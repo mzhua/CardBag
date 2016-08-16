@@ -8,6 +8,8 @@ import android.support.annotation.ColorInt;
 import android.support.annotation.NonNull;
 import android.support.v4.app.Fragment;
 
+import com.wonders.xlab.cardbag.ui.CBHomeActivity;
+
 /**
  * Created by hua on 16/8/16.
  */
@@ -39,22 +41,22 @@ public class CBag {
     }
 
     /**
-     * start @{@link CbMainActivity}
+     * start @{@link CBHomeActivity}
      *
      * @param activity
      */
     public CBag start(Activity activity) {
-        activity.startActivity(new Intent(activity, CbMainActivity.class));
+        activity.startActivity(new Intent(activity, CBHomeActivity.class));
         return this;
     }
 
     /**
-     * start @{@link CbMainActivity}
+     * start @{@link CBHomeActivity}
      *
      * @param fragment
      */
     public CBag start(Fragment fragment) {
-        fragment.startActivity(new Intent(fragment.getContext(), CbMainActivity.class));
+        fragment.startActivity(new Intent(fragment.getContext(), CBHomeActivity.class));
         return this;
     }
 

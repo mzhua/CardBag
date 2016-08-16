@@ -1,9 +1,11 @@
-package com.wonders.xlab.cardbag;
+package com.wonders.xlab.cardbag.ui;
 
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
 
-public class CbMainActivity extends AppCompatActivity {
+import com.wonders.xlab.cardbag.R;
+
+public class CBHomeActivity extends AppCompatActivity {
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
