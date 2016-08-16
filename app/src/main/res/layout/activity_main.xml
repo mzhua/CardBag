@@ -11,9 +11,17 @@
     tools:context=".MainActivity">
 
     <Button
+        android:id="@+id/btn1"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:text="@string/cardbag"
-        android:onClick="openCardBag"/>
+        android:onClick="openCardBag"
+        android:text="@string/cardbag"/>
+
+    <Button
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_below="@+id/btn1"
+        android:onClick="scan"
+        android:text="扫一扫"/>
 
 </RelativeLayout>

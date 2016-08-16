@@ -9,7 +9,7 @@
     android:paddingLeft="@dimen/activity_horizontal_margin"
     android:paddingRight="@dimen/activity_horizontal_margin"
     android:paddingTop="@dimen/activity_vertical_margin"
-    tools:context="com.wonders.xlab.qrscanner.XlabQrScannerActivity">
+    tools:context="com.wonders.xlab.qrscanner.QrScannerActivity">
 
     <cn.bingoogolapple.qrcode.zxing.ZXingView
         android:id="@+id/zxingview"
@@ -27,9 +27,4 @@
         app:qrcv_scanLineSize="1dp"
         app:qrcv_topOffset="90dp"/>
 
-    <ImageView
-        android:id="@+id/cbscanner_iv"
-        android:layout_width="200dp"
-        android:layout_height="80dp"
-        android:background="@android:color/white"/>
 </RelativeLayout>

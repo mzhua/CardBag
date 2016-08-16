@@ -1,7 +1,6 @@
 package com.wonders.xlab.cardbag;
 
 import android.app.Activity;
-import android.app.Application;
 import android.content.Intent;
 import android.os.Bundle;
 import android.support.annotation.ColorInt;
@@ -26,9 +25,8 @@ public class CBag {
     /**
      * have to call the method before call start
      *
-     * @param application
      */
-    public static CBag init(Application application) {
+    public static CBag getInstance() {
         if (cBag == null) {
             synchronized (object) {
                 if (cBag == null) {

@@ -1,5 +1,6 @@
 <?xml version="1.0" encoding="utf-8"?>
 <RelativeLayout
+    android:id="@+id/cb_home_activity"
     xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
@@ -8,12 +9,18 @@
     android:paddingLeft="@dimen/activity_horizontal_margin"
     android:paddingRight="@dimen/activity_horizontal_margin"
     android:paddingTop="@dimen/activity_vertical_margin"
-    tools:context=".ui.CBHomeActivity">
+    tools:context="com.wonders.xlab.cardbag.ui.CBHomeActivity">
 
-    <TextView
+    <ImageView
+        android:id="@+id/cbscanner_iv"
+        android:layout_width="200dp"
+        android:layout_height="80dp"
+        android:background="@android:color/white"/>
+
+    <Button
         android:layout_width="match_parent"
-        android:layout_height="?android:actionBarSize"
-        android:gravity="center"
-        android:textSize="18dp"
-        android:text="电子会员卡"/>
+        android:layout_height="wrap_content"
+        android:text="扫一扫"
+        android:layout_below="@+id/cbscanner_iv"
+        android:onClick="scan"/>
 </RelativeLayout>
