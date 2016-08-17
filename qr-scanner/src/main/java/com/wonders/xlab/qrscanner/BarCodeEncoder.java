@@ -20,6 +20,7 @@ public class BarCodeEncoder {
     }
 
     /**
+     * generator string to qrcode
      * @param s
      * @return
      * @throws Exception
@@ -45,7 +46,7 @@ public class BarCodeEncoder {
     }
 
     /**
-     * 绘制条形码
+     *  generator string to barcode
      *
      * @param ss
      * @return

@@ -1,8 +1,8 @@
 package com.wonders.xlab.qrscanner;
 
 import android.app.Activity;
+import android.app.Fragment;
 import android.content.Intent;
-import android.support.v4.app.Fragment;
 
 /**
  * Created by hua on 16/8/16.
@@ -39,7 +39,7 @@ public class XQrScanner {
     }
 
     public XQrScanner startForResult(Fragment fragment, int requestCode) {
-        fragment.startActivityForResult(new Intent(fragment.getContext(), XQrScannerActivity.class),requestCode);
+        fragment.startActivityForResult(new Intent(fragment.getActivity(), XQrScannerActivity.class),requestCode);
         return this;
     }
 }

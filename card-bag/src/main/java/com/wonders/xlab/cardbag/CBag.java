@@ -54,7 +54,7 @@ public class CBag {
      * @param fragment
      */
     public CBag start(Fragment fragment) {
-        fragment.startActivity(new Intent(fragment.getContext(), CBHomeActivity.class));
+        fragment.startActivity(new Intent(fragment.getActivity(), CBHomeActivity.class));
         return this;
     }
 

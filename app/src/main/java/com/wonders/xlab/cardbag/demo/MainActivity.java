@@ -33,7 +33,7 @@ public class MainActivity extends AppCompatActivity {
     protected void onActivityResult(int requestCode, int resultCode, Intent data) {
         super.onActivityResult(requestCode, resultCode, data);
         if (requestCode == REQUEST_CODE_SCAN && resultCode == RESULT_OK) {
-            String result = data.getStringExtra(XQrScannerActivity.EXTRA_RESULT);
+            String result = data.getStringExtra(XQrScannerActivity.EXTRA_RESULT_STRING);
             Toast.makeText(this, result, Toast.LENGTH_SHORT).show();
         }
     }

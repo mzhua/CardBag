@@ -1,4 +1,5 @@
 apply plugin: 'com.android.library'
+apply plugin: 'com.novoda.bintray-release'
 
 android {
     compileSdkVersion 24
@@ -30,4 +31,26 @@ dependencies {
     compile 'com.google.zxing:core:3.2.1'
     compile 'cn.bingoogolapple:bga-qrcodecore:1.1.3@aar'
     compile 'cn.bingoogolapple:bga-zxing:1.1.3@aar'
+}
+
+task clearJar(type: Delete) {
+    delete 'build/outputs/okhttputils.jar'
+}
+
+task makeJar(type: Copy) {
+    from('build/intermediates/bundles/release/')
+    into('build/outputs/')
+    include('classes.jar')
+    rename ('classes.jar', 'cardbag-1_0_2_3.jar')
+}
+
+makeJar.dependsOn(clearJar, build)
+
+publish {
+    userOrg = 'mzhua'
+    groupId = 'com.wonders.xlab.qrscanner'
+    artifactId = 'qr-scanner'
+    publishVersion = '1.0.0'
+    desc = 'Oh hi, this is a nice description for a project, right?'
+    website = 'https://gitlab.com/Mzhua/card-bag'
 }
