@@ -7,8 +7,8 @@ import android.view.View;
 import android.widget.Toast;
 
 import com.wonders.xlab.cardbag.CBag;
-import com.wonders.xlab.qrscanner.QrScanner;
-import com.wonders.xlab.qrscanner.QrScannerActivity;
+import com.wonders.xlab.qrscanner.XQrScanner;
+import com.wonders.xlab.qrscanner.XQrScannerActivity;
 
 import static com.wonders.xlab.cardbag.ui.CBHomeActivity.REQUEST_CODE_SCAN;
 
@@ -26,14 +26,14 @@ public class MainActivity extends AppCompatActivity {
     }
 
     public void scan(View view) {
-        QrScanner.getInstance().startForResult(this, 1234);
+        XQrScanner.getInstance().startForResult(this, 1234);
     }
 
     @Override
     protected void onActivityResult(int requestCode, int resultCode, Intent data) {
         super.onActivityResult(requestCode, resultCode, data);
         if (requestCode == REQUEST_CODE_SCAN && resultCode == RESULT_OK) {
-            String result = data.getStringExtra(QrScannerActivity.EXTRA_RESULT);
+            String result = data.getStringExtra(XQrScannerActivity.EXTRA_RESULT);
             Toast.makeText(this, result, Toast.LENGTH_SHORT).show();
         }
     }

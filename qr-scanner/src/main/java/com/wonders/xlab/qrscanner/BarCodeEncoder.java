@@ -10,11 +10,11 @@ import com.google.zxing.common.BitMatrix;
  * Created by hua on 16/8/8.
  * util to generator qrcode and barcode
  */
-public class Encoder {
+public class BarCodeEncoder {
     private int width;
     private int height;
 
-    public Encoder(int width, int height) {
+    public BarCodeEncoder(int width, int height) {
         this.width = width;
         this.height = height;
     }

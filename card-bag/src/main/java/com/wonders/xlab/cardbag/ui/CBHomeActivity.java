@@ -9,9 +9,9 @@ import android.widget.ImageView;
 import android.widget.Toast;
 
 import com.wonders.xlab.cardbag.R;
-import com.wonders.xlab.qrscanner.Encoder;
-import com.wonders.xlab.qrscanner.QrScanner;
-import com.wonders.xlab.qrscanner.QrScannerActivity;
+import com.wonders.xlab.qrscanner.BarCodeEncoder;
+import com.wonders.xlab.qrscanner.XQrScanner;
+import com.wonders.xlab.qrscanner.XQrScannerActivity;
 
 public class CBHomeActivity extends AppCompatActivity {
     public static final int REQUEST_CODE_SCAN = 1234;
@@ -25,7 +25,7 @@ public class CBHomeActivity extends AppCompatActivity {
     }
 
     public void scan(View view) {
-        QrScanner.getInstance()
+        XQrScanner.getInstance()
                 .startForResult(this, 1234);
     }
 
@@ -33,9 +33,9 @@ public class CBHomeActivity extends AppCompatActivity {
     protected void onActivityResult(int requestCode, int resultCode, Intent data) {
         super.onActivityResult(requestCode, resultCode, data);
         if (requestCode == REQUEST_CODE_SCAN && resultCode == RESULT_OK) {
-            String result = data.getStringExtra(QrScannerActivity.EXTRA_RESULT);
+            String result = data.getStringExtra(XQrScannerActivity.EXTRA_RESULT);
             Toast.makeText(this, result, Toast.LENGTH_SHORT).show();
-            Encoder ecc = new Encoder(mImageView.getWidth(), mImageView.getHeight());
+            BarCodeEncoder ecc = new BarCodeEncoder(mImageView.getWidth(), mImageView.getHeight());
             try {
                 Bitmap bitm = ecc.barcode(result);
                 mImageView.setImageBitmap(bitm);
