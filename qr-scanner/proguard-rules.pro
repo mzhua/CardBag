@@ -15,3 +15,5 @@
 #-keepclassmembers class fqcn.of.javascript.interface.for.webview {
 #   public *;
 #}
+-keep class com.wonders.xlab.qrscanner.XQrScanner { *; }
+-keep class com.wonders.xlab.qrscanner.BarCodeEncoder { *; }

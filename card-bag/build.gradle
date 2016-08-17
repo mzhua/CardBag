@@ -16,7 +16,7 @@ android {
     }
     buildTypes {
         release {
-            minifyEnabled false
+            minifyEnabled true
             proguardFiles getDefaultProguardFile('proguard-android.txt'), 'proguard-rules.pro'
         }
     }
@@ -29,8 +29,12 @@ dependencies {
     })
     compile 'com.android.support:appcompat-v7:24.1.1'
     testCompile 'junit:junit:4.12'
-    compile 'com.wonders.xlab.xcontacts:x-contacts:1.0.0'
-    compile 'com.wonders.xlab.qrscanner:qr-scanner:1.0.0'
+    //    compile project(":x-contacts")
+    //    compile project(":qr-scanner")
+//    compile 'com.wonders.xlab.xcontacts:x-contacts:1.0.0'
+//    compile 'com.wonders.xlab.qrscanner:qr-scanner:1.0.0'
+    compile project(':qr-scanner')
+    compile project(':x-contacts')
 }
 
 task clearJar(type: Delete) {

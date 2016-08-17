@@ -14,7 +14,6 @@ import cn.bingoogolapple.qrcode.zxing.ZXingView;
 
 public class XQrScannerActivity extends AppCompatActivity implements QRCodeView.Delegate {
 
-    public static final String EXTRA_RESULT_STRING = "extra_result_string";
     private static final int REQUEST_CODE_CAMERA = 1234;
     private ZXingView mZXingView;
 
@@ -83,7 +82,7 @@ public class XQrScannerActivity extends AppCompatActivity implements QRCodeView.
         mZXingView.startSpot();
         try {
             Intent data = new Intent();
-            data.putExtra(EXTRA_RESULT_STRING, result);
+            data.putExtra(XQrScanner.EXTRA_RESULT_STRING, result);
             setResult(RESULT_OK, data);
             finish();
         } catch (Exception e) {

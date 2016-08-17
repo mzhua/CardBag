@@ -11,7 +11,6 @@ import android.widget.Toast;
 import com.wonders.xlab.cardbag.R;
 import com.wonders.xlab.qrscanner.BarCodeEncoder;
 import com.wonders.xlab.qrscanner.XQrScanner;
-import com.wonders.xlab.qrscanner.XQrScannerActivity;
 import com.wonders.xlab.xcontacts.XContacts;
 
 public class CBHomeActivity extends AppCompatActivity {
@@ -34,7 +33,7 @@ public class CBHomeActivity extends AppCompatActivity {
     protected void onActivityResult(int requestCode, int resultCode, Intent data) {
         super.onActivityResult(requestCode, resultCode, data);
         if (requestCode == REQUEST_CODE_SCAN && resultCode == RESULT_OK) {
-            String result = data.getStringExtra(XQrScannerActivity.EXTRA_RESULT_STRING);
+            String result = data.getStringExtra(XQrScanner.EXTRA_RESULT_STRING);
             Toast.makeText(this, result, Toast.LENGTH_SHORT).show();
             BarCodeEncoder ecc = new BarCodeEncoder(mImageView.getWidth(), mImageView.getHeight());
             try {

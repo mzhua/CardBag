@@ -26,7 +26,7 @@ public class MainActivity extends AppCompatActivity {
     }
 
     public void scan(View view) {
-        XQrScanner.getInstance().startForResult(this, 1234);
+        XQrScanner.getInstance().startForResult(this, REQUEST_CODE_SCAN);
     }
 
     @Override
