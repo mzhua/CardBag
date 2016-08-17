@@ -29,9 +29,7 @@ dependencies {
     })
     compile 'com.android.support:appcompat-v7:24.1.1'
     testCompile 'junit:junit:4.12'
-    //    compile project(":x-contacts")
-    //    compile project(":qr-scanner")
-//    compile 'com.wonders.xlab.xcontacts:x-contacts:1.0.0'
+//    compile 'com.wonders.xlab.xcontacts:x-contacts:1.0.1'
 //    compile 'com.wonders.xlab.qrscanner:qr-scanner:1.0.0'
     compile project(':qr-scanner')
     compile project(':x-contacts')
@@ -54,7 +52,7 @@ publish {
     userOrg = 'mzhua'
     groupId = 'com.wonders.xlab.cardbag'
     artifactId = 'card-bag'
-    publishVersion = '1.0.1'
+    publishVersion = '1.0.2'
     desc = 'Oh hi, this is a nice description for a project, right?'
     website = 'https://gitlab.com/Mzhua/card-bag'
 }

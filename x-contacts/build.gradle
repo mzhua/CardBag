@@ -42,7 +42,7 @@ publish {
     userOrg = 'mzhua'
     groupId = 'com.wonders.xlab.xcontacts'
     artifactId = 'x-contacts'
-    publishVersion = '1.0.0'
+    publishVersion = '1.0.1'
     desc = 'Oh hi, this is a nice description for a project, right?'
     website = 'https://gitlab.com/Mzhua/card-bag'
 }

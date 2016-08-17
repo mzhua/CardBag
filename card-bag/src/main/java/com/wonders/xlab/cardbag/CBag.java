@@ -13,6 +13,8 @@ import com.wonders.xlab.cardbag.ui.CBHomeActivity;
  * Created by hua on 16/8/16.
  */
 public class CBag {
+    public static final int REQUEST_CODE_SCAN = 1234;
+
     private static final String EXTRA_PREFIX = BuildConfig.APPLICATION_ID;
     private static final Object object = new Object();
     private static CBag cBag;

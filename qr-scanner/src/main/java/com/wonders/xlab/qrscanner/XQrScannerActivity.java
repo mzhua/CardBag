@@ -14,7 +14,7 @@ import cn.bingoogolapple.qrcode.zxing.ZXingView;
 
 public class XQrScannerActivity extends AppCompatActivity implements QRCodeView.Delegate {
 
-    private static final int REQUEST_CODE_CAMERA = 1234;
+    private static final int PERMISSION_REQUEST_CODE_CAMERA = 1234;
     private ZXingView mZXingView;
 
     @Override
@@ -25,12 +25,13 @@ public class XQrScannerActivity extends AppCompatActivity implements QRCodeView.
         setContentView(R.layout.x_qr_scanner_activity);
         mZXingView = (ZXingView) findViewById(R.id.zxingview);
         mZXingView.setDelegate(this);
+
     }
 
     private void requestPermission() {
         if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.M) {
             if (!(checkSelfPermission(Manifest.permission.CAMERA) == PackageManager.PERMISSION_GRANTED)) {
-                requestPermissions(new String[]{Manifest.permission.CAMERA}, REQUEST_CODE_CAMERA);
+                requestPermissions(new String[]{Manifest.permission.CAMERA}, PERMISSION_REQUEST_CODE_CAMERA);
             }
         }
     }
@@ -82,7 +83,7 @@ public class XQrScannerActivity extends AppCompatActivity implements QRCodeView.
         mZXingView.startSpot();
         try {
             Intent data = new Intent();
-            data.putExtra(XQrScanner.EXTRA_RESULT_STRING, result);
+            data.putExtra(XQrScanner.EXTRA_RESULT_BAR_OR_CODE_STRING, result);
             setResult(RESULT_OK, data);
             finish();
         } catch (Exception e) {

@@ -9,9 +9,8 @@ import android.content.Intent;
  */
 
 public class XQrScanner {
-    public static final String EXTRA_RESULT_STRING = "extra_result_string";
+    public static final String EXTRA_RESULT_BAR_OR_CODE_STRING = "extra_result_bar_or_code_string";
 
-    private static final String EXTRA_PREFIX = BuildConfig.APPLICATION_ID;
     private static final Object object = new Object();
     private static XQrScanner XQrScanner;
 
@@ -21,7 +20,6 @@ public class XQrScanner {
 
     /**
      * have to call the method before call start
-     *
      */
     public static XQrScanner getInstance() {
         if (XQrScanner == null) {
@@ -36,12 +34,12 @@ public class XQrScanner {
     }
 
     public XQrScanner startForResult(Activity activity, int requestCode) {
-        activity.startActivityForResult(new Intent(activity, XQrScannerActivity.class),requestCode);
+        activity.startActivityForResult(new Intent(activity, XQrScannerActivity.class), requestCode);
         return this;
     }
 
     public XQrScanner startForResult(Fragment fragment, int requestCode) {
-        fragment.startActivityForResult(new Intent(fragment.getActivity(), XQrScannerActivity.class),requestCode);
+        fragment.startActivityForResult(new Intent(fragment.getActivity(), XQrScannerActivity.class), requestCode);
         return this;
     }
 }
