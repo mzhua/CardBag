@@ -50,7 +50,7 @@ publish {
     userOrg = 'mzhua'
     groupId = 'com.wonders.xlab.qrscanner'
     artifactId = 'qr-scanner'
-    publishVersion = '1.0.1'
+    publishVersion = '1.0.2'
     desc = 'Oh hi, this is a nice description for a project, right?'
     website = 'https://gitlab.com/Mzhua/card-bag'
 }

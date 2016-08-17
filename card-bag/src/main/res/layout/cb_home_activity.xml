@@ -32,4 +32,9 @@
         android:layout_below="@+id/btn1"
         android:onClick="contacts"
         android:text="通讯录"/>
+
+    <TextView android:id="@+id/text"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_below="@id/btn2"/>
 </RelativeLayout>
