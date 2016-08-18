@@ -1,4 +1,4 @@
-package com.wonders.xlab.cardbag.ui;
+package com.wonders.xlab.cardbag.ui.home;
 
 import java.util.List;
 

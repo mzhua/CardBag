@@ -1,13 +1,18 @@
 <?xml version="1.0" encoding="utf-8"?>
-<manifest package="com.wonders.xlab.cardbag"
-          xmlns:android="http://schemas.android.com/apk/res/android">
+<manifest xmlns:android="http://schemas.android.com/apk/res/android"
+          package="com.wonders.xlab.cardbag">
 
     <uses-permission android:name="android.permission.INTERNET"/>
+
     <application
         android:label="@string/app_name"
         android:supportsRtl="true">
-        <activity android:name=".ui.CBHomeActivity">
-        </activity>
+        <activity
+            android:name=".ui.home.CBHomeActivity"
+            android:theme="@style/AppTheme"/>
+        <activity
+            android:name=".ui.mycard.CBMyCardActivity"
+            android:theme="@style/AppTheme"/>
     </application>
 
 </manifest>

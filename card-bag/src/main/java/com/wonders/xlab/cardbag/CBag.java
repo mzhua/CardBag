@@ -7,7 +7,7 @@ import android.support.annotation.ColorInt;
 import android.support.annotation.NonNull;
 import android.support.v4.app.Fragment;
 
-import com.wonders.xlab.cardbag.ui.CBHomeActivity;
+import com.wonders.xlab.cardbag.ui.home.CBHomeActivity;
 
 /**
  * Created by hua on 16/8/16.
