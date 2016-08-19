@@ -1,0 +1,18 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <declare-styleable name="CBTopBar">
+        <attr name="titleText" format="string"/>
+        <attr name="titleGravity">
+            <enum name="left" value="2"/>
+            <enum name="center" value="4"/>
+        </attr>
+        <attr name="titleSize" format="dimension"/>
+        <attr name="menuSize" format="dimension"/>
+        <attr name="horizontalPadding" format="dimension"/>
+        <attr name="titleColor" format="color"/>
+        <attr name="rightMenuIcon" format="reference"/>
+        <attr name="rightMenuText" format="string"/>
+        <attr name="leftMenuIcon" format="reference"/>
+        <attr name="leftMenuText" format="string"/>
+    </declare-styleable>
+</resources>
