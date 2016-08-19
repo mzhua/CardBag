@@ -2,10 +2,10 @@ package com.wonders.xlab.cardbag.view;
 
 import android.content.Context;
 import android.content.res.TypedArray;
+import android.support.annotation.ColorInt;
 import android.support.annotation.IntDef;
 import android.text.TextUtils;
 import android.util.AttributeSet;
-import android.util.Log;
 import android.util.TypedValue;
 import android.view.Gravity;
 import android.view.View;
@@ -15,7 +15,6 @@ import android.widget.RelativeLayout;
 import android.widget.TextView;
 
 import com.wonders.xlab.cardbag.R;
-import com.wonders.xlab.cardbag.util.LogUtil;
 
 import java.lang.annotation.Retention;
 import java.lang.annotation.RetentionPolicy;
@@ -29,9 +28,9 @@ public class CBTopBar extends RelativeLayout {
     private final float MENU_SIZE_DEFAULT = 16;//dp
     private final float MENU_HORIZONTAL_PADDING = 10;//dp
 
-    private final int GRAVITY_TITLE_MASK = 1;
-    private final int GRAVITY_TITLE_LEFT = GRAVITY_TITLE_MASK << 1;
-    private final int GRAVITY_TITLE_CENTER = GRAVITY_TITLE_MASK << 2;
+    private static final int GRAVITY_TITLE_MASK = 1;
+    public static final int GRAVITY_TITLE_LEFT = GRAVITY_TITLE_MASK << 1;
+    public static final int GRAVITY_TITLE_CENTER = GRAVITY_TITLE_MASK << 2;
 
     private String titleText;
     private int titleGravity;
@@ -61,15 +60,15 @@ public class CBTopBar extends RelativeLayout {
     }
 
     @Retention(RetentionPolicy.CLASS)
-    @IntDef({Gravity.LEFT, Gravity.CENTER})
+    @IntDef({GRAVITY_TITLE_LEFT, GRAVITY_TITLE_CENTER})
     public @interface TitleGravity {
     }
 
-    public interface OnLeftMenuClickListener{
+    public interface OnLeftMenuClickListener {
         void onClick(View view);
     }
 
-    public interface OnRightMenuClickListener{
+    public interface OnRightMenuClickListener {
         void onClick(View view);
     }
 
@@ -85,6 +84,10 @@ public class CBTopBar extends RelativeLayout {
         super(context, attrs, defStyleAttr);
         initAttributes(context, attrs, defStyleAttr);
 
+        initView(context);
+    }
+
+    private void initView(Context context) {
         setupMenuView(context);
         setupTitleView(context);
     }
@@ -110,18 +113,21 @@ public class CBTopBar extends RelativeLayout {
             if (mLeftMenuView == null) {
                 if (!TextUtils.isEmpty(leftMenuText)) {
                     mLeftMenuView = new TextView(context);
-                    ((TextView)mLeftMenuView).setText(leftMenuText);
+                    ((TextView) mLeftMenuView).setText(leftMenuText);
                 } else {
                     mLeftMenuView = new ImageView(context);
-                    ((ImageView)mLeftMenuView).setImageResource(leftMenuIconResId);
+                    ((ImageView) mLeftMenuView).setImageResource(leftMenuIconResId);
                 }
+                mLeftMenuView.setId(R.id.left_menu);
+                mLeftMenuView.setPadding(mMenuHorizontalPaddingInPx, 0, mMenuHorizontalPaddingInPx, 0);
             }
-            mLeftMenuView.setId(R.id.left_menu);
-            mLeftMenuView.setPadding(mMenuHorizontalPaddingInPx,0,mMenuHorizontalPaddingInPx,0);
             LayoutParams layoutParams = new LayoutParams(menuSizeInPx + mMenuHorizontalPaddingInPx * 2, ViewGroup.LayoutParams.MATCH_PARENT);
             layoutParams.addRule(RelativeLayout.ALIGN_PARENT_LEFT);
             layoutParams.addRule(RelativeLayout.CENTER_VERTICAL);
             mLeftMenuView.setLayoutParams(layoutParams);
+            if (mLeftMenuView != null) {
+                removeView(mLeftMenuView);
+            }
             addView(mLeftMenuView);
             mLeftMenuView.setOnClickListener(new OnClickListener() {
                 @Override
@@ -137,17 +143,20 @@ public class CBTopBar extends RelativeLayout {
             if (mRightMenuView == null) {
                 if (!TextUtils.isEmpty(rightMenuText)) {
                     mRightMenuView = new TextView(context);
-                    ((TextView)mRightMenuView).setText(rightMenuText);
+                    ((TextView) mRightMenuView).setText(rightMenuText);
                 } else {
                     mRightMenuView = new ImageView(context);
-                    ((ImageView)mRightMenuView).setImageResource(rightMenuIconResId);
+                    ((ImageView) mRightMenuView).setImageResource(rightMenuIconResId);
                 }
+                mRightMenuView.setPadding(mMenuHorizontalPaddingInPx, 0, mMenuHorizontalPaddingInPx, 0);
             }
-            mRightMenuView.setPadding(mMenuHorizontalPaddingInPx,0, mMenuHorizontalPaddingInPx,0);
             LayoutParams layoutParams = new LayoutParams(menuSizeInPx + mMenuHorizontalPaddingInPx * 2, ViewGroup.LayoutParams.MATCH_PARENT);
             layoutParams.addRule(RelativeLayout.ALIGN_PARENT_RIGHT);
             layoutParams.addRule(RelativeLayout.CENTER_VERTICAL);
             mRightMenuView.setLayoutParams(layoutParams);
+            if (mRightMenuView != null) {
+                removeView(mRightMenuView);
+            }
             addView(mRightMenuView);
             mRightMenuView.setOnClickListener(new OnClickListener() {
                 @Override
@@ -163,8 +172,8 @@ public class CBTopBar extends RelativeLayout {
     private void setupTitleView(Context context) {
         if (mTitleView == null) {
             mTitleView = new TextView(context);
+            mTitleView.setText(TextUtils.isEmpty(titleText) ? getResources().getString(R.string.app_name) : titleText);
         }
-        mTitleView.setText(TextUtils.isEmpty(titleText) ? getResources().getString(R.string.app_name) : titleText);
         mTitleView.setTextSize(TypedValue.COMPLEX_UNIT_PX, titleSizeInPx);
         mTitleView.setTextColor(titleColor);
         if (getBackground() == null) {
@@ -180,6 +189,7 @@ public class CBTopBar extends RelativeLayout {
                     layoutParams.addRule(RelativeLayout.RIGHT_OF, mLeftMenuView.getId());
                 } else {
                     layoutParams.addRule(RelativeLayout.ALIGN_PARENT_LEFT);
+                    mTitleView.setPadding(mMenuHorizontalPaddingInPx,0,0,0);
                 }
                 break;
             default:
@@ -187,8 +197,30 @@ public class CBTopBar extends RelativeLayout {
                 break;
         }
         mTitleView.setLayoutParams(layoutParams);
-
+        if (mTitleView != null) {
+            removeView(mTitleView);
+        }
         addView(mTitleView);
+    }
+
+    public void setTitleGravity(@TitleGravity int titleGravity) {
+        this.titleGravity = titleGravity;
+        setupTitleView(getContext());
+    }
+
+    public void setTitleSize(int titleSize) {
+        this.titleSizeInPx = sp2px(getContext(),titleSize);
+        setupTitleView(getContext());
+    }
+
+    public void setTitleColor(@ColorInt int titleColor) {
+        this.titleColor = titleColor;
+        setupTitleView(getContext());
+    }
+
+    public void setMenuSize(int menuSize) {
+        this.menuSizeInPx = dp2px(getContext(),menuSize);
+        setupMenuView(getContext());
     }
 
     private int sp2px(Context context, float spVal) {

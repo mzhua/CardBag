@@ -14,7 +14,9 @@
         android:layout_width="match_parent"
         android:layout_height="?android:actionBarSize"
         app:titleSize="20sp"
-        app:titleGravity="center"
+        app:rightMenuIcon="@drawable/ic_editor"
+        app:leftMenuIcon="@drawable/ic_editor"
+        app:titleGravity="left"
         app:titleText="电子会员卡"/>
 
     <ImageButton
