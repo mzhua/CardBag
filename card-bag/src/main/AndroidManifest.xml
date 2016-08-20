@@ -9,10 +9,10 @@
         android:supportsRtl="true">
         <activity
             android:name=".ui.home.CBHomeActivity"
-            android:theme="@style/AppTheme"/>
+            android:theme="@style/CBAppTheme.NoActionBar"/>
         <activity
             android:name=".ui.mycard.CBMyCardActivity"
-            android:theme="@style/AppTheme"/>
+            android:theme="@style/CBAppTheme.NoActionBar"/>
     </application>
 
 </manifest>
