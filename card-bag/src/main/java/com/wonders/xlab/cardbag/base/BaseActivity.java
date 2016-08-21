@@ -7,13 +7,24 @@ import android.support.v7.app.AlertDialog;
 import android.text.TextUtils;
 import android.widget.Toast;
 
+import java.util.ArrayList;
+import java.util.Collections;
+
 /**
  * Created by hua on 16/8/19.
  */
 public class BaseActivity extends Activity {
+    private ArrayList<BasePresenter> mPresenters;
     private ProgressDialog mProgressDialog;
     private AlertDialog.Builder mBuilder;
     private AlertDialog mAlertDialog;
+
+    private <P extends BasePresenter> void attachPresenter(P... presenters) {
+        if (null == mPresenters) {
+            mPresenters = new ArrayList<>();
+        }
+        Collections.addAll(mPresenters, presenters);
+    }
 
     public void showShortToast(String message) {
         Toast.makeText(this, message, Toast.LENGTH_SHORT).show();
@@ -78,5 +89,11 @@ public class BaseActivity extends Activity {
         mBuilder = null;
         mAlertDialog = null;
         mProgressDialog = null;
+        if (mPresenters != null) {
+            for (BasePresenter presenter : mPresenters) {
+                presenter.onDestroy();
+                presenter = null;
+            }
+        }
     }
 }

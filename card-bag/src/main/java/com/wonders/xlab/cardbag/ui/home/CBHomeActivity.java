@@ -23,6 +23,10 @@ public class CBHomeActivity extends Activity {
                 Toast.makeText(CBHomeActivity.this, "right click", Toast.LENGTH_SHORT).show();
             }
         });
+        mCBTopBar.setMenuSize(20);
+        mCBTopBar.setTitleGravity(CBTopBar.GRAVITY_TITLE_LEFT);
+        mCBTopBar.setTitleSize(10);
+        mCBTopBar.setTitleColor(getResources().getColor(R.color.colorAccent));
     }
 
 

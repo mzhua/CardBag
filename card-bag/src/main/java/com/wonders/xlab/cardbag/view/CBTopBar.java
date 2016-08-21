@@ -32,15 +32,15 @@ public class CBTopBar extends RelativeLayout {
     public static final int GRAVITY_TITLE_LEFT = GRAVITY_TITLE_MASK << 1;
     public static final int GRAVITY_TITLE_CENTER = GRAVITY_TITLE_MASK << 2;
 
-    private String titleText;
-    private int titleGravity;
-    private int titleSizeInPx;//px
-    private int titleColor;
-    private int rightMenuIconResId;
-    private String rightMenuText;
-    private int leftMenuIconResId;
-    private String leftMenuText;
-    private int menuSizeInPx;//px
+    private String mTitleText;
+    private int mTitleGravity;
+    private int mTitleSizeInPx;//px
+    private int mTitleColor;
+    private int mRightMenuIconResId;
+    private String mRightMenuText;
+    private int mLeftMenuIconResId;
+    private String mLeftMenuText;
+    private int mMenuSizeInPx;//px
 
     private TextView mTitleView;
     private View mLeftMenuView;
@@ -88,39 +88,40 @@ public class CBTopBar extends RelativeLayout {
     }
 
     private void initView(Context context) {
-        setupMenuView(context);
-        setupTitleView(context);
+        setupMenuView();
+        setupTitleView();
     }
 
     private void initAttributes(Context context, AttributeSet attrs, int defStyleAttr) {
         TypedArray array = context.obtainStyledAttributes(attrs, R.styleable.CBTopBar, defStyleAttr, 0);
-        titleText = array.getString(R.styleable.CBTopBar_titleText);
-        titleGravity = array.getInt(R.styleable.CBTopBar_titleGravity, GRAVITY_TITLE_CENTER);
-        titleSizeInPx = array.getDimensionPixelSize(R.styleable.CBTopBar_titleSize, sp2px(context, TITLE_SIZE_DEFAULT));
-        titleColor = array.getColor(R.styleable.CBTopBar_titleColor, getResources().getColor(android.R.color.black));
-        rightMenuIconResId = array.getResourceId(R.styleable.CBTopBar_rightMenuIcon, RESOURCE_ID_NONE);
-        rightMenuText = array.getString(R.styleable.CBTopBar_rightMenuText);
-        leftMenuIconResId = array.getResourceId(R.styleable.CBTopBar_leftMenuIcon, RESOURCE_ID_NONE);
-        leftMenuText = array.getString(R.styleable.CBTopBar_leftMenuText);
-        menuSizeInPx = array.getDimensionPixelSize(R.styleable.CBTopBar_menuSize, dp2px(context, MENU_SIZE_DEFAULT));
+        mTitleText = array.getString(R.styleable.CBTopBar_titleText);
+        mTitleGravity = array.getInt(R.styleable.CBTopBar_titleGravity, GRAVITY_TITLE_CENTER);
+        mTitleSizeInPx = array.getDimensionPixelSize(R.styleable.CBTopBar_titleSize, sp2px(context, TITLE_SIZE_DEFAULT));
+        mTitleColor = array.getColor(R.styleable.CBTopBar_titleColor, getResources().getColor(android.R.color.black));
+        mRightMenuIconResId = array.getResourceId(R.styleable.CBTopBar_rightMenuIcon, RESOURCE_ID_NONE);
+        mRightMenuText = array.getString(R.styleable.CBTopBar_rightMenuText);
+        mLeftMenuIconResId = array.getResourceId(R.styleable.CBTopBar_leftMenuIcon, RESOURCE_ID_NONE);
+        mLeftMenuText = array.getString(R.styleable.CBTopBar_leftMenuText);
+        mMenuSizeInPx = array.getDimensionPixelSize(R.styleable.CBTopBar_menuSize, dp2px(context, MENU_SIZE_DEFAULT));
         array.recycle();
 
         mMenuHorizontalPaddingInPx = dp2px(context, MENU_HORIZONTAL_PADDING);
     }
 
-    private void setupMenuView(Context context) {
-        if (!TextUtils.isEmpty(leftMenuText) || RESOURCE_ID_NONE != leftMenuIconResId) {
-            int w = menuSizeInPx + mMenuHorizontalPaddingInPx * 2;
+    private void setupMenuView() {
+        Context context = getContext();
+        if (!TextUtils.isEmpty(mLeftMenuText) || RESOURCE_ID_NONE != mLeftMenuIconResId) {
+            int w = mMenuSizeInPx + mMenuHorizontalPaddingInPx * 2;
             if (mLeftMenuView == null) {
-                if (RESOURCE_ID_NONE != leftMenuIconResId) {
+                if (RESOURCE_ID_NONE != mLeftMenuIconResId) {
                     mLeftMenuView = new ImageView(context);
-                    ((ImageView) mLeftMenuView).setImageResource(leftMenuIconResId);
+                    ((ImageView) mLeftMenuView).setImageResource(mLeftMenuIconResId);
                 } else {
                     w = LayoutParams.WRAP_CONTENT;
 
                     mLeftMenuView = new TextView(context);
                     TextView textView = (TextView) mLeftMenuView;
-                    textView.setText(leftMenuText);
+                    textView.setText(mLeftMenuText);
                     textView.setTextColor(getTextColor());
                     textView.setGravity(Gravity.CENTER);
                 }
@@ -145,17 +146,17 @@ public class CBTopBar extends RelativeLayout {
             });
         }
 
-        if (!TextUtils.isEmpty(rightMenuText) || RESOURCE_ID_NONE != rightMenuIconResId) {
-            int w = menuSizeInPx + mMenuHorizontalPaddingInPx * 2;
+        if (!TextUtils.isEmpty(mRightMenuText) || RESOURCE_ID_NONE != mRightMenuIconResId) {
+            int w = mMenuSizeInPx + mMenuHorizontalPaddingInPx * 2;
             if (mRightMenuView == null) {
-                if (RESOURCE_ID_NONE != rightMenuIconResId) {
+                if (RESOURCE_ID_NONE != mRightMenuIconResId) {
                     mRightMenuView = new ImageView(context);
-                    ((ImageView) mRightMenuView).setImageResource(rightMenuIconResId);
+                    ((ImageView) mRightMenuView).setImageResource(mRightMenuIconResId);
                 } else {
                     w = LayoutParams.WRAP_CONTENT;
                     mRightMenuView = new TextView(context);
                     TextView textView = (TextView) mRightMenuView;
-                    textView.setText(rightMenuText);
+                    textView.setText(mRightMenuText);
                     textView.setTextColor(getTextColor());
                     textView.setGravity(Gravity.CENTER);
                 }
@@ -184,16 +185,16 @@ public class CBTopBar extends RelativeLayout {
         if (getBackground() == null) {
             return getResources().getColor(android.R.color.white);
         } else {
-            return titleColor;
+            return mTitleColor;
         }
     }
 
-    private void setupTitleView(Context context) {
+    private void setupTitleView() {
         if (mTitleView == null) {
-            mTitleView = new TextView(context);
-            mTitleView.setText(TextUtils.isEmpty(titleText) ? getResources().getString(R.string.app_name) : titleText);
+            mTitleView = new TextView(getContext());
+            mTitleView.setText(TextUtils.isEmpty(mTitleText) ? getResources().getString(R.string.app_name) : mTitleText);
         }
-        mTitleView.setTextSize(TypedValue.COMPLEX_UNIT_PX, titleSizeInPx);
+        mTitleView.setTextSize(TypedValue.COMPLEX_UNIT_PX, mTitleSizeInPx);
         mTitleView.setTextColor(getTextColor());
         if (getBackground() == null) {
             setBackgroundColor(getResources().getColor(R.color.colorPrimary));
@@ -201,7 +202,7 @@ public class CBTopBar extends RelativeLayout {
         LayoutParams layoutParams = new LayoutParams(ViewGroup.LayoutParams.WRAP_CONTENT, ViewGroup.LayoutParams.WRAP_CONTENT);
         layoutParams.addRule(RelativeLayout.CENTER_VERTICAL);
 
-        switch (titleGravity) {
+        switch (mTitleGravity) {
             case GRAVITY_TITLE_LEFT:
                 if (null != mLeftMenuView) {
                     layoutParams.addRule(RelativeLayout.RIGHT_OF, mLeftMenuView.getId());
@@ -222,23 +223,23 @@ public class CBTopBar extends RelativeLayout {
     }
 
     public void setTitleGravity(@TitleGravity int titleGravity) {
-        this.titleGravity = titleGravity;
-        setupTitleView(getContext());
+        this.mTitleGravity = titleGravity;
+        setupTitleView();
     }
 
     public void setTitleSize(int titleSize) {
-        this.titleSizeInPx = sp2px(getContext(), titleSize);
-        setupTitleView(getContext());
+        this.mTitleSizeInPx = sp2px(getContext(), titleSize);
+        setupTitleView();
     }
 
     public void setTitleColor(@ColorInt int titleColor) {
-        this.titleColor = titleColor;
-        setupTitleView(getContext());
+        this.mTitleColor = titleColor;
+        setupTitleView();
     }
 
     public void setMenuSize(int menuSize) {
-        this.menuSizeInPx = dp2px(getContext(), menuSize);
-        setupMenuView(getContext());
+        this.mMenuSizeInPx = dp2px(getContext(), menuSize);
+        setupMenuView();
     }
 
     private int sp2px(Context context, float spVal) {
