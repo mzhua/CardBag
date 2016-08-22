@@ -29,7 +29,9 @@
             <LinearLayout
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:gravity="center"
+                android:gravity="center_vertical"
+                android:paddingLeft="30dp"
+                android:paddingRight="16dp"
                 android:orientation="horizontal">
 
                 <com.wonders.xlab.cardbag.view.RatioImageView
@@ -43,7 +45,8 @@
                     app:vertical_weight="@integer/iv_vertical_weight"/>
 
                 <EditText
-                    android:layout_width="120dp"
+                    android:layout_width="0dp"
+                    android:layout_weight="1"
                     android:layout_height="wrap_content"
                     android:layout_marginLeft="20dp"
                     android:text="111"
