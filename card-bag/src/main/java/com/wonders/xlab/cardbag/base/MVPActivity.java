@@ -6,7 +6,7 @@ import java.util.Collections;
 /**
  * Created by hua on 16/8/19.
  */
-public class MVP1Activity extends BaseActivity {
+public class MVPActivity extends BaseActivity {
     private ArrayList<BasePresenter> mPresenters;
 
     protected <P extends BasePresenter> void attachPresenter(P... presenters) {

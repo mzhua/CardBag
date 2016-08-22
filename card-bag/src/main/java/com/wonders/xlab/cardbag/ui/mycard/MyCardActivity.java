@@ -3,9 +3,9 @@ package com.wonders.xlab.cardbag.ui.mycard;
 import android.os.Bundle;
 
 import com.wonders.xlab.cardbag.R;
-import com.wonders.xlab.cardbag.base.MVP1Activity;
+import com.wonders.xlab.cardbag.base.MVPActivity;
 
-public class MyCardActivity extends MVP1Activity implements MyCardContract.View{
+public class MyCardActivity extends MVPActivity implements MyCardContract.View{
 
     private MyCardContract.Presenter mPresenter;
     private MyCardContract.Model mModel;
