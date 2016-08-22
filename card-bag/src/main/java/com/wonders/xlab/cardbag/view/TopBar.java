@@ -13,6 +13,7 @@ import android.view.ViewGroup;
 import android.widget.ImageView;
 import android.widget.RelativeLayout;
 import android.widget.TextView;
+import android.widget.Toast;
 
 import com.wonders.xlab.cardbag.R;
 
@@ -104,7 +105,7 @@ public class TopBar extends RelativeLayout {
             if (mDividerView == null) {
                 mDividerView = new View(mContext);
                 mDividerView.setId(R.id.divider);
-                mDividerView.setBackgroundColor(getResources().getColor(R.color.cb_divider));
+                mDividerView.setBackgroundColor(getResources().getColor(R.color.cbDivider));
                 LayoutParams layoutParams = new LayoutParams(ViewGroup.LayoutParams.MATCH_PARENT, dp2px(mContext, DIVIDER_HEIGHT_DEFAULT));
                 layoutParams.addRule(RelativeLayout.ALIGN_PARENT_BOTTOM, RelativeLayout.TRUE);
                 mDividerView.setLayoutParams(layoutParams);
@@ -148,6 +149,17 @@ public class TopBar extends RelativeLayout {
                 }
                 mLeftMenuView.setId(R.id.left_menu);
                 mLeftMenuView.setPadding(mMenuHorizontalPaddingInPx, 0, mMenuHorizontalPaddingInPx, 0);
+                mLeftMenuView.setOnLongClickListener(new OnLongClickListener() {
+                    @Override
+                    public boolean onLongClick(View view) {
+                        if (!TextUtils.isEmpty(mLeftMenuText)) {
+                            Toast toast = Toast.makeText(mContext, mLeftMenuText, Toast.LENGTH_SHORT);
+                            toast.setGravity(Gravity.LEFT | Gravity.TOP,50, dp2px(mContext,56));
+                            toast.show();
+                        }
+                        return true;
+                    }
+                });
             }
             LayoutParams layoutParams = new LayoutParams(w, ViewGroup.LayoutParams.MATCH_PARENT);
             layoutParams.addRule(RelativeLayout.ALIGN_PARENT_LEFT);
@@ -185,6 +197,17 @@ public class TopBar extends RelativeLayout {
                     textView.setGravity(Gravity.CENTER);
                 }
                 mRightMenuView.setPadding(mMenuHorizontalPaddingInPx, 0, mMenuHorizontalPaddingInPx, 0);
+                mRightMenuView.setOnLongClickListener(new OnLongClickListener() {
+                    @Override
+                    public boolean onLongClick(View view) {
+                        if (!TextUtils.isEmpty(mRightMenuText)) {
+                            Toast toast = Toast.makeText(mContext, mRightMenuText, Toast.LENGTH_SHORT);
+                            toast.setGravity(Gravity.RIGHT | Gravity.TOP,50, dp2px(mContext,56));
+                            toast.show();
+                        }
+                        return true;
+                    }
+                });
             }
             LayoutParams layoutParams = new LayoutParams(w, LayoutParams.MATCH_PARENT);
             layoutParams.addRule(RelativeLayout.ALIGN_PARENT_RIGHT);
@@ -210,7 +233,7 @@ public class TopBar extends RelativeLayout {
 
     private int getTextColor() {
         if (getBackground() == null) {
-            return getResources().getColor(R.color.text_black);
+            return getResources().getColor(R.color.textBlack);
         } else {
             return mTitleColor;
         }

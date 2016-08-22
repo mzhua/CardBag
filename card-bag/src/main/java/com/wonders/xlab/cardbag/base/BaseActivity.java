@@ -3,13 +3,9 @@ package com.wonders.xlab.cardbag.base;
 import android.app.Activity;
 import android.app.ProgressDialog;
 import android.content.DialogInterface;
-import android.support.annotation.IdRes;
 import android.support.v7.app.AlertDialog;
 import android.text.TextUtils;
-import android.view.View;
 import android.widget.Toast;
-
-import com.wonders.xlab.cardbag.R;
 
 /**
  * Created by hua on 16/8/19.
@@ -18,13 +14,24 @@ public class BaseActivity extends Activity {
     private ProgressDialog mProgressDialog;
     private AlertDialog.Builder mBuilder;
     private AlertDialog mAlertDialog;
+    private Toast mToast;
 
     protected void showShortToast(String message) {
-        Toast.makeText(this, message, Toast.LENGTH_SHORT).show();
+        showToast(message, true);
+    }
+
+    private void showToast(String message, boolean isShort) {
+        if (mToast == null) {
+            mToast = Toast.makeText(this, message, isShort ? Toast.LENGTH_SHORT : Toast.LENGTH_LONG);
+        } else {
+            mToast.setDuration(Toast.LENGTH_SHORT);
+            mToast.setText(message);
+        }
+        mToast.show();
     }
 
     protected void showLongToast(String message) {
-        Toast.makeText(this, message, Toast.LENGTH_LONG).show();
+        showToast(message, false);
     }
 
     protected void showProgressDialog(String title, String message) {
@@ -82,5 +89,9 @@ public class BaseActivity extends Activity {
         mBuilder = null;
         mAlertDialog = null;
         mProgressDialog = null;
+        if (mToast != null) {
+            mToast.cancel();
+            mToast = null;
+        }
     }
 }

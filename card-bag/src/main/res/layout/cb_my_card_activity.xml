@@ -13,11 +13,12 @@
         android:id="@+id/top_bar"
         android:layout_width="match_parent"
         android:layout_height="?attr/actionBarSize"
-        android:background="@color/top_bar_background"
+        android:background="@color/topBarBackground"
         app:menuSize="@dimen/top_bar_menu_size"
-        app:titleSize="@dimen/top_bar_title_size"
-        app:titleColor="@color/text_black"
         app:rightMenuIcon="@drawable/ic_menu_list"
+        app:rightMenuText="展示方式"
+        app:titleColor="@color/textBlack"
+        app:titleSize="@dimen/top_bar_title_size"
         app:titleText="我的卡片"/>
 
     <android.support.v7.widget.RecyclerView
@@ -36,4 +37,12 @@
         android:layout_marginRight="@dimen/fab_margin_horizontal"
         android:clickable="true"
         android:src="@drawable/ic_fab_add"/>
+
+    <com.wonders.xlab.cardbag.view.SideBar
+        android:id="@+id/side_bar"
+        android:layout_width="wrap_content"
+        android:layout_height="match_parent"
+        android:layout_above="@+id/iv_add"
+        android:layout_below="@+id/top_bar"
+        android:visibility="gone"/>
 </RelativeLayout>

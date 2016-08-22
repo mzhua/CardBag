@@ -1,6 +1,6 @@
 <?xml version="1.0" encoding="utf-8"?>
-<manifest xmlns:android="http://schemas.android.com/apk/res/android"
-          package="com.wonders.xlab.cardbag">
+<manifest package="com.wonders.xlab.cardbag"
+          xmlns:android="http://schemas.android.com/apk/res/android">
 
     <uses-permission android:name="android.permission.INTERNET"/>
 
@@ -13,10 +13,12 @@
         <activity
             android:name=".ui.cardmy.CardMyActivity"
             android:theme="@style/CBAppTheme.NoActionBar"/>
-        <activity android:name=".ui.cardedit.CardEditActivity">
-        </activity>
-        <activity android:name=".ui.cardsearch.CardSearchActivity">
-        </activity>
+        <activity
+            android:name=".ui.cardedit.CardEditActivity"
+            android:theme="@style/CBAppTheme.NoActionBar"/>
+        <activity
+            android:name=".ui.cardsearch.CardSearchActivity"
+            android:theme="@style/CBAppTheme.NoActionBar"/>
     </application>
 
 </manifest>
