@@ -1,0 +1,46 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+              xmlns:app="http://schemas.android.com/apk/res-auto"
+              xmlns:tools="http://schemas.android.com/tools"
+              android:layout_width="match_parent"
+              android:layout_height="match_parent"
+              android:background="@color/background"
+              android:fitsSystemWindows="true"
+              android:orientation="vertical"
+              tools:context="com.wonders.xlab.cardbag.ui.cardedit.CardEditActivity">
+
+    <com.wonders.xlab.cardbag.view.TopBar
+        android:id="@+id/top_bar"
+        android:layout_width="match_parent"
+        android:layout_height="?attr/actionBarSize"
+        app:rightMenuText="@string/menu_text_card_edit"
+        app:showDivider="false"/>
+
+    <android.support.v4.widget.NestedScrollView
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content">
+
+        <RelativeLayout
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            android:gravity="center_horizontal">
+
+            <com.wonders.xlab.cardbag.view.RatioImageView
+                android:id="@+id/iv_card"
+                android:layout_width="100dp"
+                android:layout_height="wrap_content"
+                android:scaleType="centerCrop"
+                android:src="@drawable/ic_use_card"
+                app:base="horizontal"
+                app:horizontal_weight="@integer/iv_horizontal_weight"
+                app:vertical_weight="@integer/iv_vertical_weight"/>
+
+            <EditText
+                android:layout_width="120dp"
+                android:layout_height="wrap_content"
+                android:layout_toRightOf="@+id/iv_card"/>
+        </RelativeLayout>
+
+    </android.support.v4.widget.NestedScrollView>
+</LinearLayout>
+

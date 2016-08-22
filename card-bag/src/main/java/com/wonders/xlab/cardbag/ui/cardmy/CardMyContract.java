@@ -1,7 +1,8 @@
-package com.wonders.xlab.cardbag.ui.mycard;
+package com.wonders.xlab.cardbag.ui.cardmy;
 
 import com.wonders.xlab.cardbag.base.BaseContract;
 import com.wonders.xlab.cardbag.data.entity.CardEntity;
+import com.wonders.xlab.cardbag.data.entity.MyCardEntity;
 
 import java.util.List;
 
@@ -9,7 +10,7 @@ import java.util.List;
  * Created by hua on 16/8/21.
  */
 
-public interface MyCardContract {
+public interface CardMyContract {
     interface View extends BaseContract.View{
         void showMyCards(List<CardEntity> cardEntityList);
     }
@@ -19,7 +20,7 @@ public interface MyCardContract {
     }
 
     interface Model extends BaseContract.Model {
-        void getMyCards(BaseContract.Model.Callback<CardEntity> callback);
+        void getMyCards(BaseContract.Model.Callback<MyCardEntity> callback);
     }
 
 }

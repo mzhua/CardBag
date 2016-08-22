@@ -100,14 +100,16 @@ public class TopBar extends RelativeLayout {
     }
 
     private void setupDividerView() {
-        if (mDividerView == null) {
-            mDividerView = new View(mContext);
-            mDividerView.setId(R.id.divider);
-            mDividerView.setBackgroundColor(getResources().getColor(R.color.cb_divider));
-            LayoutParams layoutParams = new LayoutParams(ViewGroup.LayoutParams.MATCH_PARENT, dp2px(mContext, DIVIDER_HEIGHT_DEFAULT));
-            layoutParams.addRule(RelativeLayout.ALIGN_PARENT_BOTTOM,RelativeLayout.TRUE);
-            mDividerView.setLayoutParams(layoutParams);
-            addView(mDividerView);
+        if (mShowDivider) {
+            if (mDividerView == null) {
+                mDividerView = new View(mContext);
+                mDividerView.setId(R.id.divider);
+                mDividerView.setBackgroundColor(getResources().getColor(R.color.cb_divider));
+                LayoutParams layoutParams = new LayoutParams(ViewGroup.LayoutParams.MATCH_PARENT, dp2px(mContext, DIVIDER_HEIGHT_DEFAULT));
+                layoutParams.addRule(RelativeLayout.ALIGN_PARENT_BOTTOM, RelativeLayout.TRUE);
+                mDividerView.setLayoutParams(layoutParams);
+                addView(mDividerView);
+            }
         }
     }
 
@@ -149,8 +151,10 @@ public class TopBar extends RelativeLayout {
             }
             LayoutParams layoutParams = new LayoutParams(w, ViewGroup.LayoutParams.MATCH_PARENT);
             layoutParams.addRule(RelativeLayout.ALIGN_PARENT_LEFT);
-            layoutParams.addRule(RelativeLayout.ABOVE,mDividerView.getId());
             layoutParams.addRule(RelativeLayout.CENTER_VERTICAL);
+            if (mShowDivider) {
+                layoutParams.addRule(RelativeLayout.ABOVE, mDividerView.getId());
+            }
             mLeftMenuView.setLayoutParams(layoutParams);
             if (mLeftMenuView != null && mLeftMenuView.getParent() != null) {
                 removeView(mLeftMenuView);
@@ -184,8 +188,10 @@ public class TopBar extends RelativeLayout {
             }
             LayoutParams layoutParams = new LayoutParams(w, LayoutParams.MATCH_PARENT);
             layoutParams.addRule(RelativeLayout.ALIGN_PARENT_RIGHT);
-            layoutParams.addRule(RelativeLayout.ABOVE,mDividerView.getId());
             layoutParams.addRule(RelativeLayout.CENTER_VERTICAL);
+            if (mShowDivider) {
+                layoutParams.addRule(RelativeLayout.ABOVE, mDividerView.getId());
+            }
             mRightMenuView.setLayoutParams(layoutParams);
             if (mRightMenuView != null && mRightMenuView.getParent() != null) {
                 removeView(mRightMenuView);
@@ -223,7 +229,9 @@ public class TopBar extends RelativeLayout {
         }
         LayoutParams layoutParams = new LayoutParams(LayoutParams.WRAP_CONTENT, LayoutParams.MATCH_PARENT);
         layoutParams.addRule(RelativeLayout.CENTER_VERTICAL);
-        layoutParams.addRule(RelativeLayout.ABOVE,mDividerView.getId());
+        if (mShowDivider) {
+            layoutParams.addRule(RelativeLayout.ABOVE, mDividerView.getId());
+        }
 
         switch (mTitleGravity) {
             case GRAVITY_TITLE_LEFT:

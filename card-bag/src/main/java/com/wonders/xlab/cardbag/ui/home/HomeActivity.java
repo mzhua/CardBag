@@ -7,7 +7,7 @@ import android.view.View;
 import android.widget.Toast;
 
 import com.wonders.xlab.cardbag.R;
-import com.wonders.xlab.cardbag.ui.mycard.MyCardActivity;
+import com.wonders.xlab.cardbag.ui.cardmy.CardMyActivity;
 import com.wonders.xlab.cardbag.view.TopBar;
 
 public class HomeActivity extends Activity {
@@ -45,7 +45,7 @@ public class HomeActivity extends Activity {
     }*/
 
     public void manageCard(View view) {
-        startActivity(new Intent(this, MyCardActivity.class));
+        startActivity(new Intent(this, CardMyActivity.class));
     }
 
     public void useCard(View view) {

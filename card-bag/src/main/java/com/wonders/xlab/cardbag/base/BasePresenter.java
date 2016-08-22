@@ -7,10 +7,10 @@ import java.util.Collections;
  * Created by hua on 16/8/19.
  */
 public class BasePresenter implements BaseContract.Presenter {
-    private ArrayList<BaseModel> mModels;
+    private ArrayList<BaseContract.Model> mModels;
 
 
-    public <M extends BaseModel> void attachModels(M... models) {
+    public void attachModels(BaseContract.Model... models) {
         if (mModels == null) {
             mModels = new ArrayList<>();
         }
@@ -20,7 +20,7 @@ public class BasePresenter implements BaseContract.Presenter {
     @Override
     public void onDestroy() {
         if (mModels != null) {
-            for (BaseModel model : mModels) {
+            for (BaseContract.Model model : mModels) {
                 model.onDestroy();
                 model = null;
             }

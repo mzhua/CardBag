@@ -2,4 +2,5 @@
     <string name="app_name">电子会员卡</string>
     <string name="content_desc_manage_card">管理卡片</string>
     <string name="content_desc_use_card">使用卡片</string>
+    <string name="menu_text_card_edit">完成</string>
 </resources>

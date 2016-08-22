@@ -7,7 +7,7 @@
     android:layout_height="match_parent"
     android:background="@color/background"
     android:fitsSystemWindows="true"
-    tools:context="com.wonders.xlab.cardbag.ui.mycard.MyCardActivity">
+    tools:context="com.wonders.xlab.cardbag.ui.cardmy.CardMyActivity">
 
     <com.wonders.xlab.cardbag.view.TopBar
         android:id="@+id/top_bar"

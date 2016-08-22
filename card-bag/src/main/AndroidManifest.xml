@@ -11,8 +11,12 @@
             android:name=".ui.home.HomeActivity"
             android:theme="@style/CBAppTheme.NoActionBar"/>
         <activity
-            android:name=".ui.mycard.MyCardActivity"
+            android:name=".ui.cardmy.CardMyActivity"
             android:theme="@style/CBAppTheme.NoActionBar"/>
+        <activity android:name=".ui.cardedit.CardEditActivity">
+        </activity>
+        <activity android:name=".ui.cardsearch.CardSearchActivity">
+        </activity>
     </application>
 
 </manifest>

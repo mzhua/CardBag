@@ -1,4 +1,4 @@
-package com.wonders.xlab.cardbag.ui.mycard;
+package com.wonders.xlab.cardbag.ui.cardmy;
 
 import android.support.v7.widget.RecyclerView;
 import android.view.LayoutInflater;
@@ -16,7 +16,7 @@ import com.wonders.xlab.cardbag.util.ImageViewUtil;
  * Created by hua on 16/8/22.
  */
 
-public class MyCardRVAdapter extends BaseRecyclerViewAdapter<CardEntity,MyCardRVAdapter.ItemViewHolder> {
+public class CardMyRVAdapter extends BaseRecyclerViewAdapter<CardEntity,CardMyRVAdapter.ItemViewHolder> {
 
     @Override
     public ItemViewHolder onCreateViewHolder(ViewGroup parent, int viewType) {

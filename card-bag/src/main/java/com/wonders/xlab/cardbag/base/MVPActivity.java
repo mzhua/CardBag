@@ -6,25 +6,15 @@ import java.util.Collections;
 /**
  * Created by hua on 16/8/19.
  */
-public class MVPActivity extends BaseActivity {
-    private ArrayList<BasePresenter> mPresenters;
+public abstract class MVPActivity extends BaseActivity {
 
-    @SafeVarargs
-    protected final <P extends BasePresenter> void attachPresenter(P... presenters) {
-        if (null == mPresenters) {
-            mPresenters = new ArrayList<>();
-        }
-        Collections.addAll(mPresenters, presenters);
-    }
+    protected abstract BaseContract.Presenter getPresenter();
 
     @Override
     protected void onDestroy() {
         super.onDestroy();
-        if (mPresenters != null) {
-            for (BasePresenter presenter : mPresenters) {
-                presenter.onDestroy();
-                presenter = null;
-            }
+        if (getPresenter() != null) {
+            getPresenter().onDestroy();
         }
     }
 }

@@ -14,8 +14,8 @@
         android:layout_height="wrap_content"
         android:scaleType="centerCrop"
         app:base="horizontal"
-        app:horizontal_weight="2"
-        app:vertical_weight="1"/>
+        app:horizontal_weight="@integer/iv_horizontal_weight"
+        app:vertical_weight="@integer/iv_vertical_weight"/>
 
     <TextView
         android:id="@+id/tv_name"

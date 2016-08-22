@@ -1,4 +1,4 @@
-package com.wonders.xlab.cardbag.ui.mycard;
+package com.wonders.xlab.cardbag.ui.cardmy;
 
 import android.os.Bundle;
 import android.support.v7.widget.GridLayoutManager;
@@ -7,19 +7,25 @@ import android.view.View;
 import android.widget.ImageView;
 
 import com.wonders.xlab.cardbag.R;
+import com.wonders.xlab.cardbag.base.BaseContract;
 import com.wonders.xlab.cardbag.base.MVPActivity;
 import com.wonders.xlab.cardbag.data.MyCardModel;
 import com.wonders.xlab.cardbag.data.entity.CardEntity;
 
 import java.util.List;
 
-public class MyCardActivity extends MVPActivity implements MyCardContract.View {
+public class CardMyActivity extends MVPActivity implements CardMyContract.View {
 
     private ImageView mIvAdd;
     private RecyclerView mRecyclerView;
-    private MyCardRVAdapter mAdapter;
+    private CardMyRVAdapter mAdapter;
 
-    private MyCardContract.Presenter mPresenter;
+    private CardMyContract.Presenter mPresenter;
+
+    @Override
+    protected BaseContract.Presenter getPresenter() {
+        return mPresenter;
+    }
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -40,8 +46,7 @@ public class MyCardActivity extends MVPActivity implements MyCardContract.View {
     protected void onStart() {
         super.onStart();
         if (mPresenter == null) {
-            mPresenter = new MyCardPresenter(new MyCardModel(), this);
-//            attachPresenter(mPresenter);
+            mPresenter = new CardMyPresenter(new MyCardModel(), this);
         }
         mPresenter.getMyCards();
     }
@@ -49,7 +54,7 @@ public class MyCardActivity extends MVPActivity implements MyCardContract.View {
     @Override
     public void showMyCards(List<CardEntity> cardEntityList) {
         if (mAdapter == null) {
-            mAdapter = new MyCardRVAdapter();
+            mAdapter = new CardMyRVAdapter();
             mRecyclerView.setAdapter(mAdapter);
         }
         mAdapter.setDatas(cardEntityList);
