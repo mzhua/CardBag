@@ -1,0 +1,30 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+              xmlns:app="http://schemas.android.com/apk/res-auto"
+              android:layout_width="match_parent"
+              android:layout_height="wrap_content"
+              android:orientation="horizontal"
+              android:gravity="center_vertical"
+              android:background="?android:attr/selectableItemBackground"
+              android:clickable="true"
+              android:padding="@dimen/app_root_layout_padding">
+
+    <com.wonders.xlab.cardbag.view.RatioImageView
+        android:id="@+id/iv_card"
+        android:layout_width="wrap_content"
+        android:layout_height="56dp"
+        android:scaleType="centerCrop"
+        app:base="vertical"
+        android:layout_marginLeft="16dp"
+        app:horizontal_weight="@integer/iv_horizontal_weight"
+        app:vertical_weight="@integer/iv_vertical_weight"/>
+
+    <TextView
+        android:id="@+id/tv_name"
+        style="@style/NormalSizeBlackColorTextView"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginLeft="16dp"
+        android:maxLines="1"
+        android:gravity="center"/>
+</LinearLayout>

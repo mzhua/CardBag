@@ -16,11 +16,11 @@ import com.wonders.xlab.cardbag.util.ImageViewUtil;
  * Created by hua on 16/8/22.
  */
 
-public class CardMyRVAdapter extends BaseRecyclerViewAdapter<CardEntity,CardMyRVAdapter.ItemViewHolder> {
+public class CardMyIconRVAdapter extends BaseRecyclerViewAdapter<CardEntity,CardMyIconRVAdapter.ItemViewHolder> {
 
     @Override
     public ItemViewHolder onCreateViewHolder(ViewGroup parent, int viewType) {
-        View view = LayoutInflater.from(parent.getContext()).inflate(R.layout.cb_my_card_rv_item, null);
+        View view = LayoutInflater.from(parent.getContext()).inflate(R.layout.cb_my_card_icon_rv_item, null);
         return new ItemViewHolder(view);
     }
 

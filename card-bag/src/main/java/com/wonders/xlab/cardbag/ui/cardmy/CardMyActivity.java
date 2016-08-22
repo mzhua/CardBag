@@ -2,6 +2,7 @@ package com.wonders.xlab.cardbag.ui.cardmy;
 
 import android.content.Intent;
 import android.os.Bundle;
+import android.support.v7.widget.DefaultItemAnimator;
 import android.support.v7.widget.GridLayoutManager;
 import android.support.v7.widget.RecyclerView;
 import android.view.View;
@@ -24,9 +25,13 @@ public class CardMyActivity extends MVPActivity implements CardMyContract.View {
     private ImageView mIvAdd;
     private RecyclerView mRecyclerView;
     private SideBar mSideBar;
-    private CardMyRVAdapter mAdapter;
+    private CardMyIconRVAdapter mIconRVAdapter;
+    private CardMyListRVAdapter mListRVAdapter;
+
+    private GridLayoutManager mGridLayoutManager;
 
     private CardMyContract.Presenter mPresenter;
+
 
     private boolean mIsIconMode = true;
 
@@ -49,6 +54,9 @@ public class CardMyActivity extends MVPActivity implements CardMyContract.View {
                 mSideBar.setVisibility(mIsIconMode ? View.VISIBLE : View.INVISIBLE);
                 ((ImageView) view).setImageResource(mIsIconMode ? R.drawable.ic_menu_icon : R.drawable.ic_menu_list);
                 mIsIconMode = !mIsIconMode;
+                if (mPresenter != null) {
+                    mPresenter.getMyCards();
+                }
             }
         });
         mIvAdd.setOnClickListener(new View.OnClickListener() {
@@ -63,7 +71,9 @@ public class CardMyActivity extends MVPActivity implements CardMyContract.View {
                 showShortToast(s);
             }
         });
-        mRecyclerView.setLayoutManager(new GridLayoutManager(this, 2, GridLayoutManager.VERTICAL, false));
+        mGridLayoutManager = new GridLayoutManager(this, 2, GridLayoutManager.VERTICAL, false);
+        mRecyclerView.setLayoutManager(mGridLayoutManager);
+        mRecyclerView.setItemAnimator(new DefaultItemAnimator());
     }
 
     @Override
@@ -77,11 +87,22 @@ public class CardMyActivity extends MVPActivity implements CardMyContract.View {
 
     @Override
     public void showMyCards(List<CardEntity> cardEntityList) {
-        if (mAdapter == null) {
-            mAdapter = new CardMyRVAdapter();
-            mRecyclerView.setAdapter(mAdapter);
+        if (mIsIconMode) {
+            if (mIconRVAdapter == null) {
+                mIconRVAdapter = new CardMyIconRVAdapter();
+            }
+            mGridLayoutManager.setSpanCount(2);
+            mIconRVAdapter.setDatas(cardEntityList);
+            mRecyclerView.setAdapter(mIconRVAdapter);
+        } else {
+            if (mListRVAdapter == null) {
+                mListRVAdapter = new CardMyListRVAdapter();
+            }
+            mGridLayoutManager.setSpanCount(1);
+            mListRVAdapter.setDatas(cardEntityList);
+            mRecyclerView.setAdapter(mListRVAdapter);
         }
-        mAdapter.setDatas(cardEntityList);
+
     }
 
     @Override
