@@ -16,15 +16,15 @@ public class BaseFragment extends Fragment {
     private AlertDialog mAlertDialog;
 
 
-    public void showShortToast(String message) {
+    protected void showShortToast(String message) {
         Toast.makeText(getActivity(), message, Toast.LENGTH_SHORT).show();
     }
 
-    public void showLongToast(String message) {
+    protected void showLongToast(String message) {
         Toast.makeText(getActivity(), message, Toast.LENGTH_LONG).show();
     }
 
-    public void showProgressDialog(String title, String message) {
+    protected void showProgressDialog(String title, String message) {
         if (mProgressDialog == null) {
             mProgressDialog = new ProgressDialog(getActivity());
         }
@@ -36,13 +36,13 @@ public class BaseFragment extends Fragment {
         }
     }
 
-    public void dismissProgressDialog() {
+    protected void dismissProgressDialog() {
         if (mProgressDialog != null) {
             mProgressDialog.dismiss();
         }
     }
 
-    public void showAlertDialog(String title, String message, String positiveBtnText, DialogInterface.OnClickListener positiveBtnListener, String negativeBtnText, DialogInterface.OnClickListener negativeBtnListener) {
+    protected void showAlertDialog(String title, String message, String positiveBtnText, DialogInterface.OnClickListener positiveBtnListener, String negativeBtnText, DialogInterface.OnClickListener negativeBtnListener) {
         if (mBuilder == null) {
             mBuilder = new AlertDialog.Builder(getActivity());
         }
@@ -65,7 +65,7 @@ public class BaseFragment extends Fragment {
         mAlertDialog.show();
     }
 
-    public void dismissAlertDialog() {
+    protected void dismissAlertDialog() {
         if (mAlertDialog != null) {
             mAlertDialog.dismiss();
         }

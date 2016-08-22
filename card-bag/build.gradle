@@ -34,11 +34,14 @@ dependencies {
     testCompile 'org.robolectric:robolectric:3.1.2'
     compile 'com.google.code.gson:gson:2.7'
     compile 'com.squareup.okhttp3:okhttp:3.4.1'
-
+    compile 'com.yalantis:ucrop:2.1.2'
+    //    compile 'top.zibin:Luban:1.0.8'
+    //    compile 'com.github.lovetuzitong:MultiImageSelector:1.2'
     //    compile 'com.wonders.xlab.xcontacts:x-contacts:1.0.1'
     //    compile 'com.wonders.xlab.qrscanner:qr-scanner:1.0.2'
     compile project(':qr-scanner')
     compile project(':x-contacts')
+    compile 'com.squareup.picasso:picasso:2.5.2'
 }
 
 task clearJar(type: Delete) {

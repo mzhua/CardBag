@@ -9,7 +9,8 @@ import java.util.Collections;
 public class MVPActivity extends BaseActivity {
     private ArrayList<BasePresenter> mPresenters;
 
-    protected <P extends BasePresenter> void attachPresenter(P... presenters) {
+    @SafeVarargs
+    protected final <P extends BasePresenter> void attachPresenter(P... presenters) {
         if (null == mPresenters) {
             mPresenters = new ArrayList<>();
         }

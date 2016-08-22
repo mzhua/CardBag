@@ -7,13 +7,17 @@
     android:layout_width="match_parent"
     android:layout_height="match_parent"
     android:orientation="vertical"
+    android:fitsSystemWindows="true"
     tools:context=".ui.home.HomeActivity">
 
     <com.wonders.xlab.cardbag.view.TopBar
-        android:id="@+id/topbar"
+        android:id="@+id/top_bar"
         android:layout_width="match_parent"
         android:layout_height="?android:actionBarSize"
-        app:titleSize="20sp"
+        app:titleSize="@dimen/top_bar_title_size"
+        android:background="@color/top_bar_background"
+        app:titleColor="@color/text_black"
+        app:menuSize="@dimen/top_bar_menu_size"
         app:titleText="电子会员卡"/>
 
     <ImageButton

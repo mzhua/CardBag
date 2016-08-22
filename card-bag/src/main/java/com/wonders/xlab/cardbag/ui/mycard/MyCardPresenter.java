@@ -3,7 +3,10 @@ package com.wonders.xlab.cardbag.ui.mycard;
 import com.wonders.xlab.cardbag.base.BaseContract;
 import com.wonders.xlab.cardbag.base.BasePresenter;
 import com.wonders.xlab.cardbag.base.DefaultException;
-import com.wonders.xlab.cardbag.entity.CardEntity;
+import com.wonders.xlab.cardbag.data.entity.CardEntity;
+
+import java.util.ArrayList;
+import java.util.List;
 
 /**
  * Created by hua on 16/8/18.
@@ -22,7 +25,14 @@ public class MyCardPresenter extends BasePresenter implements MyCardContract.Pre
         mModel.getMyCards(new BaseContract.Model.Callback<CardEntity>() {
             @Override
             public void onSuccess(CardEntity cardEntity) {
-                mView.showMyCards();
+                List<CardEntity> cardEntityList = new ArrayList<>();
+                for (int i = 0; i < 10; i++) {
+                    CardEntity entity = new CardEntity();
+                    entity.setCardName("Card Name " + i);
+                    entity.setImgUrl("http://upload-images.jianshu.io/upload_images/598650-71ec1d3457194419.png?imageMogr2/auto-orient/strip%7CimageView2/2/w/1240");
+                    cardEntityList.add(entity);
+                }
+                mView.showMyCards(cardEntityList);
             }
 
             @Override

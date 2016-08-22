@@ -1,6 +1,9 @@
 package com.wonders.xlab.cardbag.ui.mycard;
 
 import com.wonders.xlab.cardbag.base.BaseContract;
+import com.wonders.xlab.cardbag.data.entity.CardEntity;
+
+import java.util.List;
 
 /**
  * Created by hua on 16/8/21.
@@ -8,7 +11,7 @@ import com.wonders.xlab.cardbag.base.BaseContract;
 
 public interface MyCardContract {
     interface View extends BaseContract.View{
-        void showMyCards();
+        void showMyCards(List<CardEntity> cardEntityList);
     }
 
     interface Presenter extends BaseContract.Presenter{
@@ -16,7 +19,7 @@ public interface MyCardContract {
     }
 
     interface Model extends BaseContract.Model {
-        void getMyCards(BaseContract.Model.Callback callback);
+        void getMyCards(BaseContract.Model.Callback<CardEntity> callback);
     }
 
 }

@@ -1,11 +1,13 @@
 package com.wonders.xlab.cardbag.ui.home;
 
 import android.app.Activity;
+import android.content.Intent;
 import android.os.Bundle;
 import android.view.View;
 import android.widget.Toast;
 
 import com.wonders.xlab.cardbag.R;
+import com.wonders.xlab.cardbag.ui.mycard.MyCardActivity;
 import com.wonders.xlab.cardbag.view.TopBar;
 
 public class HomeActivity extends Activity {
@@ -16,17 +18,13 @@ public class HomeActivity extends Activity {
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.cb_home_activity);
-        mTopBar = (TopBar) findViewById(R.id.topbar);
+        mTopBar = (TopBar) findViewById(R.id.top_bar);
         mTopBar.setOnRightMenuClickListener(new TopBar.OnRightMenuClickListener() {
             @Override
             public void onClick(View view) {
                 Toast.makeText(HomeActivity.this, "right click", Toast.LENGTH_SHORT).show();
             }
         });
-        mTopBar.setMenuSize(20);
-        mTopBar.setTitleGravity(TopBar.GRAVITY_TITLE_LEFT);
-        mTopBar.setTitleSize(10);
-        mTopBar.setTitleColor(getResources().getColor(R.color.colorAccent));
     }
 
 
@@ -47,6 +45,7 @@ public class HomeActivity extends Activity {
     }*/
 
     public void manageCard(View view) {
+        startActivity(new Intent(this, MyCardActivity.class));
     }
 
     public void useCard(View view) {

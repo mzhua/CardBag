@@ -14,5 +14,21 @@
         <attr name="rightMenuText" format="string"/>
         <attr name="leftMenuIcon" format="reference"/>
         <attr name="leftMenuText" format="string"/>
+        <attr name="showDivider" format="boolean"/>
+    </declare-styleable>
+
+    <declare-styleable name="RecyclerViewPager">
+        <attr name="rvp_triggerOffset" format="float" />
+        <attr name="rvp_flingFactor" format="float" />
+        <attr name="rvp_singlePageFling" format="boolean" />
+    </declare-styleable>
+
+    <declare-styleable name="RatioImageView">
+        <attr name="vertical_weight" format="integer" />
+        <attr name="horizontal_weight" format="integer" />
+        <attr name="base" format="enum">
+            <enum name="horizontal" value="0" />
+            <enum name="vertical" value="1" />
+        </attr>
     </declare-styleable>
 </resources>

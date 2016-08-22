@@ -3,9 +3,13 @@ package com.wonders.xlab.cardbag.base;
 import android.app.Activity;
 import android.app.ProgressDialog;
 import android.content.DialogInterface;
+import android.support.annotation.IdRes;
 import android.support.v7.app.AlertDialog;
 import android.text.TextUtils;
+import android.view.View;
 import android.widget.Toast;
+
+import com.wonders.xlab.cardbag.R;
 
 /**
  * Created by hua on 16/8/19.
@@ -15,15 +19,15 @@ public class BaseActivity extends Activity {
     private AlertDialog.Builder mBuilder;
     private AlertDialog mAlertDialog;
 
-    public void showShortToast(String message) {
+    protected void showShortToast(String message) {
         Toast.makeText(this, message, Toast.LENGTH_SHORT).show();
     }
 
-    public void showLongToast(String message) {
+    protected void showLongToast(String message) {
         Toast.makeText(this, message, Toast.LENGTH_LONG).show();
     }
 
-    public void showProgressDialog(String title, String message) {
+    protected void showProgressDialog(String title, String message) {
         if (mProgressDialog == null) {
             mProgressDialog = new ProgressDialog(this);
         }
@@ -35,13 +39,13 @@ public class BaseActivity extends Activity {
         }
     }
 
-    public void dismissProgressDialog() {
+    protected void dismissProgressDialog() {
         if (mProgressDialog != null) {
             mProgressDialog.dismiss();
         }
     }
 
-    public void showAlertDialog(String title, String message, String positiveBtnText, DialogInterface.OnClickListener positiveBtnListener, String negativeBtnText, DialogInterface.OnClickListener negativeBtnListener) {
+    protected void showAlertDialog(String title, String message, String positiveBtnText, DialogInterface.OnClickListener positiveBtnListener, String negativeBtnText, DialogInterface.OnClickListener negativeBtnListener) {
         if (mBuilder == null) {
             mBuilder = new AlertDialog.Builder(this);
         }
@@ -64,7 +68,7 @@ public class BaseActivity extends Activity {
         mAlertDialog.show();
     }
 
-    public void dismissAlertDialog() {
+    protected void dismissAlertDialog() {
         if (mAlertDialog != null) {
             mAlertDialog.dismiss();
         }

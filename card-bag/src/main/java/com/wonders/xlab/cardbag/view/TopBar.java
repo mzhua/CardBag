@@ -23,9 +23,11 @@ import java.lang.annotation.RetentionPolicy;
  * Created by hua on
  */
 public class TopBar extends RelativeLayout {
+    private Context mContext;
+    private final float DIVIDER_HEIGHT_DEFAULT = 0.8f;
     private final float TITLE_SIZE_DEFAULT = 20;//sp
     private final int RESOURCE_ID_NONE = -1;
-    private final float MENU_SIZE_DEFAULT = 16;//dp
+    private final float MENU_SIZE_DEFAULT = 24;//dp
     private final float MENU_HORIZONTAL_PADDING = 10;//dp
 
     private static final int GRAVITY_TITLE_MASK = 1;
@@ -41,10 +43,12 @@ public class TopBar extends RelativeLayout {
     private int mLeftMenuIconResId;
     private String mLeftMenuText;
     private int mMenuSizeInPx;//px
+    private boolean mShowDivider;
 
     private TextView mTitleView;
     private View mLeftMenuView;
     private View mRightMenuView;
+    private View mDividerView;
 
     private int mMenuHorizontalPaddingInPx;
 
@@ -82,44 +86,59 @@ public class TopBar extends RelativeLayout {
 
     public TopBar(Context context, AttributeSet attrs, int defStyleAttr) {
         super(context, attrs, defStyleAttr);
-        initAttributes(context, attrs, defStyleAttr);
+        mContext = context;
 
-        initView(context);
+        initAttributes(attrs, defStyleAttr);
+
+        initView();
     }
 
-    private void initView(Context context) {
+    private void initView() {
+        setupDividerView();
         setupMenuView();
         setupTitleView();
     }
 
-    private void initAttributes(Context context, AttributeSet attrs, int defStyleAttr) {
-        TypedArray array = context.obtainStyledAttributes(attrs, R.styleable.TopBar, defStyleAttr, 0);
+    private void setupDividerView() {
+        if (mDividerView == null) {
+            mDividerView = new View(mContext);
+            mDividerView.setId(R.id.divider);
+            mDividerView.setBackgroundColor(getResources().getColor(R.color.cb_divider));
+            LayoutParams layoutParams = new LayoutParams(ViewGroup.LayoutParams.MATCH_PARENT, dp2px(mContext, DIVIDER_HEIGHT_DEFAULT));
+            layoutParams.addRule(RelativeLayout.ALIGN_PARENT_BOTTOM,RelativeLayout.TRUE);
+            mDividerView.setLayoutParams(layoutParams);
+            addView(mDividerView);
+        }
+    }
+
+    private void initAttributes(AttributeSet attrs, int defStyleAttr) {
+        TypedArray array = mContext.obtainStyledAttributes(attrs, R.styleable.TopBar, defStyleAttr, 0);
         mTitleText = array.getString(R.styleable.TopBar_titleText);
         mTitleGravity = array.getInt(R.styleable.TopBar_titleGravity, GRAVITY_TITLE_CENTER);
-        mTitleSizeInPx = array.getDimensionPixelSize(R.styleable.TopBar_titleSize, sp2px(context, TITLE_SIZE_DEFAULT));
+        mTitleSizeInPx = array.getDimensionPixelSize(R.styleable.TopBar_titleSize, sp2px(mContext, TITLE_SIZE_DEFAULT));
         mTitleColor = array.getColor(R.styleable.TopBar_titleColor, getResources().getColor(android.R.color.black));
         mRightMenuIconResId = array.getResourceId(R.styleable.TopBar_rightMenuIcon, RESOURCE_ID_NONE);
         mRightMenuText = array.getString(R.styleable.TopBar_rightMenuText);
         mLeftMenuIconResId = array.getResourceId(R.styleable.TopBar_leftMenuIcon, RESOURCE_ID_NONE);
         mLeftMenuText = array.getString(R.styleable.TopBar_leftMenuText);
-        mMenuSizeInPx = array.getDimensionPixelSize(R.styleable.TopBar_menuSize, dp2px(context, MENU_SIZE_DEFAULT));
+        mMenuSizeInPx = array.getDimensionPixelSize(R.styleable.TopBar_menuSize, dp2px(mContext, MENU_SIZE_DEFAULT));
+        mShowDivider = array.getBoolean(R.styleable.TopBar_showDivider, true);
         array.recycle();
 
-        mMenuHorizontalPaddingInPx = dp2px(context, MENU_HORIZONTAL_PADDING);
+        mMenuHorizontalPaddingInPx = dp2px(mContext, MENU_HORIZONTAL_PADDING);
     }
 
     private void setupMenuView() {
-        Context context = getContext();
         if (!TextUtils.isEmpty(mLeftMenuText) || RESOURCE_ID_NONE != mLeftMenuIconResId) {
             int w = mMenuSizeInPx + mMenuHorizontalPaddingInPx * 2;
             if (mLeftMenuView == null) {
                 if (RESOURCE_ID_NONE != mLeftMenuIconResId) {
-                    mLeftMenuView = new ImageView(context);
+                    mLeftMenuView = new ImageView(mContext);
                     ((ImageView) mLeftMenuView).setImageResource(mLeftMenuIconResId);
                 } else {
                     w = LayoutParams.WRAP_CONTENT;
 
-                    mLeftMenuView = new TextView(context);
+                    mLeftMenuView = new TextView(mContext);
                     TextView textView = (TextView) mLeftMenuView;
                     textView.setText(mLeftMenuText);
                     textView.setTextColor(getTextColor());
@@ -130,9 +149,10 @@ public class TopBar extends RelativeLayout {
             }
             LayoutParams layoutParams = new LayoutParams(w, ViewGroup.LayoutParams.MATCH_PARENT);
             layoutParams.addRule(RelativeLayout.ALIGN_PARENT_LEFT);
+            layoutParams.addRule(RelativeLayout.ABOVE,mDividerView.getId());
             layoutParams.addRule(RelativeLayout.CENTER_VERTICAL);
             mLeftMenuView.setLayoutParams(layoutParams);
-            if (mLeftMenuView != null) {
+            if (mLeftMenuView != null && mLeftMenuView.getParent() != null) {
                 removeView(mLeftMenuView);
             }
             addView(mLeftMenuView);
@@ -150,11 +170,11 @@ public class TopBar extends RelativeLayout {
             int w = mMenuSizeInPx + mMenuHorizontalPaddingInPx * 2;
             if (mRightMenuView == null) {
                 if (RESOURCE_ID_NONE != mRightMenuIconResId) {
-                    mRightMenuView = new ImageView(context);
+                    mRightMenuView = new ImageView(mContext);
                     ((ImageView) mRightMenuView).setImageResource(mRightMenuIconResId);
                 } else {
                     w = LayoutParams.WRAP_CONTENT;
-                    mRightMenuView = new TextView(context);
+                    mRightMenuView = new TextView(mContext);
                     TextView textView = (TextView) mRightMenuView;
                     textView.setText(mRightMenuText);
                     textView.setTextColor(getTextColor());
@@ -164,9 +184,10 @@ public class TopBar extends RelativeLayout {
             }
             LayoutParams layoutParams = new LayoutParams(w, LayoutParams.MATCH_PARENT);
             layoutParams.addRule(RelativeLayout.ALIGN_PARENT_RIGHT);
+            layoutParams.addRule(RelativeLayout.ABOVE,mDividerView.getId());
             layoutParams.addRule(RelativeLayout.CENTER_VERTICAL);
             mRightMenuView.setLayoutParams(layoutParams);
-            if (mRightMenuView != null) {
+            if (mRightMenuView != null && mRightMenuView.getParent() != null) {
                 removeView(mRightMenuView);
             }
             addView(mRightMenuView);
@@ -183,7 +204,7 @@ public class TopBar extends RelativeLayout {
 
     private int getTextColor() {
         if (getBackground() == null) {
-            return getResources().getColor(android.R.color.white);
+            return getResources().getColor(R.color.text_black);
         } else {
             return mTitleColor;
         }
@@ -191,16 +212,18 @@ public class TopBar extends RelativeLayout {
 
     private void setupTitleView() {
         if (mTitleView == null) {
-            mTitleView = new TextView(getContext());
+            mTitleView = new TextView(mContext);
             mTitleView.setText(TextUtils.isEmpty(mTitleText) ? getResources().getString(R.string.app_name) : mTitleText);
         }
         mTitleView.setTextSize(TypedValue.COMPLEX_UNIT_PX, mTitleSizeInPx);
+        mTitleView.setGravity(Gravity.CENTER);
         mTitleView.setTextColor(getTextColor());
         if (getBackground() == null) {
             setBackgroundColor(getResources().getColor(R.color.colorPrimary));
         }
-        LayoutParams layoutParams = new LayoutParams(ViewGroup.LayoutParams.WRAP_CONTENT, ViewGroup.LayoutParams.WRAP_CONTENT);
+        LayoutParams layoutParams = new LayoutParams(LayoutParams.WRAP_CONTENT, LayoutParams.MATCH_PARENT);
         layoutParams.addRule(RelativeLayout.CENTER_VERTICAL);
+        layoutParams.addRule(RelativeLayout.ABOVE,mDividerView.getId());
 
         switch (mTitleGravity) {
             case GRAVITY_TITLE_LEFT:
@@ -216,7 +239,7 @@ public class TopBar extends RelativeLayout {
                 break;
         }
         mTitleView.setLayoutParams(layoutParams);
-        if (mTitleView != null) {
+        if (mTitleView != null && mTitleView.getParent() != null) {
             removeView(mTitleView);
         }
         addView(mTitleView);

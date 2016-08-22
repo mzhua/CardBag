@@ -1,4 +1,4 @@
-package com.wonders.xlab.cardbag.entity;
+package com.wonders.xlab.cardbag.data.entity;
 
 import com.wonders.xlab.cardbag.base.BaseEntity;
 

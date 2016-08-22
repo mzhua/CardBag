@@ -1,6 +1,12 @@
 <?xml version="1.0" encoding="utf-8"?>
 <resources>
-    <color name="colorPrimary">#3F51B5</color>
-    <color name="colorPrimaryDark">#303F9F</color>
+    <color name="colorPrimary">@color/top_bar_background</color>
+    <color name="colorPrimaryDark">#a1a1a1</color>
     <color name="colorAccent">#FF4081</color>
+
+    <color name="imageBackgroundHolder">#c6bebebe</color>
+    <color name="background">@android:color/white</color>
+    <color name="text_black">@android:color/black</color>
+    <color name="top_bar_background">@android:color/white</color>
+    <color name="cb_divider">@android:color/darker_gray</color>
 </resources>
