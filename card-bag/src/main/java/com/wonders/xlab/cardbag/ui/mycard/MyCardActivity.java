@@ -3,12 +3,12 @@ package com.wonders.xlab.cardbag.ui.mycard;
 import android.os.Bundle;
 
 import com.wonders.xlab.cardbag.R;
-import com.wonders.xlab.cardbag.base.BaseActivity;
+import com.wonders.xlab.cardbag.base.MVP1Activity;
 
-public class CBMyCardActivity extends BaseActivity implements CBMyCardContract.View{
+public class MyCardActivity extends MVP1Activity implements MyCardContract.View{
 
-    private CBMyCardContract.Presenter mPresenter;
-    private CBMyCardContract.Model mModel;
+    private MyCardContract.Presenter mPresenter;
+    private MyCardContract.Model mModel;
 
 
     @Override
@@ -21,8 +21,8 @@ public class CBMyCardActivity extends BaseActivity implements CBMyCardContract.V
     protected void onStart() {
         super.onStart();
         if (mPresenter == null) {
-            mModel = new CBMyCardsModel();
-            mPresenter = new CBMyCardPresenter(mModel);
+            mModel = new MyCardsModel();
+            mPresenter = new MyCardPresenter(mModel,this);
         }
         mPresenter.getMyCards();
     }

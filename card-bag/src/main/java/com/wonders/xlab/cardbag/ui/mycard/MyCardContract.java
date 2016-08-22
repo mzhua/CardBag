@@ -6,7 +6,7 @@ import com.wonders.xlab.cardbag.base.BaseContract;
  * Created by hua on 16/8/21.
  */
 
-public interface CBMyCardContract {
+public interface MyCardContract {
     interface View extends BaseContract.View{
         void showMyCards();
     }

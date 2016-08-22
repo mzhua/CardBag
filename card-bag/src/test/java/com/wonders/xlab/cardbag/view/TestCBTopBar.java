@@ -2,7 +2,7 @@ package com.wonders.xlab.cardbag.view;
 
 
 import com.wonders.xlab.cardbag.BuildConfig;
-import com.wonders.xlab.cardbag.ui.home.CBHomeActivity;
+import com.wonders.xlab.cardbag.ui.home.HomeActivity;
 import com.wonders.xlab.cardbag.util.LogUtil;
 
 import org.junit.Before;
@@ -21,7 +21,7 @@ import org.robolectric.shadows.ShadowActivity;
 @RunWith(RobolectricTestRunner.class)
 @Config(sdk = 21,constants = BuildConfig.class)
 public class TestCBTopBar {
-    CBHomeActivity homeActivity;
+    HomeActivity homeActivity;
     ShadowActivity shadowActivity;
 
     @BeforeClass
@@ -31,7 +31,7 @@ public class TestCBTopBar {
 
     @Before
     public void setup() {
-        homeActivity = Robolectric.setupActivity(CBHomeActivity.class);
+        homeActivity = Robolectric.setupActivity(HomeActivity.class);
         shadowActivity = Shadows.shadowOf(homeActivity);
     }
 

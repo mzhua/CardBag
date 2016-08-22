@@ -22,7 +22,7 @@ import java.lang.annotation.RetentionPolicy;
 /**
  * Created by hua on
  */
-public class CBTopBar extends RelativeLayout {
+public class TopBar extends RelativeLayout {
     private final float TITLE_SIZE_DEFAULT = 20;//sp
     private final int RESOURCE_ID_NONE = -1;
     private final float MENU_SIZE_DEFAULT = 16;//dp
@@ -72,15 +72,15 @@ public class CBTopBar extends RelativeLayout {
         void onClick(View view);
     }
 
-    public CBTopBar(Context context) {
+    public TopBar(Context context) {
         this(context, null);
     }
 
-    public CBTopBar(Context context, AttributeSet attrs) {
+    public TopBar(Context context, AttributeSet attrs) {
         this(context, attrs, 0);
     }
 
-    public CBTopBar(Context context, AttributeSet attrs, int defStyleAttr) {
+    public TopBar(Context context, AttributeSet attrs, int defStyleAttr) {
         super(context, attrs, defStyleAttr);
         initAttributes(context, attrs, defStyleAttr);
 
@@ -93,16 +93,16 @@ public class CBTopBar extends RelativeLayout {
     }
 
     private void initAttributes(Context context, AttributeSet attrs, int defStyleAttr) {
-        TypedArray array = context.obtainStyledAttributes(attrs, R.styleable.CBTopBar, defStyleAttr, 0);
-        mTitleText = array.getString(R.styleable.CBTopBar_titleText);
-        mTitleGravity = array.getInt(R.styleable.CBTopBar_titleGravity, GRAVITY_TITLE_CENTER);
-        mTitleSizeInPx = array.getDimensionPixelSize(R.styleable.CBTopBar_titleSize, sp2px(context, TITLE_SIZE_DEFAULT));
-        mTitleColor = array.getColor(R.styleable.CBTopBar_titleColor, getResources().getColor(android.R.color.black));
-        mRightMenuIconResId = array.getResourceId(R.styleable.CBTopBar_rightMenuIcon, RESOURCE_ID_NONE);
-        mRightMenuText = array.getString(R.styleable.CBTopBar_rightMenuText);
-        mLeftMenuIconResId = array.getResourceId(R.styleable.CBTopBar_leftMenuIcon, RESOURCE_ID_NONE);
-        mLeftMenuText = array.getString(R.styleable.CBTopBar_leftMenuText);
-        mMenuSizeInPx = array.getDimensionPixelSize(R.styleable.CBTopBar_menuSize, dp2px(context, MENU_SIZE_DEFAULT));
+        TypedArray array = context.obtainStyledAttributes(attrs, R.styleable.TopBar, defStyleAttr, 0);
+        mTitleText = array.getString(R.styleable.TopBar_titleText);
+        mTitleGravity = array.getInt(R.styleable.TopBar_titleGravity, GRAVITY_TITLE_CENTER);
+        mTitleSizeInPx = array.getDimensionPixelSize(R.styleable.TopBar_titleSize, sp2px(context, TITLE_SIZE_DEFAULT));
+        mTitleColor = array.getColor(R.styleable.TopBar_titleColor, getResources().getColor(android.R.color.black));
+        mRightMenuIconResId = array.getResourceId(R.styleable.TopBar_rightMenuIcon, RESOURCE_ID_NONE);
+        mRightMenuText = array.getString(R.styleable.TopBar_rightMenuText);
+        mLeftMenuIconResId = array.getResourceId(R.styleable.TopBar_leftMenuIcon, RESOURCE_ID_NONE);
+        mLeftMenuText = array.getString(R.styleable.TopBar_leftMenuText);
+        mMenuSizeInPx = array.getDimensionPixelSize(R.styleable.TopBar_menuSize, dp2px(context, MENU_SIZE_DEFAULT));
         array.recycle();
 
         mMenuHorizontalPaddingInPx = dp2px(context, MENU_HORIZONTAL_PADDING);

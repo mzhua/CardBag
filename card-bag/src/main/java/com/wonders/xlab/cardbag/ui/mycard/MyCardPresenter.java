@@ -3,24 +3,25 @@ package com.wonders.xlab.cardbag.ui.mycard;
 import com.wonders.xlab.cardbag.base.BaseContract;
 import com.wonders.xlab.cardbag.base.BasePresenter;
 import com.wonders.xlab.cardbag.base.DefaultException;
+import com.wonders.xlab.cardbag.entity.CardEntity;
 
 /**
  * Created by hua on 16/8/18.
  */
-public class CBMyCardPresenter extends BasePresenter implements CBMyCardContract.Presenter{
-    private CBMyCardContract.Model mModel;
-    private CBMyCardContract.View mView;
+public class MyCardPresenter extends BasePresenter implements MyCardContract.Presenter{
+    private MyCardContract.Model mModel;
+    private MyCardContract.View mView;
 
-    public CBMyCardPresenter(CBMyCardContract.Model model,CBMyCardContract.View view) {
+    public MyCardPresenter(MyCardContract.Model model, MyCardContract.View view) {
         mModel = model;
         mView = view;
     }
 
     @Override
     public void getMyCards() {
-        mModel.getMyCards(new BaseContract.Model.Callback<CBMyCardEntity>() {
+        mModel.getMyCards(new BaseContract.Model.Callback<CardEntity>() {
             @Override
-            public void onSuccess(CBMyCardEntity cbMyCardEntity) {
+            public void onSuccess(CardEntity cardEntity) {
                 mView.showMyCards();
             }
 

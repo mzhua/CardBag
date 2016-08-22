@@ -7,9 +7,9 @@
     android:layout_width="match_parent"
     android:layout_height="match_parent"
     android:orientation="vertical"
-    tools:context=".ui.home.CBHomeActivity">
+    tools:context=".ui.home.HomeActivity">
 
-    <com.wonders.xlab.cardbag.view.CBTopBar
+    <com.wonders.xlab.cardbag.view.TopBar
         android:id="@+id/topbar"
         android:layout_width="match_parent"
         android:layout_height="?android:actionBarSize"

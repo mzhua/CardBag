@@ -6,27 +6,27 @@ import android.view.View;
 import android.widget.Toast;
 
 import com.wonders.xlab.cardbag.R;
-import com.wonders.xlab.cardbag.view.CBTopBar;
+import com.wonders.xlab.cardbag.view.TopBar;
 
-public class CBHomeActivity extends Activity {
+public class HomeActivity extends Activity {
     private static final int REQUEST_CODE_SCAN = 1234;
-    private CBTopBar mCBTopBar;
+    private TopBar mTopBar;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.cb_home_activity);
-        mCBTopBar = (CBTopBar) findViewById(R.id.topbar);
-        mCBTopBar.setOnRightMenuClickListener(new CBTopBar.OnRightMenuClickListener() {
+        mTopBar = (TopBar) findViewById(R.id.topbar);
+        mTopBar.setOnRightMenuClickListener(new TopBar.OnRightMenuClickListener() {
             @Override
             public void onClick(View view) {
-                Toast.makeText(CBHomeActivity.this, "right click", Toast.LENGTH_SHORT).show();
+                Toast.makeText(HomeActivity.this, "right click", Toast.LENGTH_SHORT).show();
             }
         });
-        mCBTopBar.setMenuSize(20);
-        mCBTopBar.setTitleGravity(CBTopBar.GRAVITY_TITLE_LEFT);
-        mCBTopBar.setTitleSize(10);
-        mCBTopBar.setTitleColor(getResources().getColor(R.color.colorAccent));
+        mTopBar.setMenuSize(20);
+        mTopBar.setTitleGravity(TopBar.GRAVITY_TITLE_LEFT);
+        mTopBar.setTitleSize(10);
+        mTopBar.setTitleColor(getResources().getColor(R.color.colorAccent));
     }
 
 

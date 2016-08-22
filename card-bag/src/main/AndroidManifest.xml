@@ -8,10 +8,10 @@
         android:label="@string/app_name"
         android:supportsRtl="true">
         <activity
-            android:name=".ui.home.CBHomeActivity"
+            android:name=".ui.home.HomeActivity"
             android:theme="@style/CBAppTheme.NoActionBar"/>
         <activity
-            android:name=".ui.mycard.CBMyCardActivity"
+            android:name=".ui.mycard.MyCardActivity"
             android:theme="@style/CBAppTheme.NoActionBar"/>
     </application>
 

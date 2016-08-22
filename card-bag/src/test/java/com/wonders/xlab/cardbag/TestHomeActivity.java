@@ -1,10 +1,9 @@
 package com.wonders.xlab.cardbag;
 
-import com.wonders.xlab.cardbag.ui.home.CBHomeActivity;
+import com.wonders.xlab.cardbag.ui.home.HomeActivity;
 import com.wonders.xlab.cardbag.util.LogUtil;
 
 import org.junit.Before;
-import org.junit.Test;
 import org.junit.runner.RunWith;
 import org.robolectric.Robolectric;
 import org.robolectric.RobolectricTestRunner;
@@ -18,13 +17,13 @@ import org.robolectric.shadows.ShadowActivity;
 @RunWith(RobolectricTestRunner.class)
 @Config(constants = BuildConfig.class, sdk = 21)
 public class TestHomeActivity {
-    CBHomeActivity homeActivity;
+    HomeActivity homeActivity;
     ShadowActivity shadowActivity;
 
     @Before
     public void setup() {
         LogUtil.setForTest(true);
-        homeActivity = Robolectric.setupActivity(CBHomeActivity.class);
+        homeActivity = Robolectric.setupActivity(HomeActivity.class);
         shadowActivity = Shadows.shadowOf(homeActivity);
     }
     /*@Test
