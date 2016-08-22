@@ -20,26 +20,37 @@
         android:layout_width="match_parent"
         android:layout_height="wrap_content">
 
-        <RelativeLayout
+        <LinearLayout
             android:layout_width="match_parent"
             android:layout_height="match_parent"
-            android:gravity="center_horizontal">
+            android:gravity="center_horizontal"
+            android:orientation="vertical">
 
-            <com.wonders.xlab.cardbag.view.RatioImageView
-                android:id="@+id/iv_card"
-                android:layout_width="100dp"
+            <LinearLayout
+                android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:scaleType="centerCrop"
-                android:src="@drawable/ic_use_card"
-                app:base="horizontal"
-                app:horizontal_weight="@integer/iv_horizontal_weight"
-                app:vertical_weight="@integer/iv_vertical_weight"/>
+                android:gravity="center"
+                android:orientation="horizontal">
 
-            <EditText
-                android:layout_width="120dp"
-                android:layout_height="wrap_content"
-                android:layout_toRightOf="@+id/iv_card"/>
-        </RelativeLayout>
+                <com.wonders.xlab.cardbag.view.RatioImageView
+                    android:id="@+id/iv_card"
+                    android:layout_width="100dp"
+                    android:layout_height="wrap_content"
+                    android:scaleType="centerCrop"
+                    android:src="@drawable/ic_use_card"
+                    app:base="horizontal"
+                    app:horizontal_weight="@integer/iv_horizontal_weight"
+                    app:vertical_weight="@integer/iv_vertical_weight"/>
+
+                <EditText
+                    android:layout_width="120dp"
+                    android:layout_height="wrap_content"
+                    android:layout_marginLeft="20dp"
+                    android:text="111"
+                    android:layout_toRightOf="@+id/iv_card"/>
+            </LinearLayout>
+
+        </LinearLayout>
 
     </android.support.v4.widget.NestedScrollView>
 </LinearLayout>
