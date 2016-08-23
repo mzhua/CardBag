@@ -1,6 +1,8 @@
 package com.wonders.xlab.cardbag.ui.cardmy;
 
+import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
+import android.support.v7.widget.StaggeredGridLayoutManager;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -34,11 +36,22 @@ public class CardMyListRVAdapter extends BaseRecyclerViewAdapter<CardEntity, Car
         super.setDatas(mBeanList);
     }
 
-    public void scrollTo(RecyclerView recyclerView,String c) {
-        for (CardEntity entity : getBeanList()) {
-            if (Pinyin.toPinyin(entity.getCardName().charAt(0)).toUpperCase().charAt(0) == c.toUpperCase().charAt(0)) {
-                recyclerView.getLayoutManager().scrollToPosition(getBeanList().indexOf(entity));
-                break;
+    public void scrollTo(RecyclerView recyclerView, String c) {
+        RecyclerView.LayoutManager layoutManager = recyclerView.getLayoutManager();
+        if (c.equals("#")) {
+            layoutManager.scrollToPosition(0);
+        } else {
+            for (CardEntity entity : getBeanList()) {
+                if (Pinyin.toPinyin(entity.getCardName().charAt(0)).toUpperCase().charAt(0) == c.toUpperCase().charAt(0)) {
+                    if (layoutManager instanceof LinearLayoutManager) {
+                        ((LinearLayoutManager) layoutManager).scrollToPositionWithOffset(getBeanList().indexOf(entity), 0);
+                    } else if (layoutManager instanceof StaggeredGridLayoutManager) {
+                        ((StaggeredGridLayoutManager) layoutManager).scrollToPositionWithOffset(getBeanList().indexOf(entity), 0);
+                    } else {
+                        layoutManager.scrollToPosition(getBeanList().indexOf(entity));
+                    }
+                    break;
+                }
             }
         }
     }
