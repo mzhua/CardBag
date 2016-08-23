@@ -3,8 +3,10 @@ package com.wonders.xlab.cardbag.base;
 import android.app.Activity;
 import android.app.ProgressDialog;
 import android.content.DialogInterface;
+import android.os.IBinder;
 import android.support.v7.app.AlertDialog;
 import android.text.TextUtils;
+import android.view.inputmethod.InputMethodManager;
 import android.widget.Toast;
 
 /**
@@ -79,6 +81,10 @@ public class BaseActivity extends Activity {
         if (mAlertDialog != null) {
             mAlertDialog.dismiss();
         }
+    }
+
+    protected void hideKeyboardForce(IBinder token) {
+        ((InputMethodManager) getSystemService(INPUT_METHOD_SERVICE)).hideSoftInputFromWindow(token, 0);
     }
 
     @Override

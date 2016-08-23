@@ -10,6 +10,7 @@
     <color name="background">@android:color/white</color>
 
     <color name="textBlack">#212121</color>
+    <color name="textWhite">@android:color/white</color>
     <color name="textGrey">#818181</color>
 
     <color name="topBarBackground">@android:color/white</color>

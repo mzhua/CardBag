@@ -6,6 +6,8 @@
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
+    android:descendantFocusability="beforeDescendants"
+    android:focusableInTouchMode="true"
     android:orientation="vertical"
     tools:context="com.wonders.xlab.cardbag.ui.cardsearch.CardSearchActivity">
 
@@ -13,9 +15,7 @@
         android:id="@+id/top_bar"
         android:layout_width="match_parent"
         android:layout_height="?attr/actionBarSize"
-        android:background="@color/topBarBackground"
         app:menuSize="@dimen/top_bar_menu_size"
-        app:titleColor="@color/textBlack"
         app:titleSize="@dimen/top_bar_title_size"
         app:titleText="搜索卡片"/>
 
@@ -39,14 +39,20 @@
             android:src="@drawable/ic_search"/>
 
         <EditText
+            android:id="@+id/et_card_name"
             android:layout_width="0dp"
             android:layout_height="wrap_content"
             android:layout_marginLeft="8dp"
             android:layout_weight="1"
             android:background="@android:color/transparent"
             android:hint="请输入卡片名称"
+            android:imeOptions="actionSearch"
+            android:inputType="text"
+            android:maxLength="10"
+            android:maxLines="1"
             android:paddingBottom="8dp"
             android:paddingTop="8dp"
+            android:selectAllOnFocus="true"
             android:textColorHint="@color/textGrey"
             android:textSize="@dimen/text_size_normal"/>
 

@@ -12,7 +12,7 @@ import android.support.annotation.IntDef;
 import android.text.TextPaint;
 import android.text.TextUtils;
 import android.util.AttributeSet;
-import android.widget.ImageView;
+import android.view.View;
 
 import com.wonders.xlab.cardbag.R;
 import com.wonders.xlab.cardbag.util.DensityUtil;
@@ -24,7 +24,7 @@ import java.lang.annotation.RetentionPolicy;
  * Created by hua on 16/8/22.
  */
 
-public class RatioImageView extends ImageView {
+public class RatioView extends View {
     private int mHorizontalWeight;
     private int mVerticalWeight;
     private int mBaseLine;
@@ -45,42 +45,43 @@ public class RatioImageView extends ImageView {
 
     @Retention(RetentionPolicy.SOURCE)
     @IntDef({WIDTH, HEIGHT})
-    public @interface Base {}
+    public @interface Base {
+    }
 
-    public RatioImageView(Context context) {
+    public RatioView(Context context) {
         super(context);
         init(context, null);
     }
 
-    public RatioImageView(Context context, AttributeSet attrs) {
+    public RatioView(Context context, AttributeSet attrs) {
         super(context, attrs);
         init(context, attrs);
     }
 
-    public RatioImageView(Context context, AttributeSet attrs, int defStyleAttr) {
+    public RatioView(Context context, AttributeSet attrs, int defStyleAttr) {
         super(context, attrs, defStyleAttr);
         init(context, attrs);
     }
 
     @TargetApi(Build.VERSION_CODES.LOLLIPOP)
-    public RatioImageView(Context context, AttributeSet attrs, int defStyleAttr, int defStyleRes) {
+    public RatioView(Context context, AttributeSet attrs, int defStyleAttr, int defStyleRes) {
         super(context, attrs, defStyleAttr, defStyleRes);
         init(context, attrs);
     }
 
     private void init(Context context, AttributeSet attrs) {
         if (attrs != null) {
-            TypedArray ta = context.obtainStyledAttributes(attrs, R.styleable.RatioImageView);
-            mHorizontalWeight = ta.getInt(R.styleable.RatioImageView_rivHorizontalWeight, 1);
-            mVerticalWeight = ta.getInt(R.styleable.RatioImageView_rivVerticalWeight, 1);
-            mBaseLine = ta.getInt(R.styleable.RatioImageView_rivBaseDirection, WIDTH);
+            TypedArray ta = context.obtainStyledAttributes(attrs, R.styleable.RatioView);
+            mHorizontalWeight = ta.getInt(R.styleable.RatioView_rvHorizontalWeight, 1);
+            mVerticalWeight = ta.getInt(R.styleable.RatioView_rvVerticalWeight, 1);
+            mBaseLine = ta.getInt(R.styleable.RatioView_rvBaseDirection, WIDTH);
 
-            mForegroundColor = ta.getColor(R.styleable.RatioImageView_rivForegroundColor, 0xa9eceaea);
-            mForegroundTextColor = ta.getColor(R.styleable.RatioImageView_rivForegroundTextColor, getResources().getColor(android.R.color.holo_red_dark));
-            mShowForeground = ta.getBoolean(R.styleable.RatioImageView_rivShowForeground, false);
-            mForegroundTextSize = ta.getDimensionPixelSize(R.styleable.RatioImageView_rivForegroundTextSize, DensityUtil.sp2px(context, 8));
-            mForegroundCornerRadius = ta.getDimensionPixelSize(R.styleable.RatioImageView_rivForegroundCornerRadius, DensityUtil.dp2px(context, 8));
-            mForegroundText = ta.getString(R.styleable.RatioImageView_rivForegroundText);
+            mForegroundColor = ta.getColor(R.styleable.RatioView_rvForegroundColor, 0xa9eceaea);
+            mForegroundTextColor = ta.getColor(R.styleable.RatioView_rvForegroundTextColor, getResources().getColor(android.R.color.holo_red_dark));
+            mShowForeground = ta.getBoolean(R.styleable.RatioView_rvShowForeground, false);
+            mForegroundTextSize = ta.getDimensionPixelSize(R.styleable.RatioView_rvForegroundTextSize, DensityUtil.sp2px(context, 8));
+            mForegroundCornerRadius = ta.getDimensionPixelSize(R.styleable.RatioView_rvForegroundCornerRadius, DensityUtil.dp2px(context, 8));
+            mForegroundText = ta.getString(R.styleable.RatioView_rvForegroundText);
 
             ta.recycle();
 
@@ -170,19 +171,25 @@ public class RatioImageView extends ImageView {
         setMeasuredDimension(desiredWidth, desiredHeight);
     }
 
-    /** 设定View的宽度,此时View的基准会变为{@link #WIDTH} */
+    /**
+     * 设定View的宽度,此时View的基准会变为{@link #WIDTH}
+     */
     public void setWidth(int width) {
         mSpecifiedWidth = width;
         setBase(WIDTH);
     }
 
-    /** 设定View的高度,此时View的基准会变为{@link #HEIGHT} */
+    /**
+     * 设定View的高度,此时View的基准会变为{@link #HEIGHT}
+     */
     public void setHeight(int height) {
         mSpecifiedHeight = height;
         setBase(HEIGHT);
     }
 
-    /** 设置按比例布局的基准线 */
+    /**
+     * 设置按比例布局的基准线
+     */
     public void setBase(@Base int base) {
         mBaseLine = base;
         requestLayout();

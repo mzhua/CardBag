@@ -98,6 +98,9 @@ public class TopBar extends RelativeLayout {
         setupDividerView();
         setupMenuView();
         setupTitleView();
+        if (getBackground() == null) {
+            setBackgroundColor(getResources().getColor(android.R.color.white));
+        }
     }
 
     private void setupDividerView() {
@@ -247,9 +250,7 @@ public class TopBar extends RelativeLayout {
         mTitleView.setTextSize(TypedValue.COMPLEX_UNIT_PX, mTitleSizeInPx);
         mTitleView.setGravity(Gravity.CENTER);
         mTitleView.setTextColor(getTextColor());
-        if (getBackground() == null) {
-            setBackgroundColor(getResources().getColor(R.color.colorPrimary));
-        }
+
         LayoutParams layoutParams = new LayoutParams(LayoutParams.WRAP_CONTENT, LayoutParams.MATCH_PARENT);
         layoutParams.addRule(RelativeLayout.CENTER_VERTICAL);
         if (mShowDivider) {
@@ -289,6 +290,12 @@ public class TopBar extends RelativeLayout {
     public void setTitleColor(@ColorInt int titleColor) {
         this.mTitleColor = titleColor;
         setupTitleView();
+    }
+
+    public void setTitle(String title) {
+        if (this.mTitleView != null && !TextUtils.isEmpty(title)) {
+            this.mTitleView.setText(title);
+        }
     }
 
     public void setMenuSize(int menuSize) {

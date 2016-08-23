@@ -1,0 +1,24 @@
+<?xml version="1.0" encoding="utf-8"?>
+<FrameLayout xmlns:android="http://schemas.android.com/apk/res/android"
+             xmlns:app="http://schemas.android.com/apk/res-auto"
+             android:layout_width="match_parent"
+             android:layout_height="wrap_content"
+             android:layout_margin="@dimen/app_root_layout_padding"
+             android:clickable="true"
+             android:background="@drawable/round_corner_bg"
+             android:foreground="?android:attr/selectableItemBackground">
+
+    <com.wonders.xlab.cardbag.widget.RatioView
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        app:rvBaseDirection="horizontal"
+        app:rvHorizontalWeight="@integer/iv_horizontal_weight"
+        app:rvVerticalWeight="@integer/iv_vertical_weight"/>
+
+    <TextView
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:gravity="center"
+        android:text="@string/card_not_found_notice"
+        android:textColor="@color/textBlack"/>
+</FrameLayout>

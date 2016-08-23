@@ -9,8 +9,7 @@ import java.util.Collections;
 public class BasePresenter implements BaseContract.Presenter {
     private ArrayList<BaseContract.Model> mModels;
 
-
-    public void attachModels(BaseContract.Model... models) {
+    protected void attachModels(BaseContract.Model... models) {
         if (mModels == null) {
             mModels = new ArrayList<>();
         }

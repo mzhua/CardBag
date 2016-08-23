@@ -1,29 +1,19 @@
 package com.wonders.xlab.cardbag.base;
 
-import java.util.ArrayList;
-import java.util.Collections;
-
 /**
  * Created by hua on 16/8/19.
  */
-public class MVPFragment extends BaseFragment {
-    private ArrayList<BasePresenter> mPresenters;
+public abstract class MVPFragment extends BaseFragment {
 
-    protected <P extends BasePresenter> void attachPresenter(P... presenters) {
-        if (null == mPresenters) {
-            mPresenters = new ArrayList<>();
-        }
-        Collections.addAll(mPresenters, presenters);
-    }
+    protected abstract BaseContract.Presenter getPresenter();
 
     @Override
     public void onDestroy() {
         super.onDestroy();
-        if (mPresenters != null) {
-            for (BasePresenter presenter : mPresenters) {
-                presenter.onDestroy();
-                presenter = null;
-            }
+        BaseContract.Presenter presenter = getPresenter();
+        if (presenter != null) {
+            presenter.onDestroy();
+            presenter = null;
         }
     }
 }

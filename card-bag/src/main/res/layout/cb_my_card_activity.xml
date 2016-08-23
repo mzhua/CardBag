@@ -14,11 +14,9 @@
         android:id="@+id/top_bar"
         android:layout_width="match_parent"
         android:layout_height="?attr/actionBarSize"
-        android:background="@color/topBarBackground"
         app:menuSize="@dimen/top_bar_menu_size"
         app:rightMenuIcon="@drawable/ic_menu_list"
         app:rightMenuText="展示方式"
-        app:titleColor="@color/textBlack"
         app:titleSize="@dimen/top_bar_title_size"
         app:titleText="我的卡片"/>
 

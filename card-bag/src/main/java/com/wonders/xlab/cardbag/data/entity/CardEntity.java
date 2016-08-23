@@ -7,6 +7,7 @@ import com.wonders.xlab.cardbag.base.BaseEntity;
  */
 
 public class CardEntity extends BaseEntity {
+    private String id;
     private String mImgUrl;
     private String mCardName;
 
@@ -24,5 +25,13 @@ public class CardEntity extends BaseEntity {
 
     public void setCardName(String cardName) {
         mCardName = cardName;
+    }
+
+    public String getId() {
+        return id;
+    }
+
+    public void setId(String id) {
+        this.id = id;
     }
 }

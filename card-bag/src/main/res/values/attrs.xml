@@ -23,12 +23,41 @@
         <attr name="rvp_singlePageFling" format="boolean" />
     </declare-styleable>
 
-    <declare-styleable name="RatioImageView">
-        <attr name="vertical_weight" format="integer" />
-        <attr name="horizontal_weight" format="integer" />
-        <attr name="base" format="enum">
+    <declare-styleable name="RatioView">
+        <attr name="rvVerticalWeight" format="integer" />
+        <attr name="rvHorizontalWeight" format="integer" />
+        <attr name="rvBaseDirection" format="enum">
             <enum name="horizontal" value="0" />
             <enum name="vertical" value="1" />
         </attr>
+        <attr name="rvForegroundColor" format="color"/>
+        <attr name="rvShowForeground" format="boolean"/>
+        <attr name="rvForegroundText" format="string"/>
+        <attr name="rvForegroundTextSize" format="dimension"/>
+        <attr name="rvForegroundTextColor" format="color"/>
+        <attr name="rvForegroundCornerRadius" format="dimension"/>
+    </declare-styleable>
+
+    <declare-styleable name="RatioImageView">
+        <attr name="rivVerticalWeight" format="integer" />
+        <attr name="rivHorizontalWeight" format="integer" />
+        <attr name="rivBaseDirection" format="enum">
+            <enum name="horizontal" value="0" />
+            <enum name="vertical" value="1" />
+        </attr>
+        <attr name="rivForegroundColor" format="color"/>
+        <attr name="rivShowForeground" format="boolean"/>
+        <attr name="rivForegroundText" format="string"/>
+        <attr name="rivForegroundTextSize" format="dimension"/>
+        <attr name="rivForegroundTextColor" format="color"/>
+        <attr name="rivForegroundCornerRadius" format="dimension"/>
+    </declare-styleable>
+
+    <declare-styleable name="ForegroundImageView">
+        <attr name="fivForegroundColor" format="color"/>
+        <attr name="fivShowForeground" format="boolean"/>
+        <attr name="fivForegroundText" format="string"/>
+        <attr name="fivForegroundTextSize" format="dimension"/>
+        <attr name="fivForegroundTextColor" format="color"/>
     </declare-styleable>
 </resources>

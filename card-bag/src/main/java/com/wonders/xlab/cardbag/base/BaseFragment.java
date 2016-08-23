@@ -3,9 +3,13 @@ package com.wonders.xlab.cardbag.base;
 import android.app.Fragment;
 import android.app.ProgressDialog;
 import android.content.DialogInterface;
+import android.os.IBinder;
 import android.support.v7.app.AlertDialog;
 import android.text.TextUtils;
+import android.view.inputmethod.InputMethodManager;
 import android.widget.Toast;
+
+import static android.content.Context.INPUT_METHOD_SERVICE;
 
 /**
  * Created by hua on 16/8/19.
@@ -69,6 +73,10 @@ public class BaseFragment extends Fragment {
         if (mAlertDialog != null) {
             mAlertDialog.dismiss();
         }
+    }
+
+    protected void hideKeyboardForce(IBinder token) {
+        ((InputMethodManager) getActivity().getSystemService(INPUT_METHOD_SERVICE)).hideSoftInputFromWindow(token, 0);
     }
 
     @Override
