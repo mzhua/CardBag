@@ -1,4 +1,4 @@
-package com.wonders.xlab.cardbag.view;
+package com.wonders.xlab.cardbag.widget;
 
 /**
  * Created by hua on 16/8/22.

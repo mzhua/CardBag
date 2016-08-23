@@ -8,7 +8,7 @@ import android.widget.Toast;
 
 import com.wonders.xlab.cardbag.R;
 import com.wonders.xlab.cardbag.ui.cardmy.CardMyActivity;
-import com.wonders.xlab.cardbag.view.TopBar;
+import com.wonders.xlab.cardbag.widget.TopBar;
 
 public class HomeActivity extends Activity {
     private static final int REQUEST_CODE_SCAN = 1234;

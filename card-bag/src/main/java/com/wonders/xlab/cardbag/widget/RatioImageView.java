@@ -1,4 +1,4 @@
-package com.wonders.xlab.cardbag.view;
+package com.wonders.xlab.cardbag.widget;
 
 import android.annotation.TargetApi;
 import android.content.Context;

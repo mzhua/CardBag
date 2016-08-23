@@ -13,5 +13,5 @@
     <color name="textGrey">#818181</color>
 
     <color name="topBarBackground">@android:color/white</color>
-    <color name="cbDivider">@android:color/darker_gray</color>
+    <color name="cbDivider">#EBEBEB</color>
 </resources>

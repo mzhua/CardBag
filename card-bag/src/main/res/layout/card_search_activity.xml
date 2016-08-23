@@ -9,7 +9,7 @@
     android:orientation="vertical"
     tools:context="com.wonders.xlab.cardbag.ui.cardsearch.CardSearchActivity">
 
-    <com.wonders.xlab.cardbag.view.TopBar
+    <com.wonders.xlab.cardbag.widget.TopBar
         android:id="@+id/top_bar"
         android:layout_width="match_parent"
         android:layout_height="?attr/actionBarSize"

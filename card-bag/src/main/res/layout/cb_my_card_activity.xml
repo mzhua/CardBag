@@ -7,9 +7,10 @@
     android:layout_height="match_parent"
     android:background="@color/background"
     android:fitsSystemWindows="true"
+    android:animateLayoutChanges="true"
     tools:context="com.wonders.xlab.cardbag.ui.cardmy.CardMyActivity">
 
-    <com.wonders.xlab.cardbag.view.TopBar
+    <com.wonders.xlab.cardbag.widget.TopBar
         android:id="@+id/top_bar"
         android:layout_width="match_parent"
         android:layout_height="?attr/actionBarSize"
@@ -27,6 +28,13 @@
         android:layout_height="match_parent"
         android:layout_below="@+id/top_bar"/>
 
+    <android.support.v7.widget.RecyclerView
+        android:id="@+id/recycler_view_list"
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:layout_below="@+id/top_bar"
+        android:visibility="gone"/>
+
     <ImageView
         android:id="@+id/iv_add"
         android:layout_width="wrap_content"
@@ -38,7 +46,7 @@
         android:clickable="true"
         android:src="@drawable/ic_fab_add"/>
 
-    <com.wonders.xlab.cardbag.view.SideBar
+    <com.wonders.xlab.cardbag.widget.SideBar
         android:id="@+id/side_bar"
         android:layout_width="wrap_content"
         android:layout_height="match_parent"

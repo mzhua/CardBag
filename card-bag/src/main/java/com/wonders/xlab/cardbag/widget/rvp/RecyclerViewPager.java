@@ -1,4 +1,4 @@
-package com.wonders.xlab.cardbag.view.rvp;
+package com.wonders.xlab.cardbag.widget.rvp;
 
 import android.content.Context;
 import android.content.res.TypedArray;

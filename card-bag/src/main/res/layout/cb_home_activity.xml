@@ -10,7 +10,7 @@
     android:fitsSystemWindows="true"
     tools:context=".ui.home.HomeActivity">
 
-    <com.wonders.xlab.cardbag.view.TopBar
+    <com.wonders.xlab.cardbag.widget.TopBar
         android:id="@+id/top_bar"
         android:layout_width="match_parent"
         android:layout_height="?android:actionBarSize"

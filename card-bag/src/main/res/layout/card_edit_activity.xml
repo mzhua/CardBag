@@ -9,7 +9,7 @@
               android:orientation="vertical"
               tools:context="com.wonders.xlab.cardbag.ui.cardedit.CardEditActivity">
 
-    <com.wonders.xlab.cardbag.view.TopBar
+    <com.wonders.xlab.cardbag.widget.TopBar
         android:id="@+id/top_bar"
         android:layout_width="match_parent"
         android:layout_height="?attr/actionBarSize"
@@ -34,7 +34,7 @@
                 android:paddingRight="16dp"
                 android:orientation="horizontal">
 
-                <com.wonders.xlab.cardbag.view.RatioImageView
+                <com.wonders.xlab.cardbag.widget.RatioImageView
                     android:id="@+id/iv_card"
                     android:layout_width="100dp"
                     android:layout_height="wrap_content"

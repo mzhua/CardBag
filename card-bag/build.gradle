@@ -2,8 +2,8 @@ apply plugin: 'com.android.library'
 apply plugin: 'com.novoda.bintray-release'
 
 android {
-    compileSdkVersion 24
-    buildToolsVersion "24.0.1"
+    compileSdkVersion 23
+    buildToolsVersion "23.0.3"
 
     defaultConfig {
         minSdkVersion 15
@@ -27,21 +27,23 @@ dependencies {
     androidTestCompile('com.android.support.test.espresso:espresso-core:2.2.2', {
         exclude group: 'com.android.support', module: 'support-annotations'
     })
-    compile 'com.android.support:appcompat-v7:24.2.0'
-    compile 'com.android.support:recyclerview-v7:24.2.0'
+    compile 'com.android.support:appcompat-v7:23.4.0'
+    compile 'com.android.support:recyclerview-v7:23.4.0'
     testCompile 'junit:junit:4.12'
     testCompile 'org.mockito:mockito-core:1.10.19'
     testCompile 'org.robolectric:robolectric:3.1.2'
     compile 'com.google.code.gson:gson:2.7'
     compile 'com.squareup.okhttp3:okhttp:3.4.1'
+    compile 'com.squareup.picasso:picasso:2.5.2'
     compile 'com.yalantis:ucrop:2.1.2'
+    compile 'com.github.promeg:tinypinyin:1.0.0'
+    // ~80KB
     //    compile 'top.zibin:Luban:1.0.8'
     //    compile 'com.github.lovetuzitong:MultiImageSelector:1.2'
     //    compile 'com.wonders.xlab.xcontacts:x-contacts:1.0.1'
     //    compile 'com.wonders.xlab.qrscanner:qr-scanner:1.0.2'
     compile project(':qr-scanner')
     compile project(':x-contacts')
-    compile 'com.squareup.picasso:picasso:2.5.2'
 }
 
 task clearJar(type: Delete) {

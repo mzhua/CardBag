@@ -20,7 +20,7 @@ public class CardMyIconRVAdapter extends BaseRecyclerViewAdapter<CardEntity,Card
 
     @Override
     public ItemViewHolder onCreateViewHolder(ViewGroup parent, int viewType) {
-        View view = LayoutInflater.from(parent.getContext()).inflate(R.layout.cb_my_card_icon_rv_item, null);
+        View view = LayoutInflater.from(parent.getContext()).inflate(R.layout.cb_my_card_icon_rv_item, parent,false);
         return new ItemViewHolder(view);
     }
 
