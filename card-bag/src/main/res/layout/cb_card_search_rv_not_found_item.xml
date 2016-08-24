@@ -4,8 +4,8 @@
              android:layout_width="match_parent"
              android:layout_height="wrap_content"
              android:layout_margin="@dimen/app_root_layout_padding"
+             android:background="@drawable/round_corner_foreground_cover_bg"
              android:clickable="true"
-             android:background="@drawable/round_corner_bg"
              android:foreground="?android:attr/selectableItemBackground">
 
     <com.wonders.xlab.cardbag.widget.RatioView
@@ -20,5 +20,5 @@
         android:layout_height="match_parent"
         android:gravity="center"
         android:text="@string/card_not_found_notice"
-        android:textColor="@color/textBlack"/>
+        android:textColor="@color/textWhite"/>
 </FrameLayout>

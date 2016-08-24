@@ -77,15 +77,17 @@ public class RatioView extends View {
             mBaseLine = ta.getInt(R.styleable.RatioView_rvBaseDirection, WIDTH);
 
             mForegroundColor = ta.getColor(R.styleable.RatioView_rvForegroundColor, 0xa9eceaea);
-            mForegroundTextColor = ta.getColor(R.styleable.RatioView_rvForegroundTextColor, getResources().getColor(android.R.color.holo_red_dark));
+            mForegroundTextColor = ta.getColor(R.styleable.RatioView_rvForegroundTextColor, getResources().getColor(android.R.color.white));
             mShowForeground = ta.getBoolean(R.styleable.RatioView_rvShowForeground, false);
-            mForegroundTextSize = ta.getDimensionPixelSize(R.styleable.RatioView_rvForegroundTextSize, DensityUtil.sp2px(context, 8));
+            mForegroundTextSize = ta.getDimensionPixelSize(R.styleable.RatioView_rvForegroundTextSize, DensityUtil.sp2px(context, 14));
             mForegroundCornerRadius = ta.getDimensionPixelSize(R.styleable.RatioView_rvForegroundCornerRadius, DensityUtil.dp2px(context, 8));
             mForegroundText = ta.getString(R.styleable.RatioView_rvForegroundText);
 
             ta.recycle();
 
             if (!TextUtils.isEmpty(mForegroundText)) {
+                mShowForeground = true;
+
                 textPaint = new TextPaint();
                 textPaint.setAntiAlias(true);
                 textPaint.setTextSize(mForegroundTextSize);
@@ -100,22 +102,22 @@ public class RatioView extends View {
     private void setupForegroundPaint() {
         if (mShowForeground && mForegroundPaint == null) {
             mForegroundPaint = new Paint();
-            textPaint.setAntiAlias(true);
+            mForegroundPaint.setAntiAlias(true);
             mForegroundPaint.setStyle(Paint.Style.FILL);
             mForegroundPaint.setColor(mForegroundColor);
         }
     }
 
-    private RectF rect;
+    private RectF mRectF;
 
     @Override
     protected void onDraw(Canvas canvas) {
         super.onDraw(canvas);
         if (mShowForeground) {
-            if (null == rect || rect.isEmpty()) {
-                rect = new RectF(getLeft(), getTop(), getRight(), getBottom());
+            if (null == mRectF || mRectF.isEmpty()) {
+                mRectF = new RectF(0, 0, getWidth(), getHeight());
             }
-            canvas.drawRoundRect(rect, mForegroundCornerRadius, mForegroundCornerRadius, mForegroundPaint);
+            canvas.drawRoundRect(mRectF, mForegroundCornerRadius, mForegroundCornerRadius, mForegroundPaint);
             if (!TextUtils.isEmpty(mForegroundText)) {
                 int xPos = (canvas.getWidth() / 2);
                 int yPos = (int) ((canvas.getHeight() / 2) - ((textPaint.descent() + textPaint.ascent()) / 2));

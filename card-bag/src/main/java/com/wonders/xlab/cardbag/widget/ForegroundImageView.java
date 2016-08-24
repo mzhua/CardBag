@@ -5,13 +5,14 @@ import android.content.res.TypedArray;
 import android.graphics.Canvas;
 import android.graphics.Paint;
 import android.graphics.Rect;
+import android.graphics.RectF;
 import android.text.TextPaint;
 import android.text.TextUtils;
 import android.util.AttributeSet;
-import android.util.TypedValue;
 import android.widget.ImageView;
 
 import com.wonders.xlab.cardbag.R;
+import com.wonders.xlab.cardbag.util.DensityUtil;
 
 /**
  * Created by hua on 16/4/13.
@@ -23,6 +24,11 @@ public class ForegroundImageView extends ImageView {
     private int mForegroundTextColor;
     private String mForegroundText;
     private boolean mShowForeground;
+
+    private int mForegroundCornerRadius;
+
+    private TextPaint textPaint;
+    private Paint mForegroundPaint;
 
     public ForegroundImageView(Context context) {
         this(context, null);
@@ -36,13 +42,16 @@ public class ForegroundImageView extends ImageView {
         super(context, attrs, defStyleAttr);
         TypedArray array = context.obtainStyledAttributes(attrs, R.styleable.ForegroundImageView);
         mForegroundColor = array.getColor(R.styleable.ForegroundImageView_fivForegroundColor, 0xa9eceaea);
-        mForegroundTextColor = array.getColor(R.styleable.ForegroundImageView_fivForegroundTextColor, getResources().getColor(android.R.color.holo_red_dark));
+        mForegroundTextColor = array.getColor(R.styleable.ForegroundImageView_fivForegroundTextColor, getResources().getColor(android.R.color.white));
         mShowForeground = array.getBoolean(R.styleable.ForegroundImageView_fivShowForeground, false);
-        mForegroundTextSize = array.getDimensionPixelSize(R.styleable.ForegroundImageView_fivForegroundTextSize, sp2px(getContext(), 10));
+        mForegroundTextSize = array.getDimensionPixelSize(R.styleable.ForegroundImageView_fivForegroundTextSize, DensityUtil.sp2px(getContext(), 14));
+        mForegroundCornerRadius = array.getDimensionPixelSize(R.styleable.RatioView_rvForegroundCornerRadius, DensityUtil.dp2px(context, 8));
         mForegroundText = array.getString(R.styleable.ForegroundImageView_fivForegroundText);
         array.recycle();
 
         if (!TextUtils.isEmpty(mForegroundText)) {
+            mShowForeground = true;
+
             textPaint = new TextPaint();
             textPaint.setAntiAlias(true);
             textPaint.setTextSize(mForegroundTextSize);
@@ -50,15 +59,28 @@ public class ForegroundImageView extends ImageView {
             textPaint.setStyle(Paint.Style.FILL);
             textPaint.setColor(mForegroundTextColor);
         }
+        setupForegroundPaint();
     }
 
-    private TextPaint textPaint;
+    private void setupForegroundPaint() {
+        if (mShowForeground && mForegroundPaint == null) {
+            mForegroundPaint = new Paint();
+            mForegroundPaint.setAntiAlias(true);
+            mForegroundPaint.setStyle(Paint.Style.FILL);
+            mForegroundPaint.setColor(mForegroundColor);
+        }
+    }
+
+    private RectF mRectF;
 
     @Override
     protected void onDraw(Canvas canvas) {
         super.onDraw(canvas);
         if (mShowForeground) {
-            canvas.drawColor(mForegroundColor);
+            if (null == mRectF || mRectF.isEmpty()) {
+                mRectF = new RectF(0, 0, getWidth(), getHeight());
+            }
+            canvas.drawRoundRect(mRectF, mForegroundCornerRadius, mForegroundCornerRadius, mForegroundPaint);
             if (!TextUtils.isEmpty(mForegroundText)) {
                 int xPos = (canvas.getWidth() / 2);
                 int yPos = (int) ((canvas.getHeight() / 2) - ((textPaint.descent() +
@@ -91,8 +113,4 @@ public class ForegroundImageView extends ImageView {
         invalidate();
     }
 
-    public static int sp2px(Context context, float spVal) {
-        return (int) TypedValue.applyDimension(TypedValue.COMPLEX_UNIT_SP,
-                spVal, context.getResources().getDisplayMetrics());
-    }
 }

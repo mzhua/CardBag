@@ -12,7 +12,7 @@ import android.widget.Toast;
 /**
  * Created by hua on 16/8/19.
  */
-public class BaseActivity extends Activity {
+public class BaseActivity extends Activity implements BaseContract.View{
     private ProgressDialog mProgressDialog;
     private AlertDialog.Builder mBuilder;
     private AlertDialog mAlertDialog;
@@ -99,5 +99,10 @@ public class BaseActivity extends Activity {
             mToast.cancel();
             mToast = null;
         }
+    }
+
+    @Override
+    public void showToastMessage(String message) {
+        showShortToast(message);
     }
 }

@@ -3,7 +3,6 @@ package com.wonders.xlab.qrscanner;
 import android.Manifest;
 import android.content.Intent;
 import android.content.pm.PackageManager;
-import android.graphics.Bitmap;
 import android.os.Build;
 import android.os.Bundle;
 import android.support.annotation.NonNull;
@@ -80,7 +79,6 @@ public class XQrScannerActivity extends AppCompatActivity implements QRCodeView.
 
     @Override
     public void onScanQRCodeSuccess(String result) {
-        Toast.makeText(this, result, Toast.LENGTH_SHORT).show();
         mZXingView.startSpot();
         try {
             Intent data = new Intent();

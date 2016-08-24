@@ -14,7 +14,7 @@ import static android.content.Context.INPUT_METHOD_SERVICE;
 /**
  * Created by hua on 16/8/19.
  */
-public class BaseFragment extends Fragment {
+public class BaseFragment extends Fragment implements BaseContract.View{
     private ProgressDialog mProgressDialog;
     private AlertDialog.Builder mBuilder;
     private AlertDialog mAlertDialog;
@@ -87,5 +87,10 @@ public class BaseFragment extends Fragment {
         mBuilder = null;
         mAlertDialog = null;
         mProgressDialog = null;
+    }
+
+    @Override
+    public void showToastMessage(String message) {
+        showShortToast(message);
     }
 }

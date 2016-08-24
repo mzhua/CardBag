@@ -13,9 +13,9 @@
         android:id="@+id/top_bar"
         android:layout_width="match_parent"
         android:layout_height="?attr/actionBarSize"
-        app:rightMenuText="@string/menu_text_card_edit"
+        app:rightMenuText="@string/menu_text_card_edit_finish"
         app:showDivider="false"
-        app:titleText="添加卡片"/>
+        app:titleText="@string/title_card_edit_add"/>
 
     <android.support.v4.widget.NestedScrollView
         android:layout_width="match_parent"
@@ -24,25 +24,26 @@
         <LinearLayout
             android:layout_width="match_parent"
             android:layout_height="match_parent"
+            android:clipToPadding="true"
             android:gravity="center_horizontal"
-            android:orientation="vertical">
+            android:orientation="vertical"
+            android:padding="@dimen/activity_horizontal_margin">
 
             <LinearLayout
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:layout_marginBottom="36dp"
-                android:layout_marginTop="36dp"
+                android:layout_marginTop="20dp"
                 android:gravity="center_vertical"
                 android:orientation="horizontal"
-                android:paddingLeft="30dp"
-                android:paddingRight="16dp">
+                android:paddingLeft="10dp">
 
                 <com.wonders.xlab.cardbag.widget.RatioImageView
                     android:id="@+id/iv_card"
                     android:layout_width="0dp"
-                    android:layout_weight="2"
                     android:layout_height="wrap_content"
-                    android:background="@drawable/round_corner_bg"
+                    android:layout_weight="2"
+                    android:background="@drawable/round_corner_app_grey_bg"
                     android:scaleType="centerCrop"
                     app:rivBaseDirection="horizontal"
                     app:rivHorizontalWeight="@integer/iv_horizontal_weight"
@@ -55,10 +56,10 @@
                     android:layout_height="wrap_content"
                     android:layout_marginLeft="20dp"
                     android:layout_weight="3"
-                    android:background="@drawable/round_corner_bg"
+                    android:background="@drawable/round_corner_app_grey_bg"
+                    android:hint="@string/please_input_card_name_hint"
                     android:maxLength="30"
                     android:maxLines="1"
-                    android:hint="@string/please_input_card_name_hint"
                     android:paddingBottom="8dp"
                     android:paddingLeft="16dp"
                     android:paddingRight="16dp"
@@ -68,49 +69,52 @@
             <View
                 android:layout_width="match_parent"
                 android:layout_height="1dp"
-                android:layout_marginLeft="@dimen/activity_horizontal_margin"
-                android:layout_marginRight="@dimen/activity_horizontal_margin"
                 android:background="@color/cbDivider"/>
 
             <com.wonders.xlab.cardbag.widget.RatioImageView
                 android:id="@+id/iv_bar_code"
                 android:layout_width="match_parent"
-                android:layout_marginLeft="48dp"
-                android:layout_marginRight="48dp"
                 android:layout_height="wrap_content"
+                android:layout_marginLeft="30dp"
+                android:layout_marginRight="30dp"
                 android:layout_marginTop="36dp"
-                android:background="@drawable/round_corner_bg"
                 android:scaleType="centerCrop"
+                android:onClick="scanBarCode"
                 app:rivBaseDirection="horizontal"
-                app:rivHorizontalWeight="@integer/iv_horizontal_weight"
-                app:rivVerticalWeight="@integer/iv_vertical_weight"/>
+                app:rivForegroundCornerRadius="0dp"
+                app:rivForegroundColor="@color/foreground_cover"
+                app:rivForegroundText="@string/card_edit_cover_modify_bar_code"
+                app:rivForegroundTextSize="@dimen/text_size_large"
+                app:rivHorizontalWeight="3"
+                app:rivVerticalWeight="1"/>
 
             <TextView
                 android:id="@+id/tv_bar_code"
                 style="@style/LargeSizeBlackColorTextView"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:layout_marginTop="36dp"
-                android:maxLines="2"
-                android:hint="@string/bar_code_place_holder"/>
+                android:layout_marginTop="10dp"
+                android:hint="@string/bar_code_place_holder"
+                android:maxLines="2"/>
 
             <LinearLayout
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:layout_marginTop="36dp"
                 android:gravity="center"
-                android:orientation="horizontal"
-                android:paddingLeft="@dimen/activity_horizontal_margin"
-                android:paddingRight="@dimen/activity_horizontal_margin">
+                android:orientation="horizontal">
 
                 <com.wonders.xlab.cardbag.widget.RatioImageView
                     android:id="@+id/iv_card_front"
                     android:layout_width="0dp"
                     android:layout_height="wrap_content"
                     android:layout_weight="1"
-                    android:background="@drawable/round_corner_bg"
                     android:scaleType="centerCrop"
+                    android:onClick="shotCardFront"
                     app:rivBaseDirection="horizontal"
+                    app:rivForegroundColor="@color/foreground_cover"
+                    app:rivForegroundText="@string/card_edit_cover_modify_card_front"
+                    app:rivForegroundTextSize="@dimen/text_size_large"
                     app:rivHorizontalWeight="@integer/iv_horizontal_weight"
                     app:rivVerticalWeight="@integer/iv_vertical_weight"/>
 
@@ -120,9 +124,12 @@
                     android:layout_height="wrap_content"
                     android:layout_marginLeft="24dp"
                     android:layout_weight="1"
-                    android:background="@drawable/round_corner_bg"
+                    android:onClick="shotCardBack"
                     android:scaleType="centerCrop"
                     app:rivBaseDirection="horizontal"
+                    app:rivForegroundColor="@color/foreground_cover"
+                    app:rivForegroundText="@string/card_edit_cover_modify_card_back"
+                    app:rivForegroundTextSize="@dimen/text_size_large"
                     app:rivHorizontalWeight="@integer/iv_horizontal_weight"
                     app:rivVerticalWeight="@integer/iv_vertical_weight"/>
 

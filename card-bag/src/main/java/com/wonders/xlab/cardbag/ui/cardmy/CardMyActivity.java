@@ -126,9 +126,4 @@ public class CardMyActivity extends MVPActivity implements CardMyContract.View {
             mListRecyclerView.setVisibility(View.VISIBLE);
         }
     }
-
-    @Override
-    public void showToastMessage(String message) {
-        showShortToast(message);
-    }
 }

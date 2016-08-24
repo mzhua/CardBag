@@ -5,6 +5,7 @@ import android.os.Bundle;
 import android.support.v7.widget.DefaultItemAnimator;
 import android.support.v7.widget.GridLayoutManager;
 import android.support.v7.widget.RecyclerView;
+import android.text.TextUtils;
 import android.view.KeyEvent;
 import android.view.inputmethod.EditorInfo;
 import android.widget.EditText;
@@ -19,7 +20,7 @@ import com.wonders.xlab.cardbag.ui.cardedit.CardEditActivity;
 
 import java.util.List;
 
-public class CardSearchActivity extends MVPActivity implements CardSearchContract.View{
+public class CardSearchActivity extends MVPActivity implements CardSearchContract.View {
     private final int REQUEST_CODE_CARD_EDIT = 1234;
 
     private RecyclerView mRecyclerView;
@@ -37,7 +38,7 @@ public class CardSearchActivity extends MVPActivity implements CardSearchContrac
         mEtCardName = (EditText) findViewById(R.id.et_card_name);
 
         mRecyclerView.setItemAnimator(new DefaultItemAnimator());
-        mRecyclerView.setLayoutManager(new GridLayoutManager(this,2,GridLayoutManager.VERTICAL,false));
+        mRecyclerView.setLayoutManager(new GridLayoutManager(this, 2, GridLayoutManager.VERTICAL, false));
 
         mPresenter = new CardSearchPresenter(this);
 
@@ -68,7 +69,7 @@ public class CardSearchActivity extends MVPActivity implements CardSearchContrac
                 public void onItemClick(int position) {
                     Intent intent = new Intent(CardSearchActivity.this, CardEditActivity.class);
                     CardEntity bean = mCardSearchRVAdapter.getBean(position);
-                    intent.putExtra("cardName", bean.getCardName());
+                    intent.putExtra("cardName", TextUtils.isEmpty(bean.getCardName()) ? mEtCardName.getText().toString() : bean.getCardName());
                     intent.putExtra("cardImageUrl", bean.getImgUrl());
                     startActivityForResult(intent, REQUEST_CODE_CARD_EDIT);
                 }
@@ -76,11 +77,6 @@ public class CardSearchActivity extends MVPActivity implements CardSearchContrac
             mRecyclerView.setAdapter(mCardSearchRVAdapter);
         }
         mCardSearchRVAdapter.setDatas(cardEntityList);
-    }
-
-    @Override
-    public void showToastMessage(String message) {
-
     }
 
     @Override

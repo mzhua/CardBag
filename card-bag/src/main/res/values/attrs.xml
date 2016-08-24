@@ -59,5 +59,6 @@
         <attr name="fivForegroundText" format="string"/>
         <attr name="fivForegroundTextSize" format="dimension"/>
         <attr name="fivForegroundTextColor" format="color"/>
+        <attr name="fivForegroundCornerRadius" format="dimension"/>
     </declare-styleable>
 </resources>

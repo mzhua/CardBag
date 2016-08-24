@@ -2,10 +2,13 @@
     <string name="app_name">电子会员卡</string>
     <string name="content_desc_manage_card">管理卡片</string>
     <string name="content_desc_use_card">使用卡片</string>
-    <string name="menu_text_card_edit">完成</string>
+    <string name="menu_text_card_edit_finish">完成</string>
     <string name="card_not_found_notice">没有找到您的卡?\n+ 添加新卡</string>
     <string name="bar_code_place_holder">xxxx xxxx xxxx x</string>
     <string name="please_input_card_name_hint">输入卡片名称</string>
     <string name="title_card_edit_edit">编辑卡片</string>
     <string name="title_card_edit_add">添加卡片</string>
+    <string name="card_edit_cover_modify_card_front">修改卡正面</string>
+    <string name="card_edit_cover_modify_card_back">修改卡背面</string>
+    <string name="card_edit_cover_modify_bar_code">点击扫描条形码</string>
 </resources>

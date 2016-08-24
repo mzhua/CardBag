@@ -15,4 +15,5 @@
 
     <color name="topBarBackground">@android:color/white</color>
     <color name="cbDivider">#EBEBEB</color>
+    <color name="foreground_cover">#6a000000</color>
 </resources>
