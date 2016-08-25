@@ -2,7 +2,6 @@ package com.wonders.xlab.cardbag.ui.cardmy;
 
 import com.wonders.xlab.cardbag.base.BaseContract;
 import com.wonders.xlab.cardbag.data.entity.CardEntity;
-import com.wonders.xlab.cardbag.data.entity.MyCardEntity;
 
 import java.util.List;
 
@@ -20,7 +19,7 @@ public interface CardMyContract {
     }
 
     interface Model extends BaseContract.Model {
-        void getMyCards(BaseContract.Model.Callback<MyCardEntity> callback);
+        void getMyCards(BaseContract.Model.Callback<List<CardEntity>> callback);
     }
 
 }

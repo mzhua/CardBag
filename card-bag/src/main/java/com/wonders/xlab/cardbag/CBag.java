@@ -1,11 +1,12 @@
 package com.wonders.xlab.cardbag;
 
 import android.app.Activity;
+import android.app.Fragment;
+import android.content.Context;
 import android.content.Intent;
 import android.os.Bundle;
 import android.support.annotation.ColorInt;
 import android.support.annotation.NonNull;
-import android.support.v4.app.Fragment;
 
 import com.wonders.xlab.cardbag.ui.home.HomeActivity;
 
@@ -14,27 +15,23 @@ import com.wonders.xlab.cardbag.ui.home.HomeActivity;
  */
 public class CBag {
     private static final String EXTRA_PREFIX = BuildConfig.APPLICATION_ID;
-    private static final Object object = new Object();
     private static CBag cBag;
+
+    private Intent mCBagIntent;
     private Bundle mCBagOptionsBundle;
 
     private CBag() {
         mCBagOptionsBundle = new Bundle();
+        mCBagIntent = new Intent();
     }
 
     /**
      * have to call the method before call start
-     *
      */
-    public static CBag getInstance() {
+    public static CBag get() {
         if (cBag == null) {
-            synchronized (object) {
-                if (cBag == null) {
-                    cBag = new CBag();
-                }
-            }
+            cBag = new CBag();
         }
-
         return cBag;
     }
 
@@ -43,8 +40,8 @@ public class CBag {
      *
      * @param activity
      */
-    public CBag start(Activity activity) {
-        activity.startActivity(new Intent(activity, HomeActivity.class));
+    public CBag start(@NonNull Activity activity) {
+        activity.startActivity(getIntent(activity));
         return this;
     }
 
@@ -53,22 +50,36 @@ public class CBag {
      *
      * @param fragment
      */
-    public CBag start(Fragment fragment) {
-        fragment.startActivity(new Intent(fragment.getActivity(), HomeActivity.class));
+    public CBag start(@NonNull Context context, @NonNull Fragment fragment) {
+        fragment.startActivity(getIntent(context));
         return this;
     }
 
-    public CBag withOption(Options option) {
+    public CBag start(@NonNull Context context, @NonNull android.support.v4.app.Fragment fragment) {
+        fragment.startActivity(getIntent(context));
+        return this;
+    }
+
+    public CBag withOption(@NonNull Options option) {
         mCBagOptionsBundle.putAll(option.getOptionBundle());
         return this;
+    }
+
+    private Intent getIntent(Context context) {
+        mCBagIntent = new Intent(context, HomeActivity.class);
+        mCBagIntent.putExtras(mCBagOptionsBundle);
+        return mCBagIntent;
     }
 
     /**
      *
      */
-    public static class Options{
+    public static class Options {
         private static final String EXTRA_COLOR_PRIMARY = EXTRA_PREFIX + ".ColorPrimary";
         private static final String EXTRA_COLOR_PRIMARY_DARK = EXTRA_PREFIX + ".ColorPrimaryDark";
+        private static final String EXTRA_TOP_BAR_COLOR = EXTRA_PREFIX + ".TopBarColor";
+        private static final String EXTRA_TOP_BAR_TITLE_GRAVITY = EXTRA_PREFIX + ".TopBarTitleGravity";
+        private static final String EXTRA_TOP_BAR_TEXT_COLOR = EXTRA_PREFIX + ".TopBarTextColor";
 
         private final Bundle mOptionBundle;
 
@@ -82,11 +93,11 @@ public class CBag {
         }
 
         public void setColorPrimary(@ColorInt int colorPrimary) {
-            mOptionBundle.putInt(EXTRA_COLOR_PRIMARY,colorPrimary);
+            mOptionBundle.putInt(EXTRA_COLOR_PRIMARY, colorPrimary);
         }
 
         public void setColorPrimaryDark(@ColorInt int colorPrimaryDark) {
-            mOptionBundle.putInt(EXTRA_COLOR_PRIMARY_DARK,colorPrimaryDark);
+            mOptionBundle.putInt(EXTRA_COLOR_PRIMARY_DARK, colorPrimaryDark);
         }
     }
 }

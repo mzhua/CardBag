@@ -2,7 +2,6 @@ package com.wonders.xlab.cardbag.base;
 
 import android.support.v7.widget.RecyclerView;
 import android.view.View;
-import android.view.ViewGroup;
 
 import java.util.ArrayList;
 import java.util.Collections;
@@ -107,13 +106,13 @@ public abstract class BaseRecyclerViewAdapter<Bean,VH extends RecyclerView.ViewH
     }
 
     public void setDatas(List<Bean> mBeanList) {
-        if (mBeanList == null) {
-            return;
-        }
         if (this.mBeanList == null) {
             this.mBeanList = new ArrayList<>();
         } else {
             this.mBeanList.clear();
+        }
+        if (mBeanList == null) {
+            return;
         }
         this.mBeanList.addAll(mBeanList);
         notifyDataSetChanged();

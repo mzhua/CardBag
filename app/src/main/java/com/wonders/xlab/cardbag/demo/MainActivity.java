@@ -21,7 +21,7 @@ public class MainActivity extends AppCompatActivity {
     }
 
     public void openCardBag(View view) {
-        CBag.getInstance()
+        CBag.get()
                 .start(this);
     }
 

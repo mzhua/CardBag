@@ -5,7 +5,6 @@ import android.os.Bundle;
 import android.support.v7.widget.DefaultItemAnimator;
 import android.support.v7.widget.GridLayoutManager;
 import android.support.v7.widget.RecyclerView;
-import android.text.TextUtils;
 import android.view.KeyEvent;
 import android.view.inputmethod.EditorInfo;
 import android.widget.EditText;
@@ -69,8 +68,8 @@ public class CardSearchActivity extends MVPActivity implements CardSearchContrac
                 public void onItemClick(int position) {
                     Intent intent = new Intent(CardSearchActivity.this, CardEditActivity.class);
                     CardEntity bean = mCardSearchRVAdapter.getBean(position);
-                    intent.putExtra("cardName", TextUtils.isEmpty(bean.getCardName()) ? mEtCardName.getText().toString() : bean.getCardName());
-                    intent.putExtra("cardImageUrl", bean.getImgUrl());
+                    bean.setCardName(mEtCardName.getText().toString());
+                    intent.putExtra("data", bean);
                     startActivityForResult(intent, REQUEST_CODE_CARD_EDIT);
                 }
             });
@@ -82,5 +81,10 @@ public class CardSearchActivity extends MVPActivity implements CardSearchContrac
     @Override
     protected void onActivityResult(int requestCode, int resultCode, Intent data) {
         super.onActivityResult(requestCode, resultCode, data);
+        if (resultCode == RESULT_OK) {
+            if (requestCode == REQUEST_CODE_CARD_EDIT) {
+                finish();
+            }
+        }
     }
 }

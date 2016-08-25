@@ -30,7 +30,14 @@ public class FileUtil {
                 Environment.MEDIA_MOUNTED_READ_ONLY.equals(state);
     }
 
-    public static File createFile(Context context, String fileName) throws IOException {
+    /**
+     * create temp file for camera capture
+     * @param context
+     * @param fileName
+     * @return
+     * @throws IOException
+     */
+    public static File createTempFile(Context context, String fileName) throws IOException {
         if (isExternalStorageWritable()) {
             // Get the directory for the app's private pictures directory.
             File file = getInternalDirectory(context);

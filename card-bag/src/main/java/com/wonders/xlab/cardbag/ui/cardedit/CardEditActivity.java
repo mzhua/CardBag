@@ -14,8 +14,10 @@ import android.widget.ImageView;
 import android.widget.TextView;
 
 import com.wonders.xlab.cardbag.R;
+import com.wonders.xlab.cardbag.RealmConfig;
 import com.wonders.xlab.cardbag.base.BaseContract;
 import com.wonders.xlab.cardbag.base.MVPActivity;
+import com.wonders.xlab.cardbag.data.entity.CardEntity;
 import com.wonders.xlab.cardbag.util.FileUtil;
 import com.wonders.xlab.cardbag.util.ImageViewUtil;
 import com.wonders.xlab.cardbag.widget.RatioImageView;
@@ -26,6 +28,8 @@ import com.yalantis.ucrop.UCrop;
 
 import java.io.File;
 import java.io.IOException;
+
+import io.realm.Realm;
 
 import static android.R.attr.maxHeight;
 import static android.R.attr.maxWidth;
@@ -38,7 +42,6 @@ public class CardEditActivity extends MVPActivity {
     private final int REQUEST_CODE_CROP_FRONT = REQUEST_CODE_MASK << 4;
     private final int REQUEST_CODE_CROP_BACK = REQUEST_CODE_MASK << 5;
 
-
     private TopBar mTopBar;
     private RatioImageView mIvCard;
     private RatioImageView mIvCardFront;
@@ -48,9 +51,8 @@ public class CardEditActivity extends MVPActivity {
     private TextView mTvBarCode;
     private ImageView mIvClear;
 
-    private String mCardId;
+    private CardEntity mExtraData;
 
-    private String mBarCode;
     private Bitmap mBitmapBarCodeTmp;
     private String mCardFrontPhotoPath;
     private String mCardBackPhotoPath;
@@ -77,28 +79,57 @@ public class CardEditActivity extends MVPActivity {
 
         setupViewListener();
 
-        initialWithExtra();
+        initWithIntentExtra();
 
         initUCropOptions();
     }
 
-    private void initialWithExtra() {
+    private void initWithIntentExtra() {
         Intent intent = getIntent();
         if (intent != null) {
-            mCardId = intent.getStringExtra("id");
-            String cardName = intent.getStringExtra("cardName");
-            String cardImageUrl = intent.getStringExtra("cardImageUrl");
-            mEtCardName.setText(cardName);
-            ImageViewUtil.load(this, cardImageUrl, mIvCard);
+            mExtraData = intent.getParcelableExtra("data");
+
+            mEtCardName.setText(mExtraData.getCardName());
+            ImageViewUtil.load(this, mExtraData.getImgUrl(), mIvCard);
+            if (mEtCardName.length() > 0) {
+                mEtCardName.setSelection(mEtCardName.length());
+            }
         }
 
-        if (mEtCardName.length() > 0) {
-            mEtCardName.setSelection(mEtCardName.length());
-        }
-        mTopBar.setTitle(TextUtils.isEmpty(mCardId) ? getString(R.string.title_card_edit_add) : getString(R.string.title_card_edit_edit));
+        mTopBar.setTitle(mExtraData == null || TextUtils.isEmpty(mExtraData.getBarCode()) ? getString(R.string.title_card_edit_add) : getString(R.string.title_card_edit_edit));
     }
 
     private void setupViewListener() {
+        mTopBar.setOnRightMenuClickListener(new TopBar.OnRightMenuClickListener() {
+            @Override
+            public void onClick(View view) {
+                Realm realm = RealmConfig.getRealm();
+                realm.executeTransactionAsync(new Realm.Transaction() {
+                    @Override
+                    public void execute(Realm realm) {
+                        /*CardEntity cardEntity = new CardEntity();
+                        cardEntity.setCardName(mEtCardName.getText().toString());
+                        cardEntity.setImgUrl(mExtraData.getImgUrl());
+                        cardEntity.setBarCode(mTvBarCode.getText().toString());
+                        cardEntity.setFrontImgFilePath(mCardFrontPhotoPath);
+                        cardEntity.setBackImgFilePath(mCardBackPhotoPath);
+
+                        realm.copyToRealm(cardEntity);*/
+                    }
+                }, new Realm.Transaction.OnSuccess() {
+                    @Override
+                    public void onSuccess() {
+                        setResult(RESULT_OK);
+                        finish();
+                    }
+                }, new Realm.Transaction.OnError() {
+                    @Override
+                    public void onError(Throwable error) {
+                        showShortToast(error.getMessage());
+                    }
+                });
+            }
+        });
         mEtCardName.addTextChangedListener(new TextWatcher() {
             @Override
             public void beforeTextChanged(CharSequence s, int start, int count, int after) {
@@ -152,8 +183,10 @@ public class CardEditActivity extends MVPActivity {
         if (resultCode == RESULT_OK) {
             switch (requestCode) {
                 case REQUEST_CODE_SCAN_BAR_CODE:
-                    mBarCode = data.getStringExtra(XQrScanner.EXTRA_RESULT_BAR_OR_CODE_STRING);
+                    String mBarCode = data.getStringExtra(XQrScanner.EXTRA_RESULT_BAR_OR_CODE_STRING);
+
                     mTvBarCode.setText(mBarCode);
+
                     BarCodeEncoder ecc = new BarCodeEncoder(mIvBarCode.getWidth(), mIvBarCode.getHeight());
                     try {
                         mBitmapBarCodeTmp = ecc.barcode(mBarCode);
@@ -163,24 +196,16 @@ public class CardEditActivity extends MVPActivity {
                     }
                     break;
                 case REQUEST_CODE_TAKE_PHOTO_CARD_FRONT:
-                    UCrop.of(Uri.parse("file:" + mCardFrontPhotoPath), Uri.parse("file:" + mCardFrontPhotoPath))
-                            .withAspectRatio(3, 2)
-                            .withMaxResultSize(maxWidth, maxHeight)
-                            .withOptions(mOptions)
-                            .start(this, REQUEST_CODE_CROP_FRONT);
+                    crop(REQUEST_CODE_CROP_FRONT);
                     break;
                 case REQUEST_CODE_TAKE_PHOTO_CARD_BACK:
-                    UCrop.of(Uri.parse("file:" + mCardBackPhotoPath), Uri.parse("file:" + mCardBackPhotoPath))
-                            .withAspectRatio(3, 2)
-                            .withMaxResultSize(maxWidth, maxHeight)
-                            .withOptions(mOptions)
-                            .start(this, REQUEST_CODE_CROP_BACK);
+                    crop(REQUEST_CODE_CROP_BACK);
                     break;
                 case REQUEST_CODE_CROP_FRONT:
-                    mIvCardFront.setImageURI(UCrop.getOutput(data));
+                    ImageViewUtil.load(this, UCrop.getOutput(data), mIvCardFront);
                     break;
                 case REQUEST_CODE_CROP_BACK:
-                    mIvCardBack.setImageURI(UCrop.getOutput(data));
+                    ImageViewUtil.load(this, UCrop.getOutput(data), mIvCardBack);
                     break;
                 case UCrop.RESULT_ERROR:
                     final Throwable cropError = UCrop.getError(data);
@@ -190,6 +215,28 @@ public class CardEditActivity extends MVPActivity {
         }
     }
 
+    private void crop(int requestCode) {
+        Uri pathUri = null;
+        switch (requestCode) {
+            case REQUEST_CODE_CROP_FRONT:
+                pathUri = Uri.parse("file:" + mCardFrontPhotoPath);
+                break;
+            case REQUEST_CODE_CROP_BACK:
+                pathUri = Uri.parse("file:" + mCardBackPhotoPath);
+                break;
+        }
+        if (pathUri == null) {
+            showShortToast("图片裁剪失败");
+            return;
+        }
+        UCrop.of(pathUri, pathUri)
+                .withAspectRatio(3, 2)
+                .withMaxResultSize(maxWidth, maxHeight)
+                .withOptions(mOptions)
+                .start(this, requestCode);
+
+    }
+
     private void dispatchTakePictureIntent(String fileName, int requestCode) {
         Intent takePictureIntent = new Intent(MediaStore.ACTION_IMAGE_CAPTURE);
         // Ensure that there's a camera activity to handle the intent
@@ -197,7 +244,7 @@ public class CardEditActivity extends MVPActivity {
             // Create the File where the photo should go
             File photoFile = null;
             try {
-                photoFile = FileUtil.createFile(this, fileName);
+                photoFile = FileUtil.createTempFile(this, fileName);
                 if (photoFile == null) {
                     showShortToast("保存图片失败,请确认是否授权读写存储卡的权限以及存储卡是否正确挂载");
                     return;

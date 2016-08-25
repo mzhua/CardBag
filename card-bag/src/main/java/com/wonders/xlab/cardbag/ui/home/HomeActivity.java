@@ -4,9 +4,9 @@ import android.app.Activity;
 import android.content.Intent;
 import android.os.Bundle;
 import android.view.View;
-import android.widget.Toast;
 
 import com.wonders.xlab.cardbag.R;
+import com.wonders.xlab.cardbag.RealmConfig;
 import com.wonders.xlab.cardbag.ui.cardmy.CardMyActivity;
 import com.wonders.xlab.cardbag.widget.TopBar;
 
@@ -18,12 +18,7 @@ public class HomeActivity extends Activity {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.cb_home_activity);
         mTopBar = (TopBar) findViewById(R.id.top_bar);
-        mTopBar.setOnRightMenuClickListener(new TopBar.OnRightMenuClickListener() {
-            @Override
-            public void onClick(View view) {
-                Toast.makeText(HomeActivity.this, "right click", Toast.LENGTH_SHORT).show();
-            }
-        });
+        RealmConfig.initRealm(getApplicationContext(), getResources().getInteger(R.integer.schemaVersion));
     }
 
     public void manageCard(View view) {

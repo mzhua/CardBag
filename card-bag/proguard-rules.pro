@@ -17,3 +17,7 @@
 #}
 
 -keep class com.wonders.xlab.cardbag.CBag { *; }
+
+-dontwarn com.yalantis.ucrop**
+-keep class com.yalantis.ucrop** { *; }
+-keep interface com.yalantis.ucrop** { *; }

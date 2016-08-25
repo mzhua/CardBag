@@ -1,22 +1,36 @@
 package com.wonders.xlab.cardbag.data.entity;
 
-import com.wonders.xlab.cardbag.base.BaseEntity;
+import android.os.Parcel;
+import android.os.Parcelable;
+import android.text.TextUtils;
+
+import io.realm.RealmObject;
 
 /**
  * Created by hua on 16/8/21.
  */
 
-public class CardEntity extends BaseEntity {
-    private String id;
-    private String mImgUrl;
+public class CardEntity extends RealmObject implements Parcelable {
     private String mCardName;
+    private String mBarCode;
+    private String mImgUrl;
+    private String mImgFilePath;
+    private String mFrontImgUrl;
+    private String mFrontImgFilePath;
+    private String mBackImgUrl;
+    private String mBackImgFilePath;
+    private long mCreateDate;
+
+    public CardEntity() {
+        setCreateDate(System.currentTimeMillis());
+    }
 
     public String getImgUrl() {
         return mImgUrl;
     }
 
     public void setImgUrl(String imgUrl) {
-        mImgUrl = imgUrl;
+        mImgUrl = !TextUtils.isEmpty(imgUrl) ? imgUrl : "http://upload-images.jianshu.io/upload_images/598650-71ec1d3457194419.png?imageMogr2/auto-orient/strip%7CimageView2/2/w/1240";
     }
 
     public String getCardName() {
@@ -27,11 +41,102 @@ public class CardEntity extends BaseEntity {
         mCardName = cardName;
     }
 
-    public String getId() {
-        return id;
+    public String getImgFilePath() {
+        return mImgFilePath;
     }
 
-    public void setId(String id) {
-        this.id = id;
+    public void setImgFilePath(String imgFilePath) {
+        mImgFilePath = imgFilePath;
     }
+
+    public String getBarCode() {
+        return mBarCode;
+    }
+
+    public void setBarCode(String barCode) {
+        mBarCode = barCode;
+    }
+
+    public String getFrontImgUrl() {
+        return mFrontImgUrl;
+    }
+
+    public void setFrontImgUrl(String frontImgUrl) {
+        mFrontImgUrl = frontImgUrl;
+    }
+
+    public String getFrontImgFilePath() {
+        return mFrontImgFilePath;
+    }
+
+    public void setFrontImgFilePath(String frontImgFilePath) {
+        mFrontImgFilePath = frontImgFilePath;
+    }
+
+    public String getBackImgUrl() {
+        return mBackImgUrl;
+    }
+
+    public void setBackImgUrl(String backImgUrl) {
+        mBackImgUrl = backImgUrl;
+    }
+
+    public String getBackImgFilePath() {
+        return mBackImgFilePath;
+    }
+
+    public void setBackImgFilePath(String backImgFilePath) {
+        mBackImgFilePath = backImgFilePath;
+    }
+
+    public long getCreateDate() {
+        return mCreateDate;
+    }
+
+    public void setCreateDate(long createDate) {
+        mCreateDate = createDate;
+    }
+
+
+    @Override
+    public int describeContents() {
+        return 0;
+    }
+
+    @Override
+    public void writeToParcel(Parcel dest, int flags) {
+        dest.writeString(this.mCardName);
+        dest.writeString(this.mBarCode);
+        dest.writeString(this.mImgUrl);
+        dest.writeString(this.mImgFilePath);
+        dest.writeString(this.mFrontImgUrl);
+        dest.writeString(this.mFrontImgFilePath);
+        dest.writeString(this.mBackImgUrl);
+        dest.writeString(this.mBackImgFilePath);
+        dest.writeLong(this.mCreateDate);
+    }
+
+    protected CardEntity(Parcel in) {
+        this.mCardName = in.readString();
+        this.mBarCode = in.readString();
+        this.mImgUrl = in.readString();
+        this.mImgFilePath = in.readString();
+        this.mFrontImgUrl = in.readString();
+        this.mFrontImgFilePath = in.readString();
+        this.mBackImgUrl = in.readString();
+        this.mBackImgFilePath = in.readString();
+        this.mCreateDate = in.readLong();
+    }
+
+    public static final Creator<CardEntity> CREATOR = new Creator<CardEntity>() {
+        @Override
+        public CardEntity createFromParcel(Parcel source) {
+            return new CardEntity(source);
+        }
+
+        @Override
+        public CardEntity[] newArray(int size) {
+            return new CardEntity[size];
+        }
+    };
 }

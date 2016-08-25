@@ -26,8 +26,8 @@ public class CardSearchRVAdapter extends BaseRecyclerViewAdapter<CardEntity, Rec
 
     @Override
     public void setDatas(List<CardEntity> mBeanList) {
-        mBeanList.add(new CardEntity());//手动添加卡片
         super.setDatas(mBeanList);
+        appendToLast(new CardEntity());//手动添加卡片
     }
 
     @Override
@@ -47,7 +47,7 @@ public class CardSearchRVAdapter extends BaseRecyclerViewAdapter<CardEntity, Rec
     @Override
     public int getItemViewType(int position) {
         CardEntity bean = getBean(position);
-        return TextUtils.isEmpty(bean.getId()) && TextUtils.isEmpty(bean.getCardName()) ? ITEM_TYPE_NOT_FOUND : ITEM_TYPE_CARD;
+        return TextUtils.isEmpty(bean.getImgUrl()) && TextUtils.isEmpty(bean.getCardName()) ? ITEM_TYPE_NOT_FOUND : ITEM_TYPE_CARD;
     }
 
     @Override

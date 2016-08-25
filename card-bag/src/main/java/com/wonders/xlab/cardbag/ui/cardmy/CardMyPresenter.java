@@ -3,12 +3,14 @@ package com.wonders.xlab.cardbag.ui.cardmy;
 import com.wonders.xlab.cardbag.base.BaseContract;
 import com.wonders.xlab.cardbag.base.BasePresenter;
 import com.wonders.xlab.cardbag.base.DefaultException;
-import com.wonders.xlab.cardbag.data.entity.MyCardEntity;
+import com.wonders.xlab.cardbag.data.entity.CardEntity;
+
+import java.util.List;
 
 /**
  * Created by hua on 16/8/18.
  */
-public class CardMyPresenter extends BasePresenter implements CardMyContract.Presenter{
+public class CardMyPresenter extends BasePresenter implements CardMyContract.Presenter {
     private CardMyContract.Model mModel;
     private CardMyContract.View mView;
 
@@ -20,10 +22,10 @@ public class CardMyPresenter extends BasePresenter implements CardMyContract.Pre
 
     @Override
     public void getMyCards() {
-        mModel.getMyCards(new BaseContract.Model.Callback<MyCardEntity>() {
+        mModel.getMyCards(new BaseContract.Model.Callback<List<CardEntity>>() {
             @Override
-            public void onSuccess(MyCardEntity myCardEntity) {
-                mView.showMyCards(myCardEntity.getCardList());
+            public void onSuccess(List<CardEntity> cardEntityList) {
+                mView.showMyCards(cardEntityList);
             }
 
             @Override
