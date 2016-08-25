@@ -49,21 +49,38 @@
                     app:rivHorizontalWeight="@integer/iv_horizontal_weight"
                     app:rivVerticalWeight="@integer/iv_vertical_weight"/>
 
-                <EditText
-                    android:id="@+id/et_card_name"
-                    style="@style/NormalSizeBlackColorTextView"
+                <RelativeLayout
                     android:layout_width="0dp"
                     android:layout_height="wrap_content"
                     android:layout_marginLeft="20dp"
                     android:layout_weight="3"
-                    android:background="@drawable/round_corner_app_grey_bg"
-                    android:hint="@string/please_input_card_name_hint"
-                    android:maxLength="30"
-                    android:maxLines="1"
-                    android:paddingBottom="8dp"
-                    android:paddingLeft="16dp"
-                    android:paddingRight="16dp"
-                    android:paddingTop="8dp"/>
+                    android:background="@drawable/round_corner_app_grey_bg">
+
+                    <EditText
+                        android:id="@+id/et_card_name"
+                        style="@style/NormalSizeBlackColorTextView"
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:layout_toLeftOf="@+id/iv_clear"
+                        android:hint="@string/please_input_card_name_hint"
+                        android:maxLength="30"
+                        android:singleLine="true"
+                        android:background="@android:color/transparent"
+                        android:paddingBottom="8dp"
+                        android:paddingLeft="16dp"
+                        android:paddingRight="16dp"
+                        android:paddingTop="8dp"/>
+
+                    <ImageView
+                        android:id="@+id/iv_clear"
+                        android:layout_width="wrap_content"
+                        android:layout_height="match_parent"
+                        android:layout_alignParentRight="true"
+                        android:layout_centerVertical="true"
+                        android:paddingRight="8dp"
+                        android:src="@drawable/ic_close"/>
+                </RelativeLayout>
+
             </LinearLayout>
 
             <View
@@ -78,11 +95,11 @@
                 android:layout_marginLeft="30dp"
                 android:layout_marginRight="30dp"
                 android:layout_marginTop="36dp"
-                android:scaleType="centerCrop"
                 android:onClick="scanBarCode"
+                android:scaleType="centerCrop"
                 app:rivBaseDirection="horizontal"
-                app:rivForegroundCornerRadius="0dp"
                 app:rivForegroundColor="@color/foreground_cover"
+                app:rivForegroundCornerRadius="0dp"
                 app:rivForegroundText="@string/card_edit_cover_modify_bar_code"
                 app:rivForegroundTextSize="@dimen/text_size_large"
                 app:rivHorizontalWeight="3"
@@ -109,8 +126,8 @@
                     android:layout_width="0dp"
                     android:layout_height="wrap_content"
                     android:layout_weight="1"
-                    android:scaleType="centerCrop"
                     android:onClick="shotCardFront"
+                    android:scaleType="centerCrop"
                     app:rivBaseDirection="horizontal"
                     app:rivForegroundColor="@color/foreground_cover"
                     app:rivForegroundText="@string/card_edit_cover_modify_card_front"

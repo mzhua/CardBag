@@ -28,6 +28,10 @@
         <activity
             android:name=".ui.cardsearch.CardSearchActivity"
             android:theme="@style/CBAppTheme.NoActionBar"/>
+        <activity
+            android:name="com.yalantis.ucrop.UCropActivity"
+            android:screenOrientation="portrait"
+            android:theme="@style/Theme.AppCompat.Light.NoActionBar"/>
     </application>
 
 </manifest>
