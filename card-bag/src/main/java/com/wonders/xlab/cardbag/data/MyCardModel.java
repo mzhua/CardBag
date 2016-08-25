@@ -1,6 +1,5 @@
 package com.wonders.xlab.cardbag.data;
 
-import com.wonders.xlab.cardbag.RealmConfig;
 import com.wonders.xlab.cardbag.base.BaseModel;
 import com.wonders.xlab.cardbag.data.entity.CardEntity;
 import com.wonders.xlab.cardbag.ui.cardmy.CardMyContract;
@@ -21,8 +20,8 @@ public class MyCardModel extends BaseModel implements CardMyContract.Model {
 
     @Override
     public void getMyCards(final Callback<List<CardEntity>> callback) {
-        Realm realm = RealmConfig.getRealm();
-        final RealmResults<CardEntity> allAsync = realm.where(CardEntity.class).findAllAsync().sort("mCreateDate", Sort.DESCENDING);
+        Realm realm = Realm.getDefaultInstance();
+        final RealmResults<CardEntity> allAsync = realm.where(CardEntity.class).findAllSortedAsync("mCreateDate", Sort.DESCENDING);
         allAsync.addChangeListener(new RealmChangeListener<RealmResults<CardEntity>>() {
             @Override
             public void onChange(RealmResults<CardEntity> element) {

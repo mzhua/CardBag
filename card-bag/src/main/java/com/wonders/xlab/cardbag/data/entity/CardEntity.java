@@ -5,12 +5,15 @@ import android.os.Parcelable;
 import android.text.TextUtils;
 
 import io.realm.RealmObject;
+import io.realm.annotations.PrimaryKey;
 
 /**
  * Created by hua on 16/8/21.
  */
 
 public class CardEntity extends RealmObject implements Parcelable {
+    @PrimaryKey
+    private long mId;
     private String mCardName;
     private String mBarCode;
     private String mImgUrl;
@@ -22,7 +25,6 @@ public class CardEntity extends RealmObject implements Parcelable {
     private long mCreateDate;
 
     public CardEntity() {
-        setCreateDate(System.currentTimeMillis());
     }
 
     public String getImgUrl() {
@@ -97,6 +99,13 @@ public class CardEntity extends RealmObject implements Parcelable {
         mCreateDate = createDate;
     }
 
+    public long getId() {
+        return mId;
+    }
+
+    public void setId(long id) {
+        mId = id;
+    }
 
     @Override
     public int describeContents() {
@@ -105,6 +114,7 @@ public class CardEntity extends RealmObject implements Parcelable {
 
     @Override
     public void writeToParcel(Parcel dest, int flags) {
+        dest.writeLong(this.mId);
         dest.writeString(this.mCardName);
         dest.writeString(this.mBarCode);
         dest.writeString(this.mImgUrl);
@@ -117,6 +127,7 @@ public class CardEntity extends RealmObject implements Parcelable {
     }
 
     protected CardEntity(Parcel in) {
+        this.mId = in.readLong();
         this.mCardName = in.readString();
         this.mBarCode = in.readString();
         this.mImgUrl = in.readString();

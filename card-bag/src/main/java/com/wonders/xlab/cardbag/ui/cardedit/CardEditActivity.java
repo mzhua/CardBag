@@ -1,7 +1,6 @@
 package com.wonders.xlab.cardbag.ui.cardedit;
 
 import android.content.Intent;
-import android.graphics.Bitmap;
 import android.net.Uri;
 import android.os.Bundle;
 import android.provider.MediaStore;
@@ -14,7 +13,6 @@ import android.widget.ImageView;
 import android.widget.TextView;
 
 import com.wonders.xlab.cardbag.R;
-import com.wonders.xlab.cardbag.RealmConfig;
 import com.wonders.xlab.cardbag.base.BaseContract;
 import com.wonders.xlab.cardbag.base.MVPActivity;
 import com.wonders.xlab.cardbag.data.entity.CardEntity;
@@ -53,7 +51,6 @@ public class CardEditActivity extends MVPActivity {
 
     private CardEntity mExtraData;
 
-    private Bitmap mBitmapBarCodeTmp;
     private String mCardFrontPhotoPath;
     private String mCardBackPhotoPath;
 
@@ -89,10 +86,28 @@ public class CardEditActivity extends MVPActivity {
         if (intent != null) {
             mExtraData = intent.getParcelableExtra("data");
 
-            mEtCardName.setText(mExtraData.getCardName());
-            ImageViewUtil.load(this, mExtraData.getImgUrl(), mIvCard);
-            if (mEtCardName.length() > 0) {
-                mEtCardName.setSelection(mEtCardName.length());
+            if (null != mExtraData) {
+                mEtCardName.setText(mExtraData.getCardName());
+                setBarCodeView(mExtraData.getBarCode());
+                ImageViewUtil.load(this, mExtraData.getImgUrl(), mIvCard);
+                if (TextUtils.isEmpty(mExtraData.getFrontImgUrl())) {
+                    if (!TextUtils.isEmpty(mExtraData.getFrontImgFilePath())) {
+                        ImageViewUtil.load(this, Uri.parse("file:" + mExtraData.getFrontImgFilePath()), mIvCardFront);
+                    }
+                } else {
+                    ImageViewUtil.load(this, mExtraData.getFrontImgUrl(), mIvCardFront);
+                }
+                if (TextUtils.isEmpty(mExtraData.getBackImgUrl())) {
+                    if (!TextUtils.isEmpty(mExtraData.getBackImgFilePath())) {
+                        ImageViewUtil.load(this, Uri.parse("file:" + mExtraData.getBackImgFilePath()), mIvCardBack);
+                    }
+                } else {
+                    ImageViewUtil.load(this, mExtraData.getBackImgUrl(), mIvCardBack);
+                }
+
+                if (mEtCardName.length() > 0) {
+                    mEtCardName.setSelection(mEtCardName.length());
+                }
             }
         }
 
@@ -103,18 +118,19 @@ public class CardEditActivity extends MVPActivity {
         mTopBar.setOnRightMenuClickListener(new TopBar.OnRightMenuClickListener() {
             @Override
             public void onClick(View view) {
-                Realm realm = RealmConfig.getRealm();
+                Realm realm = Realm.getDefaultInstance();
                 realm.executeTransactionAsync(new Realm.Transaction() {
                     @Override
                     public void execute(Realm realm) {
-                        /*CardEntity cardEntity = new CardEntity();
+                        CardEntity cardEntity = realm.createObject(CardEntity.class);
+                        cardEntity.setId(System.currentTimeMillis());
                         cardEntity.setCardName(mEtCardName.getText().toString());
                         cardEntity.setImgUrl(mExtraData.getImgUrl());
                         cardEntity.setBarCode(mTvBarCode.getText().toString());
                         cardEntity.setFrontImgFilePath(mCardFrontPhotoPath);
                         cardEntity.setBackImgFilePath(mCardBackPhotoPath);
+                        cardEntity.setCreateDate(System.currentTimeMillis());
 
-                        realm.copyToRealm(cardEntity);*/
                     }
                 }, new Realm.Transaction.OnSuccess() {
                     @Override
@@ -185,15 +201,7 @@ public class CardEditActivity extends MVPActivity {
                 case REQUEST_CODE_SCAN_BAR_CODE:
                     String mBarCode = data.getStringExtra(XQrScanner.EXTRA_RESULT_BAR_OR_CODE_STRING);
 
-                    mTvBarCode.setText(mBarCode);
-
-                    BarCodeEncoder ecc = new BarCodeEncoder(mIvBarCode.getWidth(), mIvBarCode.getHeight());
-                    try {
-                        mBitmapBarCodeTmp = ecc.barcode(mBarCode);
-                        mIvBarCode.setImageBitmap(mBitmapBarCodeTmp);
-                    } catch (Exception e) {
-                        e.printStackTrace();
-                    }
+                    setBarCodeView(mBarCode);
                     break;
                 case REQUEST_CODE_TAKE_PHOTO_CARD_FRONT:
                     crop(REQUEST_CODE_CROP_FRONT);
@@ -212,6 +220,17 @@ public class CardEditActivity extends MVPActivity {
                     showShortToast(cropError.getMessage());
                     break;
             }
+        }
+    }
+
+    private void setBarCodeView(String mBarCode) {
+        mTvBarCode.setText(mBarCode);
+
+        BarCodeEncoder ecc = new BarCodeEncoder(mIvBarCode.getWidth(), mIvBarCode.getHeight());
+        try {
+            mIvBarCode.setImageBitmap(ecc.barcode(mBarCode));
+        } catch (Exception e) {
+            e.printStackTrace();
         }
     }
 
