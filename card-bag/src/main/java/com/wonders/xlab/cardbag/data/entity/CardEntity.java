@@ -16,7 +16,7 @@ public class CardEntity extends RealmObject implements Parcelable {
     private long mId;
     private String mCardName;
     private String mBarCode;
-    private String mImgUrl;
+    private String mImgUrl = "http://upload-images.jianshu.io/upload_images/598650-71ec1d3457194419.png?imageMogr2/auto-orient/strip%7CimageView2/2/w/1240";
     private String mImgFilePath;
     private String mFrontImgUrl;
     private String mFrontImgFilePath;

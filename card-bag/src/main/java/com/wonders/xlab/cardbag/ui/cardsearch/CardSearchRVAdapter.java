@@ -47,7 +47,7 @@ public class CardSearchRVAdapter extends BaseRecyclerViewAdapter<CardEntity, Rec
     @Override
     public int getItemViewType(int position) {
         CardEntity bean = getBean(position);
-        return TextUtils.isEmpty(bean.getImgUrl()) && TextUtils.isEmpty(bean.getCardName()) ? ITEM_TYPE_NOT_FOUND : ITEM_TYPE_CARD;
+        return TextUtils.isEmpty(bean.getCardName()) ? ITEM_TYPE_NOT_FOUND : ITEM_TYPE_CARD;
     }
 
     @Override

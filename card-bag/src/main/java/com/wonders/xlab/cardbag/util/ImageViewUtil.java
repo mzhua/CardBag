@@ -14,10 +14,13 @@ import java.io.File;
  */
 
 public class ImageViewUtil {
+
+    private static final RoundedCornersTransform ROUNDED_CORNERS_TRANSFORM = new RoundedCornersTransform();
+
     public static void load(Context context, Uri uri, ImageView imageView) {
         Picasso.with(context)
                 .load(uri)
-                .transform(new RoundedCornersTransform())
+                .transform(ROUNDED_CORNERS_TRANSFORM)
                 .into(imageView);
     }
 
@@ -30,7 +33,7 @@ public class ImageViewUtil {
     public static void load(Context context, String path, ImageView imageView) {
         Picasso.with(context)
                 .load(path)
-                .transform(new RoundedCornersTransform())
+                .transform(ROUNDED_CORNERS_TRANSFORM)
                 .into(imageView);
     }
 
@@ -38,7 +41,7 @@ public class ImageViewUtil {
         Picasso.with(context)
                 .load(resId)
                 .placeholder(R.color.imageBackgroundHolder)
-                .transform(new RoundedCornersTransform())
+                .transform(ROUNDED_CORNERS_TRANSFORM)
                 .into(imageView);
     }
 }

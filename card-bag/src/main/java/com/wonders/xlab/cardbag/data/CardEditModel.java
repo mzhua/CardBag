@@ -19,7 +19,8 @@ public class CardEditModel extends BaseModel implements CardEditContract.Model {
         realm.executeTransactionAsync(new Realm.Transaction() {
             @Override
             public void execute(Realm realm) {
-                realm.copyToRealm(cardEntity);
+
+                realm.copyToRealmOrUpdate(cardEntity);
             }
         }, new Realm.Transaction.OnSuccess() {
             @Override

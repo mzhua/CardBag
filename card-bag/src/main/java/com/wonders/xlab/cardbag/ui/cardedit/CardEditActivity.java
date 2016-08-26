@@ -7,6 +7,7 @@ import android.provider.MediaStore;
 import android.text.Editable;
 import android.text.TextUtils;
 import android.text.TextWatcher;
+import android.util.Log;
 import android.view.View;
 import android.widget.EditText;
 import android.widget.ImageView;
@@ -44,7 +45,7 @@ public class CardEditActivity extends MVPActivity<CardEditContract.Presenter> im
     private TextView mTvBarCode;
     private ImageView mIvClear;
 
-    private CardEntity mExtraData;
+    private CardEntity mCardEntity;
 
     private String mCardFrontPhotoPath;
     private String mCardBackPhotoPath;
@@ -84,25 +85,27 @@ public class CardEditActivity extends MVPActivity<CardEditContract.Presenter> im
     private void initWithIntentExtra() {
         Intent intent = getIntent();
         if (intent != null) {
-            mExtraData = intent.getParcelableExtra("data");
+            mCardEntity = intent.getParcelableExtra("data");
 
-            if (null != mExtraData) {
-                mEtCardName.setText(mExtraData.getCardName());
-                setBarCodeView(mExtraData.getBarCode());
-                ImageViewUtil.load(this, mExtraData.getImgUrl(), mIvCard);
-                if (TextUtils.isEmpty(mExtraData.getFrontImgUrl())) {
-                    if (!TextUtils.isEmpty(mExtraData.getFrontImgFilePath())) {
-                        ImageViewUtil.load(this, Uri.parse("file:" + mExtraData.getFrontImgFilePath()), mIvCardFront);
+            if (null != mCardEntity) {
+                mEtCardName.setText(mCardEntity.getCardName());
+                setBarCodeView(mCardEntity.getBarCode());
+                ImageViewUtil.load(this, mCardEntity.getImgUrl(), mIvCard);
+                if (TextUtils.isEmpty(mCardEntity.getFrontImgUrl())) {
+                    mCardFrontPhotoPath = mCardEntity.getFrontImgFilePath();
+                    if (!TextUtils.isEmpty(mCardFrontPhotoPath)) {
+                        ImageViewUtil.load(this, Uri.parse("file:" + mCardFrontPhotoPath), mIvCardFront);
                     }
                 } else {
-                    ImageViewUtil.load(this, mExtraData.getFrontImgUrl(), mIvCardFront);
+                    ImageViewUtil.load(this, mCardEntity.getFrontImgUrl(), mIvCardFront);
                 }
-                if (TextUtils.isEmpty(mExtraData.getBackImgUrl())) {
-                    if (!TextUtils.isEmpty(mExtraData.getBackImgFilePath())) {
-                        ImageViewUtil.load(this, Uri.parse("file:" + mExtraData.getBackImgFilePath()), mIvCardBack);
+                if (TextUtils.isEmpty(mCardEntity.getBackImgUrl())) {
+                    mCardBackPhotoPath = mCardEntity.getBackImgFilePath();
+                    if (!TextUtils.isEmpty(mCardBackPhotoPath)) {
+                        ImageViewUtil.load(this, Uri.parse("file:" + mCardBackPhotoPath), mIvCardBack);
                     }
                 } else {
-                    ImageViewUtil.load(this, mExtraData.getBackImgUrl(), mIvCardBack);
+                    ImageViewUtil.load(this, mCardEntity.getBackImgUrl(), mIvCardBack);
                 }
 
                 if (mEtCardName.length() > 0) {
@@ -111,21 +114,22 @@ public class CardEditActivity extends MVPActivity<CardEditContract.Presenter> im
             }
         }
 
-        mTopBar.setTitle(mExtraData == null || TextUtils.isEmpty(mExtraData.getBarCode()) ? getString(R.string.title_card_edit_add) : getString(R.string.title_card_edit_edit));
+        mTopBar.setTitle(mCardEntity == null || TextUtils.isEmpty(mCardEntity.getBarCode()) ? getString(R.string.title_card_edit_add) : getString(R.string.title_card_edit_edit));
     }
 
     private void setupViewListener() {
         mTopBar.setOnRightMenuClickListener(new TopBar.OnRightMenuClickListener() {
             @Override
             public void onClick(View view) {
-                CardEntity cardEntity = new CardEntity();
-                cardEntity.setCardName(mEtCardName.getText().toString());
-                cardEntity.setImgUrl(mExtraData.getImgUrl());
-                cardEntity.setBarCode(mTvBarCode.getText().toString());
-                cardEntity.setFrontImgFilePath(mCardFrontPhotoPath);
-                cardEntity.setBackImgFilePath(mCardBackPhotoPath);
+                if (mCardEntity == null) {
+                    mCardEntity = new CardEntity();
+                }
+                mCardEntity.setCardName(mEtCardName.getText().toString());
+                mCardEntity.setBarCode(mTvBarCode.getText().toString());
+                mCardEntity.setFrontImgFilePath(mCardFrontPhotoPath);
+                mCardEntity.setBackImgFilePath(mCardBackPhotoPath);
 
-                getPresenter().saveCard(cardEntity);
+                getPresenter().saveCard(mCardEntity);
             }
         });
         mEtCardName.addTextChangedListener(new TextWatcher() {
@@ -204,15 +208,23 @@ public class CardEditActivity extends MVPActivity<CardEditContract.Presenter> im
         }
     }
 
-    private void setBarCodeView(String mBarCode) {
+    private void setBarCodeView(final String mBarCode) {
+        if (TextUtils.isEmpty(mBarCode)) {
+            return;
+        }
         mTvBarCode.setText(mBarCode);
 
-        BarCodeEncoder ecc = new BarCodeEncoder(mIvBarCode.getWidth(), mIvBarCode.getHeight());
-        try {
-            mIvBarCode.setImageBitmap(ecc.barcode(mBarCode));
-        } catch (Exception e) {
-            e.printStackTrace();
-        }
+        mIvBarCode.post(new Runnable() {
+            @Override
+            public void run() {
+                BarCodeEncoder ecc = new BarCodeEncoder(mIvBarCode.getWidth(), mIvBarCode.getHeight());
+                try {
+                    mIvBarCode.setImageBitmap(ecc.barcode(mBarCode));
+                } catch (Exception e) {
+                    e.printStackTrace();
+                }
+            }
+        });
     }
 
     private void crop(int requestCode) {
@@ -226,7 +238,7 @@ public class CardEditActivity extends MVPActivity<CardEditContract.Presenter> im
                 break;
         }
         if (pathUri == null) {
-            showShortToast("图片裁剪失败");
+            showShortToast(getString(R.string.crop_picture_failed));
             return;
         }
         UCrop.of(pathUri, pathUri)
@@ -246,7 +258,7 @@ public class CardEditActivity extends MVPActivity<CardEditContract.Presenter> im
             try {
                 photoFile = FileUtil.createTempFile(this, fileName);
                 if (photoFile == null) {
-                    showShortToast("保存图片失败,请确认是否授权读写存储卡的权限以及存储卡是否正确挂载");
+                    showShortToast(getString(R.string.save_photo_failed));
                     return;
                 }
                 switch (requestCode) {
@@ -259,7 +271,7 @@ public class CardEditActivity extends MVPActivity<CardEditContract.Presenter> im
                 }
             } catch (IOException ex) {
                 // Error occurred while creating the File
-                showShortToast("保存图片失败,请确认是否授权读写存储卡的权限以及存储卡是否正确挂载");
+                showShortToast(getString(R.string.save_photo_failed));
             }
             // Continue only if the File was successfully created
             Uri photoURI = Uri.fromFile(photoFile);//FileProvider.getUriForFile(this,"com.wonders.xlab.cardbag.fileprovider",photoFile);

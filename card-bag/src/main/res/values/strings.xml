@@ -11,4 +11,6 @@
     <string name="card_edit_cover_modify_card_front">修改卡正面</string>
     <string name="card_edit_cover_modify_card_back">修改卡背面</string>
     <string name="card_edit_cover_modify_bar_code">点击扫描条形码</string>
+    <string name="save_photo_failed">保存图片失败,请确认是否授权读写存储卡的权限以及存储卡是否正确挂载</string>
+    <string name="crop_picture_failed">图片裁剪失败</string>
 </resources>
