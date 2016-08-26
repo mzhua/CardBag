@@ -21,27 +21,12 @@ public abstract class BaseRecyclerViewAdapter<Bean,VH extends RecyclerView.ViewH
         mOnClickListener = onClickListener;
     }
 
+    public OnClickListener getOnClickListener() {
+        return mOnClickListener;
+    }
+
     public interface OnClickListener {
         void onItemClick(int position);
-    }
-
-    public interface OnLongClickListener {
-        void onItemLongClick(int position);
-    }
-
-    public abstract void onBindRecyclerViewHolder(VH holder, int position);
-
-    @Override
-    public void onBindViewHolder(final VH holder, int position) {
-        onBindRecyclerViewHolder(holder,position);
-        holder.itemView.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-                if (mOnClickListener != null) {
-                    mOnClickListener.onItemClick(holder.getAdapterPosition());
-                }
-            }
-        });
     }
 
     @Override

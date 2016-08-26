@@ -1,7 +1,11 @@
 package com.wonders.xlab.cardbag.ui.cardmy;
 
 import android.content.Intent;
+import android.graphics.PorterDuff;
+import android.graphics.drawable.Drawable;
 import android.os.Bundle;
+import android.support.v4.content.ContextCompat;
+import android.support.v7.app.ActionBar;
 import android.support.v7.widget.DefaultItemAnimator;
 import android.support.v7.widget.GridLayoutManager;
 import android.support.v7.widget.LinearLayoutManager;
@@ -10,7 +14,6 @@ import android.view.View;
 import android.widget.ImageView;
 
 import com.wonders.xlab.cardbag.R;
-import com.wonders.xlab.cardbag.base.BaseContract;
 import com.wonders.xlab.cardbag.base.BaseRecyclerViewAdapter;
 import com.wonders.xlab.cardbag.base.MVPActivity;
 import com.wonders.xlab.cardbag.data.CardMyModel;
@@ -19,14 +22,15 @@ import com.wonders.xlab.cardbag.ui.cardedit.CardEditActivity;
 import com.wonders.xlab.cardbag.ui.cardsearch.CardSearchActivity;
 import com.wonders.xlab.cardbag.util.DensityUtil;
 import com.wonders.xlab.cardbag.widget.SideBar;
-import com.wonders.xlab.cardbag.widget.TopBar;
+import com.wonders.xlab.cardbag.widget.XToolBarLayout;
 import com.wonders.xlab.cardbag.widget.decoration.HorizontalDividerItemDecoration;
 
 import java.util.List;
 
 public class CardMyActivity extends MVPActivity<CardMyContract.Presenter> implements CardMyContract.View {
 
-    private TopBar mTopBar;
+    private XToolBarLayout mXToolBarLayout;
+//    private TopBar mTopBar;
     private ImageView mIvAdd;
     private RecyclerView mIconRecyclerView;
     private RecyclerView mListRecyclerView;
@@ -50,11 +54,19 @@ public class CardMyActivity extends MVPActivity<CardMyContract.Presenter> implem
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.cb_my_card_activity);
-        mTopBar = (TopBar) findViewById(R.id.top_bar);
+        mXToolBarLayout = (XToolBarLayout) findViewById(R.id.xtbl);
+//        mTopBar = (TopBar) findViewById(R.id.top_bar);
         mSideBar = (SideBar) findViewById(R.id.side_bar);
         mIconRecyclerView = (RecyclerView) findViewById(R.id.recycler_view);
         mListRecyclerView = (RecyclerView) findViewById(R.id.recycler_view_list);
         mIvAdd = (ImageView) findViewById(R.id.iv_add);
+
+        mXToolBarLayout.setupNavigation(R.drawable.ic_clear_black_24dp);
+        setSupportActionBar(mXToolBarLayout.getToolbar());
+        final ActionBar actionBar = getSupportActionBar();
+        if (actionBar != null) {
+            actionBar.setDisplayShowTitleEnabled(false);
+        }
 
         setupListener();
         initRecyclerView();
@@ -71,15 +83,28 @@ public class CardMyActivity extends MVPActivity<CardMyContract.Presenter> implem
     }
 
     private void setupListener() {
-        mTopBar.setOnRightMenuClickListener(new TopBar.OnRightMenuClickListener() {
+        /*mTopBar.setOnRightMenuClickListener(new TopBar.OnRightMenuClickListener() {
             @Override
             public void onClick(View view) {
-                mSideBar.setVisibility(mIsIconMode ? View.VISIBLE : View.INVISIBLE);
-                ((ImageView) view).setImageResource(mIsIconMode ? R.drawable.ic_menu_icon : R.drawable.ic_menu_list);
-                mIsIconMode = !mIsIconMode;
-                switchRecyclerView();
+                if (mIconRVAdapter.isSelectionMode()) {
+
+                } else {
+                    mSideBar.setVisibility(mIsIconMode ? View.VISIBLE : View.INVISIBLE);
+                    ((ImageView) view).setImageResource(mIsIconMode ? R.drawable.ic_menu_icon : R.drawable.ic_menu_list);
+                    mIsIconMode = !mIsIconMode;
+                    switchRecyclerView();
+                }
             }
         });
+        mTopBar.setOnLeftMenuClickListener(new TopBar.OnLeftMenuClickListener() {
+            @Override
+            public void onClick(View view) {
+                if (mIconRVAdapter.isSelectionMode()) {
+                    mIconRVAdapter.setSelectionMode(false);
+                    mTopBar.setLeftMenuText("");
+                }
+            }
+        });*/
         mIvAdd.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
@@ -97,7 +122,6 @@ public class CardMyActivity extends MVPActivity<CardMyContract.Presenter> implem
     @Override
     protected void onStart() {
         super.onStart();
-
         getPresenter().getMyCards();
     }
 
@@ -111,6 +135,15 @@ public class CardMyActivity extends MVPActivity<CardMyContract.Presenter> implem
                     Intent intent = new Intent(CardMyActivity.this, CardEditActivity.class);
                     intent.putExtra("data", mIconRVAdapter.getBean(position));
                     startActivityForResult(intent, 12);
+                }
+            });
+            mIconRVAdapter.setOnSelectionModeChangeListener(new CardMyIconRVAdapter.OnSelectionModeChangeListener() {
+                @Override
+                public void onSelectModeChange(boolean isSelectionMode) {
+                    if (isSelectionMode) {
+//                        mTopBar.setRightMenuText("删除");
+//                        mTopBar.setLeftMenuText("取消");
+                    }
                 }
             });
             mIconRecyclerView.setAdapter(mIconRVAdapter);

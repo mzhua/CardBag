@@ -12,13 +12,17 @@ android {
         versionName "1.0"
     }
     buildTypes {
+        debug {
+            minifyEnabled false
+            proguardFiles getDefaultProguardFile('proguard-android.txt'), 'proguard-rules.pro'
+        }
         release {
             minifyEnabled false
             proguardFiles getDefaultProguardFile('proguard-android.txt'), 'proguard-rules.pro'
         }
     }
-    repositories{
-        flatDir{
+    repositories {
+        flatDir {
             dirs 'libs'
         }
     }
@@ -27,7 +31,8 @@ android {
 dependencies {
     compile fileTree(include: ['*.jar'], dir: 'libs')
     testCompile 'junit:junit:4.12'
-    compile 'com.android.support:appcompat-v7:23.4.0'
     compile project(':card-bag')
 //    compile 'com.wonders.xlab.cardbag:card-bag:1.0.3'
+    compile 'com.android.support:appcompat-v7:23.4.0'
+    compile 'com.android.support:design:23.4.0'
 }

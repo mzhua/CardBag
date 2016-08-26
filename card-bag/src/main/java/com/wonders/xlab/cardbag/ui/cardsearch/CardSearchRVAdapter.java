@@ -2,6 +2,7 @@ package com.wonders.xlab.cardbag.ui.cardsearch;
 
 import android.support.v7.widget.RecyclerView;
 import android.text.TextUtils;
+import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -51,13 +52,21 @@ public class CardSearchRVAdapter extends BaseRecyclerViewAdapter<CardEntity, Rec
     }
 
     @Override
-    public void onBindRecyclerViewHolder(RecyclerView.ViewHolder holder, int position) {
+    public void onBindViewHolder(final RecyclerView.ViewHolder holder, int position) {
         if (getItemViewType(position) == ITEM_TYPE_CARD) {
             ItemViewHolder viewHolder = (ItemViewHolder) holder;
             CardEntity cardEntity = getBean(position);
             viewHolder.mTextView.setText(cardEntity.getCardName());
             ImageViewUtil.load(holder.itemView.getContext(), cardEntity.getImgUrl(), viewHolder.mImageView);
         }
+        holder.itemView.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                if (null != getOnClickListener()) {
+                    getOnClickListener().onItemClick(holder.getAdapterPosition());
+                }
+            }
+        });
     }
 
     private class ItemViewHolder extends RecyclerView.ViewHolder {

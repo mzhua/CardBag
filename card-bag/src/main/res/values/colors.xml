@@ -18,4 +18,6 @@
     <color name="foreground_cover">#6a848484</color>
 
     <color name="ucrop_color_toolbar_widget" tools:override="true">@color/topBarBackground</color>
+    <color name="cbTitleColor">@color/textBlack</color>
+    <color name="cbToolbar">@color/colorPrimary</color>
 </resources>

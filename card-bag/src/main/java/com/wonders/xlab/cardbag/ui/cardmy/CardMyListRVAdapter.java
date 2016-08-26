@@ -63,7 +63,7 @@ public class CardMyListRVAdapter extends BaseRecyclerViewAdapter<CardEntity, Car
     }
 
     @Override
-    public void onBindRecyclerViewHolder(ItemViewHolder holder, int position) {
+    public void onBindViewHolder(ItemViewHolder holder, int position) {
         CardEntity cardEntity = getBean(position);
         holder.mTextView.setText(cardEntity.getCardName());
         ImageViewUtil.load(holder.itemView.getContext(), cardEntity.getImgUrl(), holder.mImageView);
@@ -77,6 +77,14 @@ public class CardMyListRVAdapter extends BaseRecyclerViewAdapter<CardEntity, Car
             super(itemView);
             mImageView = (ImageView) itemView.findViewById(R.id.iv_card);
             mTextView = (TextView) itemView.findViewById(R.id.tv_name);
+            itemView.setOnClickListener(new View.OnClickListener() {
+                @Override
+                public void onClick(View v) {
+                    if (null != getOnClickListener()) {
+                        getOnClickListener().onItemClick(getAdapterPosition());
+                    }
+                }
+            });
         }
     }
 }

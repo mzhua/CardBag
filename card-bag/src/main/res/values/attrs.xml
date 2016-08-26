@@ -18,17 +18,17 @@
     </declare-styleable>
 
     <declare-styleable name="RecyclerViewPager">
-        <attr name="rvp_triggerOffset" format="float" />
-        <attr name="rvp_flingFactor" format="float" />
-        <attr name="rvp_singlePageFling" format="boolean" />
+        <attr name="rvp_triggerOffset" format="float"/>
+        <attr name="rvp_flingFactor" format="float"/>
+        <attr name="rvp_singlePageFling" format="boolean"/>
     </declare-styleable>
 
     <declare-styleable name="RatioView">
-        <attr name="rvVerticalWeight" format="integer" />
-        <attr name="rvHorizontalWeight" format="integer" />
+        <attr name="rvVerticalWeight" format="integer"/>
+        <attr name="rvHorizontalWeight" format="integer"/>
         <attr name="rvBaseDirection" format="enum">
-            <enum name="horizontal" value="0" />
-            <enum name="vertical" value="1" />
+            <enum name="horizontal" value="0"/>
+            <enum name="vertical" value="1"/>
         </attr>
         <attr name="rvForegroundColor" format="color"/>
         <attr name="rvShowForeground" format="boolean"/>
@@ -39,11 +39,11 @@
     </declare-styleable>
 
     <declare-styleable name="RatioImageView">
-        <attr name="rivVerticalWeight" format="integer" />
-        <attr name="rivHorizontalWeight" format="integer" />
+        <attr name="rivVerticalWeight" format="integer"/>
+        <attr name="rivHorizontalWeight" format="integer"/>
         <attr name="rivBaseDirection" format="enum">
-            <enum name="horizontal" value="0" />
-            <enum name="vertical" value="1" />
+            <enum name="horizontal" value="0"/>
+            <enum name="vertical" value="1"/>
         </attr>
         <attr name="rivForegroundColor" format="color"/>
         <attr name="rivShowForeground" format="boolean"/>
@@ -60,5 +60,16 @@
         <attr name="fivForegroundTextSize" format="dimension"/>
         <attr name="fivForegroundTextColor" format="color"/>
         <attr name="fivForegroundCornerRadius" format="dimension"/>
+    </declare-styleable>
+
+    <declare-styleable name="XToolBarLayout">
+        <attr name="xtblTitleText" format="string"/>
+        <attr name="xtblTitleColor" format="color"/>
+        <attr name="xtblTitleGravity" format="enum">
+            <enum name="left" value="2"/>
+            <enum name="center" value="4"/>
+        </attr>
+        <attr name="xtblBackgroundColor" format="color"/>
+        <attr name="xtblShowDivider" format="boolean"/>
     </declare-styleable>
 </resources>

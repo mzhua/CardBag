@@ -3,6 +3,7 @@ package com.wonders.xlab.cardbag.data;
 import com.wonders.xlab.cardbag.base.BaseModel;
 import com.wonders.xlab.cardbag.base.DefaultException;
 import com.wonders.xlab.cardbag.data.entity.CardEntity;
+import com.wonders.xlab.cardbag.manager.RealmManager;
 import com.wonders.xlab.cardbag.ui.cardedit.CardEditContract;
 
 import io.realm.Realm;
@@ -15,7 +16,7 @@ public class CardEditModel extends BaseModel implements CardEditContract.Model {
 
     @Override
     public void saveCard(final CardEntity cardEntity, final Callback<String> callback) {
-        Realm realm = Realm.getDefaultInstance();
+        Realm realm = RealmManager.getRealm();
         realm.executeTransactionAsync(new Realm.Transaction() {
             @Override
             public void execute(Realm realm) {

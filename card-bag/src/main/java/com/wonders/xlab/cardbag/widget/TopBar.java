@@ -3,6 +3,7 @@ package com.wonders.xlab.cardbag.widget;
 import android.content.Context;
 import android.content.res.TypedArray;
 import android.support.annotation.ColorInt;
+import android.support.annotation.IdRes;
 import android.support.annotation.IntDef;
 import android.text.TextUtils;
 import android.util.AttributeSet;
@@ -296,6 +297,30 @@ public class TopBar extends RelativeLayout {
         if (this.mTitleView != null && !TextUtils.isEmpty(title)) {
             this.mTitleView.setText(title);
         }
+    }
+
+    public void setRightMenuText(String text) {
+        mRightMenuText = text;
+        mRightMenuIconResId = RESOURCE_ID_NONE;
+        setupMenuView();
+    }
+
+    public void setLeftMenuText(String text) {
+        mLeftMenuText = text;
+        mLeftMenuIconResId = RESOURCE_ID_NONE;
+        setupMenuView();
+    }
+
+    public void setRightMenuIcon(@IdRes int icon) {
+        mRightMenuText = "";
+        mRightMenuIconResId = icon;
+        setupMenuView();
+    }
+
+    public void setLeftMenuIcon(@IdRes int icon) {
+        mLeftMenuText = "";
+        mLeftMenuIconResId = icon;
+        setupMenuView();
     }
 
     public void setMenuSize(int menuSize) {
