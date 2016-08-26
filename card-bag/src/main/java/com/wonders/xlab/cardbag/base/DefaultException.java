@@ -6,4 +6,18 @@ package com.wonders.xlab.cardbag.base;
 
 public class DefaultException extends Exception {
 
+    public DefaultException() {
+    }
+
+    public DefaultException(String detailMessage) {
+        super(detailMessage);
+    }
+
+    public DefaultException(String detailMessage, Throwable throwable) {
+        super(detailMessage, throwable);
+    }
+
+    public DefaultException(Throwable throwable) {
+        super(throwable);
+    }
 }

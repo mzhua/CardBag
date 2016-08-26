@@ -19,7 +19,7 @@ import com.wonders.xlab.cardbag.ui.cardedit.CardEditActivity;
 
 import java.util.List;
 
-public class CardSearchActivity extends MVPActivity implements CardSearchContract.View {
+public class CardSearchActivity extends MVPActivity<CardSearchContract.Presenter> implements CardSearchContract.View {
     private final int REQUEST_CODE_CARD_EDIT = 1234;
 
     private RecyclerView mRecyclerView;
@@ -28,6 +28,14 @@ public class CardSearchActivity extends MVPActivity implements CardSearchContrac
     private CardSearchRVAdapter mCardSearchRVAdapter;
 
     private CardSearchContract.Presenter mPresenter;
+
+    @Override
+    public CardSearchContract.Presenter getPresenter() {
+        if (mPresenter == null) {
+            mPresenter = new CardSearchPresenter(this);
+        }
+        return mPresenter;
+    }
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -39,24 +47,17 @@ public class CardSearchActivity extends MVPActivity implements CardSearchContrac
         mRecyclerView.setItemAnimator(new DefaultItemAnimator());
         mRecyclerView.setLayoutManager(new GridLayoutManager(this, 2, GridLayoutManager.VERTICAL, false));
 
-        mPresenter = new CardSearchPresenter(this);
-
         mEtCardName.setOnEditorActionListener(new TextView.OnEditorActionListener() {
             @Override
             public boolean onEditorAction(TextView v, int actionId, KeyEvent event) {
                 if (actionId == EditorInfo.IME_ACTION_SEARCH) {
-                    mPresenter.searchByCardName(v.getText().toString());
+                    getPresenter().searchByCardName(v.getText().toString());
                     hideKeyboardForce(v.getWindowToken());
                     return true;
                 }
                 return false;
             }
         });
-    }
-
-    @Override
-    protected BaseContract.Presenter getPresenter() {
-        return mPresenter;
     }
 
     @Override

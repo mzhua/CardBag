@@ -13,8 +13,8 @@ import android.widget.ImageView;
 import android.widget.TextView;
 
 import com.wonders.xlab.cardbag.R;
-import com.wonders.xlab.cardbag.base.BaseContract;
 import com.wonders.xlab.cardbag.base.MVPActivity;
+import com.wonders.xlab.cardbag.data.CardEditModel;
 import com.wonders.xlab.cardbag.data.entity.CardEntity;
 import com.wonders.xlab.cardbag.util.FileUtil;
 import com.wonders.xlab.cardbag.util.ImageViewUtil;
@@ -27,12 +27,7 @@ import com.yalantis.ucrop.UCrop;
 import java.io.File;
 import java.io.IOException;
 
-import io.realm.Realm;
-
-import static android.R.attr.maxHeight;
-import static android.R.attr.maxWidth;
-
-public class CardEditActivity extends MVPActivity {
+public class CardEditActivity extends MVPActivity<CardEditContract.Presenter> implements CardEditContract.View {
     private final int REQUEST_CODE_MASK = 1;
     private final int REQUEST_CODE_SCAN_BAR_CODE = REQUEST_CODE_MASK << 1;
     private final int REQUEST_CODE_TAKE_PHOTO_CARD_FRONT = REQUEST_CODE_MASK << 2;
@@ -56,9 +51,14 @@ public class CardEditActivity extends MVPActivity {
 
     private UCrop.Options mOptions;
 
+    private CardEditContract.Presenter mPresenter;
+
     @Override
-    protected BaseContract.Presenter getPresenter() {
-        return null;
+    public CardEditContract.Presenter getPresenter() {
+        if (null == mPresenter) {
+            mPresenter = new CardEditPresenter(this, new CardEditModel());
+        }
+        return mPresenter;
     }
 
     @Override
@@ -118,32 +118,14 @@ public class CardEditActivity extends MVPActivity {
         mTopBar.setOnRightMenuClickListener(new TopBar.OnRightMenuClickListener() {
             @Override
             public void onClick(View view) {
-                Realm realm = Realm.getDefaultInstance();
-                realm.executeTransactionAsync(new Realm.Transaction() {
-                    @Override
-                    public void execute(Realm realm) {
-                        CardEntity cardEntity = realm.createObject(CardEntity.class);
-                        cardEntity.setId(System.currentTimeMillis());
-                        cardEntity.setCardName(mEtCardName.getText().toString());
-                        cardEntity.setImgUrl(mExtraData.getImgUrl());
-                        cardEntity.setBarCode(mTvBarCode.getText().toString());
-                        cardEntity.setFrontImgFilePath(mCardFrontPhotoPath);
-                        cardEntity.setBackImgFilePath(mCardBackPhotoPath);
-                        cardEntity.setCreateDate(System.currentTimeMillis());
+                CardEntity cardEntity = new CardEntity();
+                cardEntity.setCardName(mEtCardName.getText().toString());
+                cardEntity.setImgUrl(mExtraData.getImgUrl());
+                cardEntity.setBarCode(mTvBarCode.getText().toString());
+                cardEntity.setFrontImgFilePath(mCardFrontPhotoPath);
+                cardEntity.setBackImgFilePath(mCardBackPhotoPath);
 
-                    }
-                }, new Realm.Transaction.OnSuccess() {
-                    @Override
-                    public void onSuccess() {
-                        setResult(RESULT_OK);
-                        finish();
-                    }
-                }, new Realm.Transaction.OnError() {
-                    @Override
-                    public void onError(Throwable error) {
-                        showShortToast(error.getMessage());
-                    }
-                });
+                getPresenter().saveCard(cardEntity);
             }
         });
         mEtCardName.addTextChangedListener(new TextWatcher() {
@@ -200,7 +182,6 @@ public class CardEditActivity extends MVPActivity {
             switch (requestCode) {
                 case REQUEST_CODE_SCAN_BAR_CODE:
                     String mBarCode = data.getStringExtra(XQrScanner.EXTRA_RESULT_BAR_OR_CODE_STRING);
-
                     setBarCodeView(mBarCode);
                     break;
                 case REQUEST_CODE_TAKE_PHOTO_CARD_FRONT:
@@ -250,7 +231,7 @@ public class CardEditActivity extends MVPActivity {
         }
         UCrop.of(pathUri, pathUri)
                 .withAspectRatio(3, 2)
-                .withMaxResultSize(maxWidth, maxHeight)
+//                .withMaxResultSize(maxWidth, maxHeight)
                 .withOptions(mOptions)
                 .start(this, requestCode);
 
@@ -285,5 +266,11 @@ public class CardEditActivity extends MVPActivity {
             takePictureIntent.putExtra(MediaStore.EXTRA_OUTPUT, photoURI);
             startActivityForResult(takePictureIntent, requestCode);
         }
+    }
+
+    @Override
+    public void saveSuccess() {
+        setResult(RESULT_OK);
+        finish();
     }
 }

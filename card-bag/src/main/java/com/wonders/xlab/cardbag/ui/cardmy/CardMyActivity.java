@@ -13,7 +13,7 @@ import com.wonders.xlab.cardbag.R;
 import com.wonders.xlab.cardbag.base.BaseContract;
 import com.wonders.xlab.cardbag.base.BaseRecyclerViewAdapter;
 import com.wonders.xlab.cardbag.base.MVPActivity;
-import com.wonders.xlab.cardbag.data.MyCardModel;
+import com.wonders.xlab.cardbag.data.CardMyModel;
 import com.wonders.xlab.cardbag.data.entity.CardEntity;
 import com.wonders.xlab.cardbag.ui.cardedit.CardEditActivity;
 import com.wonders.xlab.cardbag.ui.cardsearch.CardSearchActivity;
@@ -24,7 +24,7 @@ import com.wonders.xlab.cardbag.widget.decoration.HorizontalDividerItemDecoratio
 
 import java.util.List;
 
-public class CardMyActivity extends MVPActivity implements CardMyContract.View {
+public class CardMyActivity extends MVPActivity<CardMyContract.Presenter> implements CardMyContract.View {
 
     private TopBar mTopBar;
     private ImageView mIvAdd;
@@ -36,11 +36,13 @@ public class CardMyActivity extends MVPActivity implements CardMyContract.View {
 
     private CardMyContract.Presenter mPresenter;
 
-
     private boolean mIsIconMode = true;
 
     @Override
-    protected BaseContract.Presenter getPresenter() {
+    public CardMyContract.Presenter getPresenter() {
+        if (mPresenter == null) {
+            mPresenter = new CardMyPresenter(new CardMyModel(), this);
+        }
         return mPresenter;
     }
 
@@ -95,10 +97,8 @@ public class CardMyActivity extends MVPActivity implements CardMyContract.View {
     @Override
     protected void onStart() {
         super.onStart();
-        if (mPresenter == null) {
-            mPresenter = new CardMyPresenter(new MyCardModel(), this);
-        }
-        mPresenter.getMyCards();
+
+        getPresenter().getMyCards();
     }
 
     @Override

@@ -16,12 +16,12 @@ import io.realm.Sort;
  * Created by hua on 16/8/21.
  */
 
-public class MyCardModel extends BaseModel implements CardMyContract.Model {
+public class CardMyModel extends BaseModel implements CardMyContract.Model {
 
     @Override
     public void getMyCards(final Callback<List<CardEntity>> callback) {
         Realm realm = Realm.getDefaultInstance();
-        final RealmResults<CardEntity> allAsync = realm.where(CardEntity.class).findAllSortedAsync("mCreateDate", Sort.DESCENDING);
+        RealmResults<CardEntity> allAsync = realm.where(CardEntity.class).findAllSortedAsync("mCreateDate", Sort.DESCENDING);
         allAsync.addChangeListener(new RealmChangeListener<RealmResults<CardEntity>>() {
             @Override
             public void onChange(RealmResults<CardEntity> element) {

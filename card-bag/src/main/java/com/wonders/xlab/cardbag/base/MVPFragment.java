@@ -3,9 +3,9 @@ package com.wonders.xlab.cardbag.base;
 /**
  * Created by hua on 16/8/19.
  */
-public abstract class MVPFragment extends BaseFragment {
+public abstract class MVPFragment<P extends BaseContract.Presenter> extends BaseFragment {
 
-    protected abstract BaseContract.Presenter getPresenter();
+    public abstract P getPresenter();
 
     @Override
     public void onDestroy() {

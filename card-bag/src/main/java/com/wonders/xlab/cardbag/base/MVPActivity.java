@@ -3,9 +3,9 @@ package com.wonders.xlab.cardbag.base;
 /**
  * Created by hua on 16/8/19.
  */
-public abstract class MVPActivity extends BaseActivity {
+public abstract class MVPActivity<P extends BaseContract.Presenter> extends BaseActivity {
 
-    protected abstract BaseContract.Presenter getPresenter();
+    public abstract P getPresenter();
 
     @Override
     protected void onDestroy() {
