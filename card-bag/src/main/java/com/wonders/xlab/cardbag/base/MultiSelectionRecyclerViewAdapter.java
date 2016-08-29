@@ -8,12 +8,14 @@ import java.util.HashSet;
  * Created by hua on 16/8/29.
  * {@link Bean } should override equals and hashCode
  */
-public abstract class MultiSelectionRecyclerViewAdapter<Bean, VH extends RecyclerView.ViewHolder> extends BaseRecyclerViewAdapter<Bean, VH> {
-    private HashSet<Bean> mSelectedItemPositions;
+public abstract class MultiSelectionRecyclerViewAdapter<ID, Bean, VH extends RecyclerView.ViewHolder> extends BaseRecyclerViewAdapter<Bean, VH> {
+    private HashSet<ID> mSelectedItemIdentities;
 
     private boolean mSelectionMode;
 
     private OnSelectionModeChangeListener mOnSelectionModeChangeListener;
+
+    public abstract ID getIdentity(Bean bean);
 
     public void setOnSelectionModeChangeListener(OnSelectionModeChangeListener onSelectionModeChangeListener) {
         mOnSelectionModeChangeListener = onSelectionModeChangeListener;
@@ -26,13 +28,8 @@ public abstract class MultiSelectionRecyclerViewAdapter<Bean, VH extends Recycle
     @Override
     protected boolean onItemClick(VH holder, int position) {
         if (isSelectionMode()) {
-            if (!holder.itemView.isSelected()) {
-                holder.itemView.setSelected(true);
-                mSelectedItemPositions.add(getBean(position));
-            } else {
-                holder.itemView.setSelected(false);
-                mSelectedItemPositions.remove(getBean(position));
-            }
+            updateSelectedItemIdentities(getIdentity(getBean(position)));
+            notifyItemChanged(position);
         }
         return false;
     }
@@ -40,28 +37,30 @@ public abstract class MultiSelectionRecyclerViewAdapter<Bean, VH extends Recycle
     @Override
     protected boolean onItemLongClick(VH holder, int position) {
         if (null != mOnSelectionModeChangeListener && !isSelectionMode()) {
-            if (null == mSelectedItemPositions) {
-                mSelectedItemPositions = new HashSet<>();
+            if (null == mSelectedItemIdentities) {
+                mSelectedItemIdentities = new HashSet<>();
             } else {
-                mSelectedItemPositions.clear();
+                mSelectedItemIdentities.clear();
             }
-            mOnSelectionModeChangeListener.onSelectModeChange(true);
-            mSelectedItemPositions.add(getBean(position));
 
-            holder.itemView.setSelected(true);
+            mOnSelectionModeChangeListener.onSelectModeChange(true);
+
+            updateSelectedItemIdentities(getIdentity(getBean(position)));
+            setSelectionMode(true);
+
+            notifyItemChanged(position);
         }
-        setSelectionMode(true);
         return false;
     }
 
-    public void deleteSelectedItems() {
-        if (mSelectedItemPositions != null) {
-            for (Bean selectedItemBean : mSelectedItemPositions) {
-                getBeanList().remove(selectedItemBean);
-            }
-            notifyDataSetChanged();
-            mSelectedItemPositions.clear();
-            mSelectedItemPositions = null;
+    /**
+     * @param identity
+     */
+    private void updateSelectedItemIdentities(ID identity) {
+        if (!mSelectedItemIdentities.contains(identity)) {
+            mSelectedItemIdentities.add(identity);
+        } else {
+            mSelectedItemIdentities.remove(identity);
         }
     }
 
@@ -69,15 +68,19 @@ public abstract class MultiSelectionRecyclerViewAdapter<Bean, VH extends Recycle
         return mSelectionMode;
     }
 
+    protected boolean isSelected(int position) {
+        return !(mSelectedItemIdentities == null || mSelectedItemIdentities.size() <= 0) && mSelectedItemIdentities.contains(getIdentity(getBean(position)));
+    }
+
     public void setSelectionMode(boolean selectionMode) {
         mSelectionMode = selectionMode;
-        if (mSelectedItemPositions != null && !selectionMode) {
-            mSelectedItemPositions.clear();
+        if (mSelectedItemIdentities != null && !selectionMode) {
+            mSelectedItemIdentities.clear();
         }
         notifyDataSetChanged();
     }
 
-    public HashSet<Bean> getSelectedItemPositions() {
-        return mSelectedItemPositions;
+    public HashSet<ID> getSelectedItemIdentities() {
+        return mSelectedItemIdentities;
     }
 }

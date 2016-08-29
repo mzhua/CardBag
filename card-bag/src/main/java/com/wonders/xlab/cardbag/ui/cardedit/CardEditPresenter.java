@@ -1,7 +1,5 @@
 package com.wonders.xlab.cardbag.ui.cardedit;
 
-import android.text.TextUtils;
-
 import com.wonders.xlab.cardbag.base.BaseContract;
 import com.wonders.xlab.cardbag.base.BasePresenter;
 import com.wonders.xlab.cardbag.base.DefaultException;
@@ -22,14 +20,14 @@ public class CardEditPresenter extends BasePresenter implements CardEditContract
 
     @Override
     public void saveCard(CardEntity cardEntity) {
-        if (TextUtils.isEmpty(cardEntity.getBarCode())) {
+        /*if (TextUtils.isEmpty(cardEntity.getBarCode())) {
             mView.showToastMessage("请先扫描条形码");
             return;
         }
         if (TextUtils.isEmpty(cardEntity.getCardName())) {
             mView.showToastMessage("请输入卡片名称");
             return;
-        }
+        }*/
         long timeMillis = System.currentTimeMillis();
         cardEntity.setId(cardEntity.getId() == 0 ? timeMillis : cardEntity.getId());
         cardEntity.setCreateDate(timeMillis);

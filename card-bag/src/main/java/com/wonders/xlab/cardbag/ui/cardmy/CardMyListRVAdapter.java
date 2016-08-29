@@ -12,7 +12,6 @@ import android.widget.TextView;
 
 import com.github.promeg.pinyinhelper.Pinyin;
 import com.wonders.xlab.cardbag.R;
-import com.wonders.xlab.cardbag.base.BaseRecyclerViewAdapter;
 import com.wonders.xlab.cardbag.base.MultiSelectionRecyclerViewAdapter;
 import com.wonders.xlab.cardbag.data.entity.CardEntity;
 import com.wonders.xlab.cardbag.util.ImageViewUtil;
@@ -25,7 +24,7 @@ import java.util.List;
  * Created by hua on 16/8/22.
  */
 
-public class CardMyListRVAdapter extends MultiSelectionRecyclerViewAdapter<CardEntity, CardMyListRVAdapter.ItemViewHolder> {
+public class CardMyListRVAdapter extends MultiSelectionRecyclerViewAdapter<Long,CardEntity, CardMyListRVAdapter.ItemViewHolder> {
 
     @Override
     public void setDatas(List<CardEntity> mBeanList) {
@@ -59,10 +58,14 @@ public class CardMyListRVAdapter extends MultiSelectionRecyclerViewAdapter<CardE
     }
 
     @Override
+    public Long getIdentity(CardEntity cardEntity) {
+        return cardEntity.getId();
+    }
+
+    @Override
     protected boolean onItemClick(ItemViewHolder holder, int position) {
         super.onItemClick(holder, position);
         if (isSelectionMode()) {
-            holder.mCheckBox.setChecked(!holder.mCheckBox.isChecked());
             return true;
         } else {
             return false;
@@ -73,9 +76,9 @@ public class CardMyListRVAdapter extends MultiSelectionRecyclerViewAdapter<CardE
     protected boolean onItemLongClick(ItemViewHolder holder, int position) {
         super.onItemLongClick(holder, position);
         if (isSelectionMode()) {
-            holder.mCheckBox.setChecked(!holder.mCheckBox.isChecked());
+            return true;
         }
-        return true;
+        return false;
     }
 
     @Override
@@ -90,12 +93,8 @@ public class CardMyListRVAdapter extends MultiSelectionRecyclerViewAdapter<CardE
         CardEntity cardEntity = getBean(position);
         holder.mTextView.setText(cardEntity.getCardName());
         ImageViewUtil.load(holder.itemView.getContext(), cardEntity.getImgUrl(), holder.mImageView);
-        if (isSelectionMode()) {
-            holder.mCheckBox.setVisibility(View.VISIBLE);
-        } else {
-            holder.mCheckBox.setChecked(false);
-            holder.mCheckBox.setVisibility(View.GONE);
-        }
+        holder.mCheckBox.setVisibility(isSelectionMode() ? View.VISIBLE : View.GONE);
+        holder.mCheckBox.setChecked(isSelected(position));
     }
 
     class ItemViewHolder extends RecyclerView.ViewHolder {

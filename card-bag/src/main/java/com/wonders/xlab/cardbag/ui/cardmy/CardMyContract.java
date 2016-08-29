@@ -20,13 +20,13 @@ public interface CardMyContract {
     interface Presenter extends BaseContract.Presenter{
         void getMyCards();
 
-        void deleteCards(HashSet<CardEntity> cardEntities);
+        void deleteCards(HashSet<Long> ids);
     }
 
     interface Model extends BaseContract.Model {
         void getMyCards(BaseContract.Model.Callback<List<CardEntity>> callback);
 
-        void deleteCards(HashSet<CardEntity> cardEntities,BaseContract.Model.Callback<String> callback);
+        void deleteCards(HashSet<Long> ids, Callback<String> callback);
     }
 
 }
