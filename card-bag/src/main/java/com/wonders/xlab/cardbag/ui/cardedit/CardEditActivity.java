@@ -7,6 +7,8 @@ import android.provider.MediaStore;
 import android.text.Editable;
 import android.text.TextUtils;
 import android.text.TextWatcher;
+import android.view.Menu;
+import android.view.MenuItem;
 import android.view.View;
 import android.widget.EditText;
 import android.widget.ImageView;
@@ -19,7 +21,7 @@ import com.wonders.xlab.cardbag.data.entity.CardEntity;
 import com.wonders.xlab.cardbag.util.FileUtil;
 import com.wonders.xlab.cardbag.util.ImageViewUtil;
 import com.wonders.xlab.cardbag.widget.RatioImageView;
-import com.wonders.xlab.cardbag.widget.TopBar;
+import com.wonders.xlab.cardbag.widget.XToolBarLayout;
 import com.wonders.xlab.qrscanner.BarCodeEncoder;
 import com.wonders.xlab.qrscanner.XQrScanner;
 import com.yalantis.ucrop.UCrop;
@@ -35,7 +37,7 @@ public class CardEditActivity extends MVPActivity<CardEditContract.Presenter> im
     private final int REQUEST_CODE_CROP_FRONT = REQUEST_CODE_MASK << 4;
     private final int REQUEST_CODE_CROP_BACK = REQUEST_CODE_MASK << 5;
 
-    private TopBar mTopBar;
+    private XToolBarLayout mToolBarLayout;
     private RatioImageView mIvCard;
     private RatioImageView mIvCardFront;
     private RatioImageView mIvCardBack;
@@ -65,7 +67,7 @@ public class CardEditActivity extends MVPActivity<CardEditContract.Presenter> im
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.cb_card_edit_activity);
-        mTopBar = (TopBar) findViewById(R.id.top_bar);
+        mToolBarLayout = (XToolBarLayout) findViewById(R.id.xtbl);
         mIvCard = (RatioImageView) findViewById(R.id.iv_card);
         mIvCardFront = (RatioImageView) findViewById(R.id.iv_card_front);
         mIvCardBack = (RatioImageView) findViewById(R.id.iv_card_back);
@@ -79,58 +81,44 @@ public class CardEditActivity extends MVPActivity<CardEditContract.Presenter> im
         initWithIntentExtra();
 
         initUCropOptions();
+
+        setupActionBar(mToolBarLayout.getToolbar());
     }
 
     private void initWithIntentExtra() {
         Intent intent = getIntent();
         if (intent != null) {
-            mCardEntity = intent.getParcelableExtra("data");
+            mCardEntity = new CardEntity((CardEntity) intent.getParcelableExtra("data"));
 
-            if (null != mCardEntity) {
-                mEtCardName.setText(mCardEntity.getCardName());
-                setBarCodeView(mCardEntity.getBarCode());
-                ImageViewUtil.load(this, mCardEntity.getImgUrl(), mIvCard);
-                if (TextUtils.isEmpty(mCardEntity.getFrontImgUrl())) {
-                    mCardFrontPhotoPath = mCardEntity.getFrontImgFilePath();
-                    if (!TextUtils.isEmpty(mCardFrontPhotoPath)) {
-                        ImageViewUtil.load(this, Uri.parse("file:" + mCardFrontPhotoPath), mIvCardFront);
-                    }
-                } else {
-                    ImageViewUtil.load(this, mCardEntity.getFrontImgUrl(), mIvCardFront);
+            mEtCardName.setText(mCardEntity.getCardName());
+            setBarCodeView(mCardEntity.getBarCode());
+            ImageViewUtil.load(this, mCardEntity.getImgUrl(), mIvCard);
+            if (TextUtils.isEmpty(mCardEntity.getFrontImgUrl())) {
+                mCardFrontPhotoPath = mCardEntity.getFrontImgFilePath();
+                if (!TextUtils.isEmpty(mCardFrontPhotoPath)) {
+                    ImageViewUtil.load(this, Uri.parse("file:" + mCardFrontPhotoPath), mIvCardFront);
                 }
-                if (TextUtils.isEmpty(mCardEntity.getBackImgUrl())) {
-                    mCardBackPhotoPath = mCardEntity.getBackImgFilePath();
-                    if (!TextUtils.isEmpty(mCardBackPhotoPath)) {
-                        ImageViewUtil.load(this, Uri.parse("file:" + mCardBackPhotoPath), mIvCardBack);
-                    }
-                } else {
-                    ImageViewUtil.load(this, mCardEntity.getBackImgUrl(), mIvCardBack);
+            } else {
+                ImageViewUtil.load(this, mCardEntity.getFrontImgUrl(), mIvCardFront);
+            }
+            if (TextUtils.isEmpty(mCardEntity.getBackImgUrl())) {
+                mCardBackPhotoPath = mCardEntity.getBackImgFilePath();
+                if (!TextUtils.isEmpty(mCardBackPhotoPath)) {
+                    ImageViewUtil.load(this, Uri.parse("file:" + mCardBackPhotoPath), mIvCardBack);
                 }
+            } else {
+                ImageViewUtil.load(this, mCardEntity.getBackImgUrl(), mIvCardBack);
+            }
 
-                if (mEtCardName.length() > 0) {
-                    mEtCardName.setSelection(mEtCardName.length());
-                }
+            if (mEtCardName.length() > 0) {
+                mEtCardName.setSelection(mEtCardName.length());
             }
         }
 
-        mTopBar.setTitle(mCardEntity == null || TextUtils.isEmpty(mCardEntity.getBarCode()) ? getString(R.string.title_card_edit_add) : getString(R.string.title_card_edit_edit));
+        mToolBarLayout.setTitle(mCardEntity == null || TextUtils.isEmpty(mCardEntity.getBarCode()) ? getString(R.string.title_card_edit_add) : getString(R.string.title_card_edit_edit));
     }
 
     private void setupViewListener() {
-        mTopBar.setOnRightMenuClickListener(new TopBar.OnRightMenuClickListener() {
-            @Override
-            public void onClick(View view) {
-                if (mCardEntity == null) {
-                    mCardEntity = new CardEntity();
-                }
-                mCardEntity.setCardName(mEtCardName.getText().toString());
-                mCardEntity.setBarCode(mTvBarCode.getText().toString());
-                mCardEntity.setFrontImgFilePath(mCardFrontPhotoPath);
-                mCardEntity.setBackImgFilePath(mCardBackPhotoPath);
-
-                getPresenter().saveCard(mCardEntity);
-            }
-        });
         mEtCardName.addTextChangedListener(new TextWatcher() {
             @Override
             public void beforeTextChanged(CharSequence s, int start, int count, int after) {
@@ -157,7 +145,7 @@ public class CardEditActivity extends MVPActivity<CardEditContract.Presenter> im
     private void initUCropOptions() {
         if (mOptions == null) {
             mOptions = new UCrop.Options();
-            int color = getResources().getColor(R.color.topBarBackground);
+            int color = getResources().getColor(R.color.cbTopBarBackground);
             mOptions.setToolbarColor(color);
             mOptions.setToolbarWidgetColor(getResources().getColor(R.color.textBlack));
             mOptions.setStatusBarColor(getResources().getColor(R.color.textBlack));
@@ -283,5 +271,27 @@ public class CardEditActivity extends MVPActivity<CardEditContract.Presenter> im
     public void saveSuccess() {
         setResult(RESULT_OK);
         finish();
+    }
+
+    @Override
+    public boolean onCreateOptionsMenu(Menu menu) {
+        getMenuInflater().inflate(R.menu.card_edit_activity, menu);
+        return true;
+    }
+
+    @Override
+    public boolean onOptionsItemSelected(MenuItem item) {
+        if (item.getItemId() == R.id.menu_card_edit_save) {
+            if (mCardEntity == null) {
+                mCardEntity = new CardEntity();
+            }
+            mCardEntity.setCardName(mEtCardName.getText().toString());
+            mCardEntity.setBarCode(mTvBarCode.getText().toString());
+            mCardEntity.setFrontImgFilePath(mCardFrontPhotoPath);
+            mCardEntity.setBackImgFilePath(mCardBackPhotoPath);
+
+            getPresenter().saveCard(mCardEntity);
+        }
+        return super.onOptionsItemSelected(item);
     }
 }

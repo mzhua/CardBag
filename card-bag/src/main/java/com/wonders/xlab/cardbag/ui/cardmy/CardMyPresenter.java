@@ -5,6 +5,7 @@ import com.wonders.xlab.cardbag.base.BasePresenter;
 import com.wonders.xlab.cardbag.base.DefaultException;
 import com.wonders.xlab.cardbag.data.entity.CardEntity;
 
+import java.util.HashSet;
 import java.util.List;
 
 /**
@@ -26,6 +27,26 @@ public class CardMyPresenter extends BasePresenter implements CardMyContract.Pre
             @Override
             public void onSuccess(List<CardEntity> cardEntityList) {
                 mView.showMyCards(cardEntityList);
+            }
+
+            @Override
+            public void onFail(DefaultException e) {
+                mView.showToastMessage(e.getMessage());
+            }
+        });
+    }
+
+    @Override
+    public void deleteCards(HashSet<CardEntity> cardEntities) {
+        if (cardEntities == null) {
+            mView.showToastMessage("数据为空");
+            return;
+        }
+        mModel.deleteCards(cardEntities, new BaseContract.Model.Callback<String>() {
+            @Override
+            public void onSuccess(String s) {
+                mView.showToastMessage("删除成功");
+                mView.deleteSuccess();
             }
 
             @Override

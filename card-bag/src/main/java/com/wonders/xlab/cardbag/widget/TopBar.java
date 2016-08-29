@@ -3,6 +3,7 @@ package com.wonders.xlab.cardbag.widget;
 import android.content.Context;
 import android.content.res.TypedArray;
 import android.support.annotation.ColorInt;
+import android.support.annotation.IdRes;
 import android.support.annotation.IntDef;
 import android.text.TextUtils;
 import android.util.AttributeSet;
@@ -31,9 +32,9 @@ public class TopBar extends RelativeLayout {
     private final float MENU_SIZE_DEFAULT = 24;//dp
     private final float MENU_HORIZONTAL_PADDING = 10;//dp
 
-    private static final int GRAVITY_TITLE_MASK = 1;
-    public static final int GRAVITY_TITLE_LEFT = GRAVITY_TITLE_MASK << 1;
-    public static final int GRAVITY_TITLE_CENTER = GRAVITY_TITLE_MASK << 2;
+    private final int GRAVITY_TITLE_MASK = 1;
+    private final int GRAVITY_TITLE_LEFT = GRAVITY_TITLE_MASK << 1;
+    private final int GRAVITY_TITLE_CENTER = GRAVITY_TITLE_MASK << 2;
 
     private String mTitleText;
     private int mTitleGravity;
@@ -245,7 +246,7 @@ public class TopBar extends RelativeLayout {
     private void setupTitleView() {
         if (mTitleView == null) {
             mTitleView = new TextView(mContext);
-            mTitleView.setText(TextUtils.isEmpty(mTitleText) ? getResources().getString(R.string.app_name) : mTitleText);
+            mTitleView.setText(TextUtils.isEmpty(mTitleText) ? getResources().getString(R.string.cb_app_name) : mTitleText);
         }
         mTitleView.setTextSize(TypedValue.COMPLEX_UNIT_PX, mTitleSizeInPx);
         mTitleView.setGravity(Gravity.CENTER);
@@ -296,6 +297,30 @@ public class TopBar extends RelativeLayout {
         if (this.mTitleView != null && !TextUtils.isEmpty(title)) {
             this.mTitleView.setText(title);
         }
+    }
+
+    public void setRightMenuText(String text) {
+        mRightMenuText = text;
+        mRightMenuIconResId = RESOURCE_ID_NONE;
+        setupMenuView();
+    }
+
+    public void setLeftMenuText(String text) {
+        mLeftMenuText = text;
+        mLeftMenuIconResId = RESOURCE_ID_NONE;
+        setupMenuView();
+    }
+
+    public void setRightMenuIcon(@IdRes int icon) {
+        mRightMenuText = "";
+        mRightMenuIconResId = icon;
+        setupMenuView();
+    }
+
+    public void setLeftMenuIcon(@IdRes int icon) {
+        mLeftMenuText = "";
+        mLeftMenuIconResId = icon;
+        setupMenuView();
     }
 
     public void setMenuSize(int menuSize) {

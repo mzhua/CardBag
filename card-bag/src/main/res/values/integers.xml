@@ -1,7 +1,7 @@
 <?xml version="1.0" encoding="utf-8"?>
 <resources>
     <!--TODO realm schemaVersion , Must be bumped when the schema changes-->
-    <integer name="schemaVersion">2</integer>
+    <integer name="schemaVersion">1</integer>
 
     <integer name="iv_horizontal_weight">5</integer>
     <integer name="iv_vertical_weight">3</integer>

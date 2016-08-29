@@ -13,6 +13,8 @@
         <item name="windowNoTitle">true</item>
     </style>
 
+    <style name="AppTheme.PopupOverlay" parent="ThemeOverlay.AppCompat.Light"/>
+
     <style name="NormalSizeBlackColorTextView">
         <item name="android:textSize">@dimen/text_size_normal</item>
         <item name="android:textColor">@color/textBlack</item>

@@ -27,6 +27,21 @@ public class CardEntity extends RealmObject implements Parcelable {
     public CardEntity() {
     }
 
+    public CardEntity(CardEntity cardEntity) {
+        if (cardEntity != null) {
+            setId(cardEntity.getId());
+            setCardName(cardEntity.getCardName());
+            setBarCode(cardEntity.getBarCode());
+            setImgUrl(cardEntity.getImgUrl());
+            setImgFilePath(cardEntity.getImgFilePath());
+            setFrontImgUrl(cardEntity.getFrontImgUrl());
+            setFrontImgFilePath(cardEntity.getFrontImgFilePath());
+            setBackImgUrl(cardEntity.getBackImgUrl());
+            setBackImgFilePath(cardEntity.getBackImgFilePath());
+            setCreateDate(cardEntity.getCreateDate());
+        }
+    }
+
     public String getImgUrl() {
         return mImgUrl;
     }
@@ -150,4 +165,20 @@ public class CardEntity extends RealmObject implements Parcelable {
             return new CardEntity[size];
         }
     };
+
+    @Override
+    public boolean equals(Object o) {
+        if (this == o) return true;
+        if (o == null || getClass() != o.getClass()) return false;
+
+        CardEntity that = (CardEntity) o;
+
+        return mId == that.mId;
+
+    }
+
+    @Override
+    public int hashCode() {
+        return (int) (mId ^ (mId >>> 32));
+    }
 }

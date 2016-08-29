@@ -11,13 +11,12 @@
     android:orientation="vertical"
     tools:context=".ui.home.HomeActivity">
 
-    <com.wonders.xlab.cardbag.widget.TopBar
-        android:id="@+id/top_bar"
+    <com.wonders.xlab.cardbag.widget.XToolBarLayout
+        android:id="@+id/xtbl"
         android:layout_width="match_parent"
-        android:layout_height="?android:actionBarSize"
-        app:menuSize="@dimen/top_bar_menu_size"
-        app:titleSize="@dimen/top_bar_title_size"
-        app:titleText="电子会员卡"/>
+        android:layout_height="wrap_content"
+        app:xtblTitleText="@string/cb_app_name"
+        app:xtblShowDivider="true"/>
 
     <ImageButton
         android:id="@+id/btn_use_card"

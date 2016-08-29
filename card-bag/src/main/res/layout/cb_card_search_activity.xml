@@ -12,13 +12,11 @@
     android:orientation="vertical"
     tools:context="com.wonders.xlab.cardbag.ui.cardsearch.CardSearchActivity">
 
-    <com.wonders.xlab.cardbag.widget.TopBar
-        android:id="@+id/top_bar"
+    <com.wonders.xlab.cardbag.widget.XToolBarLayout
         android:layout_width="match_parent"
-        android:layout_height="?attr/actionBarSize"
-        app:menuSize="@dimen/top_bar_menu_size"
-        app:titleSize="@dimen/top_bar_title_size"
-        app:titleText="搜索卡片"/>
+        android:layout_height="wrap_content"
+        app:xtblTitleText="@string/title_card_search"
+        app:xtblShowDivider="true"/>
 
     <LinearLayout
         android:layout_width="match_parent"

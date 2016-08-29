@@ -10,6 +10,7 @@ import io.realm.RealmSchema;
  */
 
 public class MyMigration implements RealmMigration {
+
     @Override
     public void migrate(DynamicRealm realm, long oldVersion, long newVersion) {
         RealmSchema schema = realm.getSchema();
@@ -19,4 +20,10 @@ public class MyMigration implements RealmMigration {
             oldVersion++;
         }*/
     }
+
+    @Override
+    public boolean equals(Object o) {
+        return o instanceof MyMigration;
+    }
+
 }

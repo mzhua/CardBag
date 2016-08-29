@@ -9,16 +9,40 @@ import java.util.List;
 
 /**
  * Created by hua on 16/8/22.
+ * {@link Bean } should override equals and hashCode
  */
-public abstract class BaseRecyclerViewAdapter<Bean,VH extends RecyclerView.ViewHolder> extends RecyclerView.Adapter<VH> {
+public abstract class BaseRecyclerViewAdapter<Bean, VH extends RecyclerView.ViewHolder> extends RecyclerView.Adapter<VH> {
 
     private List<Bean> mBeanList;
 
     private OnClickListener mOnClickListener;
 
+    private OnLongClickListener mOnLongClickListener;
+
+    /**
+     * @param holder
+     * @param position
+     * @return true: won't call the {@link #mOnClickListener}
+     */
+    protected abstract boolean onItemClick(VH holder, int position);
+
+    /**
+     * @param holder
+     * @param position
+     * @return true: won't call the {@link #mOnLongClickListener}
+     */
+    protected abstract boolean onItemLongClick(VH holder, int position);
 
     public void setOnClickListener(OnClickListener onClickListener) {
         mOnClickListener = onClickListener;
+    }
+
+    public OnClickListener getOnClickListener() {
+        return mOnClickListener;
+    }
+
+    public void setOnLongClickListener(OnLongClickListener onLongClickListener) {
+        mOnLongClickListener = onLongClickListener;
     }
 
     public interface OnClickListener {
@@ -29,15 +53,26 @@ public abstract class BaseRecyclerViewAdapter<Bean,VH extends RecyclerView.ViewH
         void onItemLongClick(int position);
     }
 
-    public abstract void onBindRecyclerViewHolder(VH holder, int position);
-
     @Override
     public void onBindViewHolder(final VH holder, int position) {
-        onBindRecyclerViewHolder(holder,position);
+        holder.itemView.setOnLongClickListener(new View.OnLongClickListener() {
+            @Override
+            public boolean onLongClick(View v) {
+                if (onItemLongClick(holder, holder.getAdapterPosition())) {
+                    return true;
+                } else {
+                    if (null != mOnLongClickListener) {
+                        mOnLongClickListener.onItemLongClick(holder.getAdapterPosition());
+                    }
+                    return false;
+                }
+
+            }
+        });
         holder.itemView.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                if (mOnClickListener != null) {
+                if (null != mOnClickListener && !onItemClick(holder, holder.getAdapterPosition())) {
                     mOnClickListener.onItemClick(holder.getAdapterPosition());
                 }
             }
@@ -75,6 +110,21 @@ public abstract class BaseRecyclerViewAdapter<Bean,VH extends RecyclerView.ViewH
         if (mBeanList != null && mBeanList.size() > position) {
             mBeanList.remove(position);
             notifyItemRemoved(position);
+        }
+    }
+
+    /**
+     * {@link Bean } should override equals and hashCode
+     *
+     * @param bean
+     */
+    public void remove(Bean bean) {
+        if (mBeanList != null) {
+            int i = mBeanList.indexOf(bean);
+            if (i >= 0) {
+                mBeanList.remove(bean);
+                notifyItemRemoved(i);
+            }
         }
     }
 

@@ -4,7 +4,10 @@ import android.app.Activity;
 import android.app.ProgressDialog;
 import android.content.DialogInterface;
 import android.os.IBinder;
+import android.support.v7.app.ActionBar;
 import android.support.v7.app.AlertDialog;
+import android.support.v7.app.AppCompatActivity;
+import android.support.v7.widget.Toolbar;
 import android.text.TextUtils;
 import android.view.inputmethod.InputMethodManager;
 import android.widget.Toast;
@@ -12,11 +15,19 @@ import android.widget.Toast;
 /**
  * Created by hua on 16/8/19.
  */
-public class BaseActivity extends Activity implements BaseContract.View{
+public class BaseActivity extends AppCompatActivity implements BaseContract.View{
     private ProgressDialog mProgressDialog;
     private AlertDialog.Builder mBuilder;
     private AlertDialog mAlertDialog;
     private Toast mToast;
+
+    protected void setupActionBar(Toolbar toolbar) {
+        setSupportActionBar(toolbar);
+        final ActionBar actionBar = getSupportActionBar();
+        if (actionBar != null) {
+            actionBar.setDisplayShowTitleEnabled(false);
+        }
+    }
 
     protected void showShortToast(String message) {
         showToast(message, true);

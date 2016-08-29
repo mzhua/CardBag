@@ -2,6 +2,7 @@ package com.wonders.xlab.cardbag.ui.cardsearch;
 
 import android.support.v7.widget.RecyclerView;
 import android.text.TextUtils;
+import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -47,11 +48,22 @@ public class CardSearchRVAdapter extends BaseRecyclerViewAdapter<CardEntity, Rec
     @Override
     public int getItemViewType(int position) {
         CardEntity bean = getBean(position);
-        return TextUtils.isEmpty(bean.getCardName()) ? ITEM_TYPE_NOT_FOUND : ITEM_TYPE_CARD;
+        return bean.getId() == 0 ? ITEM_TYPE_NOT_FOUND : ITEM_TYPE_CARD;
     }
 
     @Override
-    public void onBindRecyclerViewHolder(RecyclerView.ViewHolder holder, int position) {
+    protected boolean onItemClick(RecyclerView.ViewHolder holder, int position) {
+        return false;
+    }
+
+    @Override
+    protected boolean onItemLongClick(RecyclerView.ViewHolder holder, int position) {
+        return false;
+    }
+
+    @Override
+    public void onBindViewHolder(final RecyclerView.ViewHolder holder, int position) {
+        super.onBindViewHolder(holder, position);
         if (getItemViewType(position) == ITEM_TYPE_CARD) {
             ItemViewHolder viewHolder = (ItemViewHolder) holder;
             CardEntity cardEntity = getBean(position);
