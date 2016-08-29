@@ -6,7 +6,6 @@ import android.graphics.drawable.Drawable;
 import android.os.Bundle;
 import android.support.annotation.IntDef;
 import android.support.v4.content.ContextCompat;
-import android.support.v7.app.ActionBar;
 import android.support.v7.widget.DefaultItemAnimator;
 import android.support.v7.widget.GridLayoutManager;
 import android.support.v7.widget.LinearLayoutManager;
@@ -232,7 +231,16 @@ public class CardMyActivity extends MVPActivity<CardMyContract.Presenter> implem
             setMenuMode(MENU_MODE_ICON);
             switchRecyclerView();
         } else if (item.getItemId() == R.id.menu_card_my_delete) {
+            if (mIconRecyclerView.getVisibility() == View.VISIBLE) {
+                mPresenter.deleteCards(mIconRVAdapter.getSelectedItemPositions());
+                mIconRVAdapter.deleteSelectedItems();
+            }
+            if (mListRecyclerView.getVisibility() == View.VISIBLE) {
+                mPresenter.deleteCards(mListRVAdapter.getSelectedItemPositions());
+                mListRVAdapter.deleteSelectedItems();
+            }
             disableSelectionModel();
+            mPresenter.getMyCards();
         }
         return super.onOptionsItemSelected(item);
     }

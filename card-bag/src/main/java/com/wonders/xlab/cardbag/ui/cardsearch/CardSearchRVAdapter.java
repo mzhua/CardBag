@@ -48,7 +48,7 @@ public class CardSearchRVAdapter extends BaseRecyclerViewAdapter<CardEntity, Rec
     @Override
     public int getItemViewType(int position) {
         CardEntity bean = getBean(position);
-        return TextUtils.isEmpty(bean.getCardName()) ? ITEM_TYPE_NOT_FOUND : ITEM_TYPE_CARD;
+        return bean.getId() == 0 ? ITEM_TYPE_NOT_FOUND : ITEM_TYPE_CARD;
     }
 
     @Override
@@ -63,6 +63,7 @@ public class CardSearchRVAdapter extends BaseRecyclerViewAdapter<CardEntity, Rec
 
     @Override
     public void onBindViewHolder(final RecyclerView.ViewHolder holder, int position) {
+        super.onBindViewHolder(holder, position);
         if (getItemViewType(position) == ITEM_TYPE_CARD) {
             ItemViewHolder viewHolder = (ItemViewHolder) holder;
             CardEntity cardEntity = getBean(position);

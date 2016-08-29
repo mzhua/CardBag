@@ -21,7 +21,6 @@ import com.wonders.xlab.cardbag.data.entity.CardEntity;
 import com.wonders.xlab.cardbag.util.FileUtil;
 import com.wonders.xlab.cardbag.util.ImageViewUtil;
 import com.wonders.xlab.cardbag.widget.RatioImageView;
-import com.wonders.xlab.cardbag.widget.TopBar;
 import com.wonders.xlab.cardbag.widget.XToolBarLayout;
 import com.wonders.xlab.qrscanner.BarCodeEncoder;
 import com.wonders.xlab.qrscanner.XQrScanner;
@@ -89,32 +88,30 @@ public class CardEditActivity extends MVPActivity<CardEditContract.Presenter> im
     private void initWithIntentExtra() {
         Intent intent = getIntent();
         if (intent != null) {
-            mCardEntity = intent.getParcelableExtra("data");
+            mCardEntity = new CardEntity((CardEntity) intent.getParcelableExtra("data"));
 
-            if (null != mCardEntity) {
-                mEtCardName.setText(mCardEntity.getCardName());
-                setBarCodeView(mCardEntity.getBarCode());
-                ImageViewUtil.load(this, mCardEntity.getImgUrl(), mIvCard);
-                if (TextUtils.isEmpty(mCardEntity.getFrontImgUrl())) {
-                    mCardFrontPhotoPath = mCardEntity.getFrontImgFilePath();
-                    if (!TextUtils.isEmpty(mCardFrontPhotoPath)) {
-                        ImageViewUtil.load(this, Uri.parse("file:" + mCardFrontPhotoPath), mIvCardFront);
-                    }
-                } else {
-                    ImageViewUtil.load(this, mCardEntity.getFrontImgUrl(), mIvCardFront);
+            mEtCardName.setText(mCardEntity.getCardName());
+            setBarCodeView(mCardEntity.getBarCode());
+            ImageViewUtil.load(this, mCardEntity.getImgUrl(), mIvCard);
+            if (TextUtils.isEmpty(mCardEntity.getFrontImgUrl())) {
+                mCardFrontPhotoPath = mCardEntity.getFrontImgFilePath();
+                if (!TextUtils.isEmpty(mCardFrontPhotoPath)) {
+                    ImageViewUtil.load(this, Uri.parse("file:" + mCardFrontPhotoPath), mIvCardFront);
                 }
-                if (TextUtils.isEmpty(mCardEntity.getBackImgUrl())) {
-                    mCardBackPhotoPath = mCardEntity.getBackImgFilePath();
-                    if (!TextUtils.isEmpty(mCardBackPhotoPath)) {
-                        ImageViewUtil.load(this, Uri.parse("file:" + mCardBackPhotoPath), mIvCardBack);
-                    }
-                } else {
-                    ImageViewUtil.load(this, mCardEntity.getBackImgUrl(), mIvCardBack);
+            } else {
+                ImageViewUtil.load(this, mCardEntity.getFrontImgUrl(), mIvCardFront);
+            }
+            if (TextUtils.isEmpty(mCardEntity.getBackImgUrl())) {
+                mCardBackPhotoPath = mCardEntity.getBackImgFilePath();
+                if (!TextUtils.isEmpty(mCardBackPhotoPath)) {
+                    ImageViewUtil.load(this, Uri.parse("file:" + mCardBackPhotoPath), mIvCardBack);
                 }
+            } else {
+                ImageViewUtil.load(this, mCardEntity.getBackImgUrl(), mIvCardBack);
+            }
 
-                if (mEtCardName.length() > 0) {
-                    mEtCardName.setSelection(mEtCardName.length());
-                }
+            if (mEtCardName.length() > 0) {
+                mEtCardName.setSelection(mEtCardName.length());
             }
         }
 
@@ -278,7 +275,7 @@ public class CardEditActivity extends MVPActivity<CardEditContract.Presenter> im
 
     @Override
     public boolean onCreateOptionsMenu(Menu menu) {
-        getMenuInflater().inflate(R.menu.card_edit_activity,menu);
+        getMenuInflater().inflate(R.menu.card_edit_activity, menu);
         return true;
     }
 

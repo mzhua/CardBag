@@ -9,6 +9,7 @@ import java.util.List;
 
 /**
  * Created by hua on 16/8/22.
+ * {@link Bean } should override equals and hashCode
  */
 public abstract class BaseRecyclerViewAdapter<Bean, VH extends RecyclerView.ViewHolder> extends RecyclerView.Adapter<VH> {
 
@@ -19,7 +20,6 @@ public abstract class BaseRecyclerViewAdapter<Bean, VH extends RecyclerView.View
     private OnLongClickListener mOnLongClickListener;
 
     /**
-     *
      * @param holder
      * @param position
      * @return true: won't call the {@link #mOnClickListener}
@@ -27,7 +27,6 @@ public abstract class BaseRecyclerViewAdapter<Bean, VH extends RecyclerView.View
     protected abstract boolean onItemClick(VH holder, int position);
 
     /**
-     *
      * @param holder
      * @param position
      * @return true: won't call the {@link #mOnLongClickListener}
@@ -111,6 +110,21 @@ public abstract class BaseRecyclerViewAdapter<Bean, VH extends RecyclerView.View
         if (mBeanList != null && mBeanList.size() > position) {
             mBeanList.remove(position);
             notifyItemRemoved(position);
+        }
+    }
+
+    /**
+     * {@link Bean } should override equals and hashCode
+     *
+     * @param bean
+     */
+    public void remove(Bean bean) {
+        if (mBeanList != null) {
+            int i = mBeanList.indexOf(bean);
+            if (i >= 0) {
+                mBeanList.remove(bean);
+                notifyItemRemoved(i);
+            }
         }
     }
 
