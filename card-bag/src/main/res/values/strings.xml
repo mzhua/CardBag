@@ -1,5 +1,5 @@
 <resources>
-    <string name="app_name">电子会员卡</string>
+    <string name="cb_app_name">电子会员卡</string>
     <string name="content_desc_manage_card">管理卡片</string>
     <string name="content_desc_use_card">使用卡片</string>
     <string name="menu_text_card_edit_finish">完成</string>
@@ -14,4 +14,5 @@
     <string name="save_photo_failed">保存图片失败,请确认是否授权读写存储卡的权限以及存储卡是否正确挂载</string>
     <string name="crop_picture_failed">图片裁剪失败</string>
     <string name="title_card_my">我的卡片</string>
+    <string name="title_card_search">搜索卡片</string>
 </resources>

@@ -246,7 +246,7 @@ public class TopBar extends RelativeLayout {
     private void setupTitleView() {
         if (mTitleView == null) {
             mTitleView = new TextView(mContext);
-            mTitleView.setText(TextUtils.isEmpty(mTitleText) ? getResources().getString(R.string.app_name) : mTitleText);
+            mTitleView.setText(TextUtils.isEmpty(mTitleText) ? getResources().getString(R.string.cb_app_name) : mTitleText);
         }
         mTitleView.setTextSize(TypedValue.COMPLEX_UNIT_PX, mTitleSizeInPx);
         mTitleView.setGravity(Gravity.CENTER);

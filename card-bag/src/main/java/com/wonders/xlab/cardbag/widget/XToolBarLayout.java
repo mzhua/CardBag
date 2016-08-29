@@ -8,6 +8,7 @@ import android.graphics.drawable.Drawable;
 import android.os.Build;
 import android.support.annotation.DrawableRes;
 import android.support.annotation.IntDef;
+import android.support.annotation.NonNull;
 import android.support.v4.content.ContextCompat;
 import android.support.v7.widget.Toolbar;
 import android.text.TextUtils;
@@ -72,7 +73,7 @@ public class XToolBarLayout extends LinearLayout {
         TypedArray array = context.obtainStyledAttributes(attrs, R.styleable.XToolBarLayout, defStyleAttr, defStyleRes);
         mTitleText = array.getString(R.styleable.XToolBarLayout_xtblTitleText);
         if (TextUtils.isEmpty(mTitleText)) {
-            mTitleText = getResources().getString(R.string.app_name);
+            mTitleText = getResources().getString(R.string.cb_app_name);
         }
         mTitleGravity = array.getInt(R.styleable.XToolBarLayout_xtblTitleGravity, GRAVITY_TITLE_CENTER);
         mTitleColor = array.getColor(R.styleable.XToolBarLayout_xtblTitleColor, ContextCompat.getColor(context,R.color.cbTopBarTitleColor));
@@ -134,6 +135,10 @@ public class XToolBarLayout extends LinearLayout {
 
     public void setTitleColor(int titleColor) {
         mTitleColor = titleColor;
+    }
+
+    public void setTitle(@NonNull String title) {
+        mTitleView.setText(title);
     }
 
     @Override

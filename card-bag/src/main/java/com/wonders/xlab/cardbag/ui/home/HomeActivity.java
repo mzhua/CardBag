@@ -9,15 +9,16 @@ import com.wonders.xlab.cardbag.R;
 import com.wonders.xlab.cardbag.manager.RealmManager;
 import com.wonders.xlab.cardbag.ui.cardmy.CardMyActivity;
 import com.wonders.xlab.cardbag.widget.TopBar;
+import com.wonders.xlab.cardbag.widget.XToolBarLayout;
 
 public class HomeActivity extends Activity {
-    private TopBar mTopBar;
+    private XToolBarLayout mTopBar;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.cb_home_activity);
-        mTopBar = (TopBar) findViewById(R.id.top_bar);
+        mTopBar = (XToolBarLayout) findViewById(R.id.xtbl);
 
         RealmManager.init(getApplicationContext());
     }

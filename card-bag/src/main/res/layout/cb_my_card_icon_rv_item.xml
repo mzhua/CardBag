@@ -36,5 +36,5 @@
         android:layout_marginRight="5dp"
         android:layout_marginTop="5dp"
         android:duplicateParentState="true"
-        android:visibility="visible"/>
+        android:visibility="gone"/>
 </RelativeLayout>
