@@ -21,8 +21,7 @@ public class MainActivity extends AppCompatActivity {
     }
 
     public void openCardBag(View view) {
-        CBag.get()
-                .start(this);
+        CBag.get().start(this);
     }
 
     public void scan(View view) {
