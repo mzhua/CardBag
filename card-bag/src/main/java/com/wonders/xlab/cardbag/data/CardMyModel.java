@@ -24,17 +24,12 @@ public class CardMyModel extends BaseModel implements CardMyContract.Model {
 
     @Override
     public void getMyCards(final Callback<List<CardEntity>> callback) {
-        RealmResults<CardEntity> allAsync = realm.where(CardEntity.class).findAllSortedAsync("mCreateDate", Sort.DESCENDING);
-        allAsync.addChangeListener(new RealmChangeListener<RealmResults<CardEntity>>() {
-            @Override
-            public void onChange(RealmResults<CardEntity> element) {
-                List<CardEntity> cardEntityList = new ArrayList<>();
-                for (CardEntity cardEntity : element) {
-                    cardEntityList.add(cardEntity);
-                }
-                callback.onSuccess(cardEntityList);
-            }
-        });
+        RealmResults<CardEntity> allAsync = realm.where(CardEntity.class).findAllSorted("mCreateDate", Sort.DESCENDING);
+        List<CardEntity> cardEntityList = new ArrayList<>();
+        for (CardEntity cardEntity : allAsync) {
+            cardEntityList.add(cardEntity);
+        }
+        callback.onSuccess(cardEntityList);
     }
 
     @Override

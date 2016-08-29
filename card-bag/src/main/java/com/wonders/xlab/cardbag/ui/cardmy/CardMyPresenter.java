@@ -38,10 +38,15 @@ public class CardMyPresenter extends BasePresenter implements CardMyContract.Pre
 
     @Override
     public void deleteCards(HashSet<CardEntity> cardEntities) {
+        if (cardEntities == null) {
+            mView.showToastMessage("数据为空");
+            return;
+        }
         mModel.deleteCards(cardEntities, new BaseContract.Model.Callback<String>() {
             @Override
             public void onSuccess(String s) {
                 mView.showToastMessage("删除成功");
+                mView.deleteSuccess();
             }
 
             @Override

@@ -164,6 +164,11 @@ public class CardMyActivity extends MVPActivity<CardMyContract.Presenter> implem
         mListRVAdapter.setDatas(cardEntityList);
     }
 
+    @Override
+    public void deleteSuccess() {
+        mPresenter.getMyCards();
+    }
+
     private void switchRecyclerView() {
 
         if (getMenuMode() == MENU_MODE_ICON) {
@@ -233,14 +238,12 @@ public class CardMyActivity extends MVPActivity<CardMyContract.Presenter> implem
         } else if (item.getItemId() == R.id.menu_card_my_delete) {
             if (mIconRecyclerView.getVisibility() == View.VISIBLE) {
                 mPresenter.deleteCards(mIconRVAdapter.getSelectedItemPositions());
-                mIconRVAdapter.deleteSelectedItems();
-            }
-            if (mListRecyclerView.getVisibility() == View.VISIBLE) {
+//                mIconRVAdapter.deleteSelectedItems();
+            } else if (mListRecyclerView.getVisibility() == View.VISIBLE) {
                 mPresenter.deleteCards(mListRVAdapter.getSelectedItemPositions());
-                mListRVAdapter.deleteSelectedItems();
+//                mListRVAdapter.deleteSelectedItems();
             }
             disableSelectionModel();
-            mPresenter.getMyCards();
         }
         return super.onOptionsItemSelected(item);
     }

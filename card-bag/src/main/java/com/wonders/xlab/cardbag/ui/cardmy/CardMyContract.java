@@ -13,6 +13,8 @@ import java.util.List;
 public interface CardMyContract {
     interface View extends BaseContract.View{
         void showMyCards(List<CardEntity> cardEntityList);
+
+        void deleteSuccess();
     }
 
     interface Presenter extends BaseContract.Presenter{

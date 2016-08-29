@@ -42,6 +42,8 @@ public abstract class MultiSelectionRecyclerViewAdapter<Bean, VH extends Recycle
         if (null != mOnSelectionModeChangeListener && !isSelectionMode()) {
             if (null == mSelectedItemPositions) {
                 mSelectedItemPositions = new HashSet<>();
+            } else {
+                mSelectedItemPositions.clear();
             }
             mOnSelectionModeChangeListener.onSelectModeChange(true);
             mSelectedItemPositions.add(getBean(position));
@@ -69,6 +71,9 @@ public abstract class MultiSelectionRecyclerViewAdapter<Bean, VH extends Recycle
 
     public void setSelectionMode(boolean selectionMode) {
         mSelectionMode = selectionMode;
+        if (mSelectedItemPositions != null && !selectionMode) {
+            mSelectedItemPositions.clear();
+        }
         notifyDataSetChanged();
     }
 
