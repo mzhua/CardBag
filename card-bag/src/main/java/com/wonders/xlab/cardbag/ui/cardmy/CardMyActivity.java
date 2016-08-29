@@ -4,12 +4,15 @@ import android.content.Intent;
 import android.graphics.PorterDuff;
 import android.graphics.drawable.Drawable;
 import android.os.Bundle;
+import android.support.annotation.IntDef;
 import android.support.v4.content.ContextCompat;
 import android.support.v7.app.ActionBar;
 import android.support.v7.widget.DefaultItemAnimator;
 import android.support.v7.widget.GridLayoutManager;
 import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
+import android.view.Menu;
+import android.view.MenuItem;
 import android.view.View;
 import android.widget.ImageView;
 
@@ -25,12 +28,13 @@ import com.wonders.xlab.cardbag.widget.SideBar;
 import com.wonders.xlab.cardbag.widget.XToolBarLayout;
 import com.wonders.xlab.cardbag.widget.decoration.HorizontalDividerItemDecoration;
 
+import java.lang.annotation.Retention;
+import java.lang.annotation.RetentionPolicy;
 import java.util.List;
 
 public class CardMyActivity extends MVPActivity<CardMyContract.Presenter> implements CardMyContract.View {
 
     private XToolBarLayout mXToolBarLayout;
-//    private TopBar mTopBar;
     private ImageView mIvAdd;
     private RecyclerView mIconRecyclerView;
     private RecyclerView mListRecyclerView;
@@ -40,7 +44,18 @@ public class CardMyActivity extends MVPActivity<CardMyContract.Presenter> implem
 
     private CardMyContract.Presenter mPresenter;
 
-    private boolean mIsIconMode = true;
+    private final int MENU_MODE_LIST = 0;
+    private final int MENU_MODE_ICON = 1;
+    private final int MENU_MODE_DELETE = 2;
+
+    @MenuMode
+    private int mMenuMode = MENU_MODE_ICON;
+
+    @Retention(RetentionPolicy.SOURCE)
+    @IntDef({MENU_MODE_LIST, MENU_MODE_ICON, MENU_MODE_DELETE})
+    public @interface MenuMode {
+
+    }
 
     @Override
     public CardMyContract.Presenter getPresenter() {
@@ -55,13 +70,11 @@ public class CardMyActivity extends MVPActivity<CardMyContract.Presenter> implem
         super.onCreate(savedInstanceState);
         setContentView(R.layout.cb_my_card_activity);
         mXToolBarLayout = (XToolBarLayout) findViewById(R.id.xtbl);
-//        mTopBar = (TopBar) findViewById(R.id.top_bar);
         mSideBar = (SideBar) findViewById(R.id.side_bar);
         mIconRecyclerView = (RecyclerView) findViewById(R.id.recycler_view);
         mListRecyclerView = (RecyclerView) findViewById(R.id.recycler_view_list);
         mIvAdd = (ImageView) findViewById(R.id.iv_add);
 
-        mXToolBarLayout.setupNavigation(R.drawable.ic_clear_black_24dp);
         setSupportActionBar(mXToolBarLayout.getToolbar());
         final ActionBar actionBar = getSupportActionBar();
         if (actionBar != null) {
@@ -79,32 +92,10 @@ public class CardMyActivity extends MVPActivity<CardMyContract.Presenter> implem
         mListRecyclerView.setLayoutManager(new LinearLayoutManager(this, LinearLayoutManager.VERTICAL, false));
         mListRecyclerView.setItemAnimator(new DefaultItemAnimator());
         int decoMargin = DensityUtil.dp2px(this, 24);
-        mListRecyclerView.addItemDecoration(new HorizontalDividerItemDecoration.Builder(this).color(getResources().getColor(R.color.cbDivider)).size(1).margin(decoMargin,decoMargin).build());
+        mListRecyclerView.addItemDecoration(new HorizontalDividerItemDecoration.Builder(this).color(getResources().getColor(R.color.cbDivider)).size(1).margin(decoMargin, decoMargin).build());
     }
 
     private void setupListener() {
-        /*mTopBar.setOnRightMenuClickListener(new TopBar.OnRightMenuClickListener() {
-            @Override
-            public void onClick(View view) {
-                if (mIconRVAdapter.isSelectionMode()) {
-
-                } else {
-                    mSideBar.setVisibility(mIsIconMode ? View.VISIBLE : View.INVISIBLE);
-                    ((ImageView) view).setImageResource(mIsIconMode ? R.drawable.ic_menu_icon : R.drawable.ic_menu_list);
-                    mIsIconMode = !mIsIconMode;
-                    switchRecyclerView();
-                }
-            }
-        });
-        mTopBar.setOnLeftMenuClickListener(new TopBar.OnLeftMenuClickListener() {
-            @Override
-            public void onClick(View view) {
-                if (mIconRVAdapter.isSelectionMode()) {
-                    mIconRVAdapter.setSelectionMode(false);
-                    mTopBar.setLeftMenuText("");
-                }
-            }
-        });*/
         mIvAdd.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
@@ -114,9 +105,21 @@ public class CardMyActivity extends MVPActivity<CardMyContract.Presenter> implem
         mSideBar.setOnTouchingLetterChangedListener(new SideBar.OnTouchingLetterChangedListener() {
             @Override
             public void onTouchingLetterChanged(String s) {
-                mListRVAdapter.scrollTo(mListRecyclerView,s);
+                mListRVAdapter.scrollTo(mListRecyclerView, s);
             }
         });
+        mXToolBarLayout.getToolbar().setNavigationOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                setMenuMode(MENU_MODE_ICON);
+                disableSelectionModel();
+            }
+        });
+    }
+
+    private void disableSelectionModel() {
+        mXToolBarLayout.hideNavigationIcon();
+        mIconRVAdapter.setSelectionMode(false);
     }
 
     @Override
@@ -141,8 +144,7 @@ public class CardMyActivity extends MVPActivity<CardMyContract.Presenter> implem
                 @Override
                 public void onSelectModeChange(boolean isSelectionMode) {
                     if (isSelectionMode) {
-//                        mTopBar.setRightMenuText("删除");
-//                        mTopBar.setLeftMenuText("取消");
+                        setMenuMode(MENU_MODE_DELETE);
                     }
                 }
             });
@@ -165,12 +167,74 @@ public class CardMyActivity extends MVPActivity<CardMyContract.Presenter> implem
     }
 
     private void switchRecyclerView() {
-        if (mIsIconMode) {
+        if (getMenuMode() == MENU_MODE_ICON) {
             mListRecyclerView.setVisibility(View.INVISIBLE);
             mIconRecyclerView.setVisibility(View.VISIBLE);
-        } else {
+        } else if (getMenuMode() == MENU_MODE_LIST) {
             mIconRecyclerView.setVisibility(View.INVISIBLE);
             mListRecyclerView.setVisibility(View.VISIBLE);
         }
+    }
+
+    private int getMenuMode() {
+        return mMenuMode;
+    }
+
+    private void setMenuMode(MenuItem item) {
+        if (item.getItemId() == R.id.menu_card_my_list) {
+            setMenuMode(MENU_MODE_LIST);
+        } else if (item.getItemId() == R.id.menu_card_my_icon) {
+            setMenuMode(MENU_MODE_ICON);
+        } else if (item.getItemId() == R.id.menu_card_my_delete) {
+            setMenuMode(MENU_MODE_ICON);
+        }
+    }
+
+    private void setMenuMode(@MenuMode int menuMode) {
+        mMenuMode = menuMode;
+
+        mSideBar.setVisibility(menuMode == MENU_MODE_LIST ? View.VISIBLE : View.INVISIBLE);
+        if (menuMode == MENU_MODE_DELETE) {
+            mXToolBarLayout.setNavigationIcon(R.drawable.ic_clear_black_24dp,ContextCompat.getColor(this,android.R.color.black));
+        }
+
+        supportInvalidateOptionsMenu();
+    }
+
+    @Override
+    public boolean onCreateOptionsMenu(Menu menu) {
+        getMenuInflater().inflate(R.menu.card_my_activity, menu);
+
+        MenuItem menuItemCrop = menu.findItem(R.id.menu_card_my_delete);
+        Drawable menuItemCropIcon = menuItemCrop.getIcon();
+        if (menuItemCropIcon != null) {
+            menuItemCropIcon.mutate();
+            menuItemCropIcon.setColorFilter(ContextCompat.getColor(this,android.R.color.black), PorterDuff.Mode.SRC_ATOP);
+            menuItemCrop.setIcon(menuItemCropIcon);
+        }
+
+        return true;
+    }
+
+    @Override
+    public boolean onPrepareOptionsMenu(Menu menu) {
+        menu.findItem(R.id.menu_card_my_list).setVisible(getMenuMode() == MENU_MODE_ICON);
+        menu.findItem(R.id.menu_card_my_icon).setVisible(getMenuMode() == MENU_MODE_LIST);
+        menu.findItem(R.id.menu_card_my_delete).setVisible(getMenuMode() == MENU_MODE_DELETE);
+
+        return super.onPrepareOptionsMenu(menu);
+    }
+
+    @Override
+    public boolean onOptionsItemSelected(MenuItem item) {
+        setMenuMode(item);
+        if (item.getItemId() == R.id.menu_card_my_list) {
+            switchRecyclerView();
+        } else if (item.getItemId() == R.id.menu_card_my_icon) {
+            switchRecyclerView();
+        } else if (item.getItemId() == R.id.menu_card_my_delete) {
+            disableSelectionModel();
+        }
+        return super.onOptionsItemSelected(item);
     }
 }

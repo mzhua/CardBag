@@ -32,9 +32,9 @@ public class TopBar extends RelativeLayout {
     private final float MENU_SIZE_DEFAULT = 24;//dp
     private final float MENU_HORIZONTAL_PADDING = 10;//dp
 
-    private static final int GRAVITY_TITLE_MASK = 1;
-    public static final int GRAVITY_TITLE_LEFT = GRAVITY_TITLE_MASK << 1;
-    public static final int GRAVITY_TITLE_CENTER = GRAVITY_TITLE_MASK << 2;
+    private final int GRAVITY_TITLE_MASK = 1;
+    private final int GRAVITY_TITLE_LEFT = GRAVITY_TITLE_MASK << 1;
+    private final int GRAVITY_TITLE_CENTER = GRAVITY_TITLE_MASK << 2;
 
     private String mTitleText;
     private int mTitleGravity;

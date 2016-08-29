@@ -52,6 +52,16 @@ public class CardSearchRVAdapter extends BaseRecyclerViewAdapter<CardEntity, Rec
     }
 
     @Override
+    protected boolean onItemClick(RecyclerView.ViewHolder holder, int position) {
+        return false;
+    }
+
+    @Override
+    protected boolean onItemLongClick(RecyclerView.ViewHolder holder, int position) {
+        return false;
+    }
+
+    @Override
     public void onBindViewHolder(final RecyclerView.ViewHolder holder, int position) {
         if (getItemViewType(position) == ITEM_TYPE_CARD) {
             ItemViewHolder viewHolder = (ItemViewHolder) holder;
@@ -59,14 +69,6 @@ public class CardSearchRVAdapter extends BaseRecyclerViewAdapter<CardEntity, Rec
             viewHolder.mTextView.setText(cardEntity.getCardName());
             ImageViewUtil.load(holder.itemView.getContext(), cardEntity.getImgUrl(), viewHolder.mImageView);
         }
-        holder.itemView.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-                if (null != getOnClickListener()) {
-                    getOnClickListener().onItemClick(holder.getAdapterPosition());
-                }
-            }
-        });
     }
 
     private class ItemViewHolder extends RecyclerView.ViewHolder {

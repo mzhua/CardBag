@@ -75,8 +75,8 @@ public class XToolBarLayout extends LinearLayout {
             mTitleText = getResources().getString(R.string.app_name);
         }
         mTitleGravity = array.getInt(R.styleable.XToolBarLayout_xtblTitleGravity, GRAVITY_TITLE_CENTER);
-        mTitleColor = array.getColor(R.styleable.XToolBarLayout_xtblTitleColor, getResources().getColor(R.color.cbTitleColor));
-        mBackgroundColor = array.getColor(R.styleable.XToolBarLayout_xtblBackgroundColor, getResources().getColor(R.color.topBarBackground));
+        mTitleColor = array.getColor(R.styleable.XToolBarLayout_xtblTitleColor, ContextCompat.getColor(context,R.color.cbTopBarTitleColor));
+        mBackgroundColor = array.getColor(R.styleable.XToolBarLayout_xtblBackgroundColor, ContextCompat.getColor(context,R.color.cbTopBarBackground));
         mShowDivider = array.getBoolean(R.styleable.XToolBarLayout_xtblShowDivider, false);
         array.recycle();
 
@@ -112,7 +112,7 @@ public class XToolBarLayout extends LinearLayout {
             if (mDividerView == null) {
                 mDividerView = new View(mContext);
                 mDividerView.setId(R.id.divider);
-                mDividerView.setBackgroundColor(getResources().getColor(R.color.cbDivider));
+                mDividerView.setBackgroundColor(ContextCompat.getColor(mContext,R.color.cbDivider));
                 LinearLayout.LayoutParams layoutParams = new LinearLayout.LayoutParams(ViewGroup.LayoutParams.MATCH_PARENT, DensityUtil.dp2px(mContext, DIVIDER_HEIGHT_DEFAULT));
                 mDividerView.setLayoutParams(layoutParams);
                 addView(mDividerView);
@@ -141,9 +141,13 @@ public class XToolBarLayout extends LinearLayout {
         mBackgroundColor = backgroundColor;
     }
 
-    public void setupNavigation(@DrawableRes int drawableResId) {
+    public void setNavigationIcon(@DrawableRes int drawableResId,int colorFilter) {
         Drawable stateButtonDrawable = ContextCompat.getDrawable(mContext, drawableResId).mutate();
-        stateButtonDrawable.setColorFilter(getResources().getColor(R.color.topBarBackground), PorterDuff.Mode.SRC_ATOP);
+        stateButtonDrawable.setColorFilter(colorFilter, PorterDuff.Mode.MULTIPLY);
         getToolbar().setNavigationIcon(stateButtonDrawable);
+    }
+
+    public void hideNavigationIcon() {
+        getToolbar().setNavigationIcon(null);
     }
 }

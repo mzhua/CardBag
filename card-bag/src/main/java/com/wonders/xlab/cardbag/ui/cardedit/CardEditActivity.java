@@ -7,7 +7,6 @@ import android.provider.MediaStore;
 import android.text.Editable;
 import android.text.TextUtils;
 import android.text.TextWatcher;
-import android.util.Log;
 import android.view.View;
 import android.widget.EditText;
 import android.widget.ImageView;
@@ -158,7 +157,7 @@ public class CardEditActivity extends MVPActivity<CardEditContract.Presenter> im
     private void initUCropOptions() {
         if (mOptions == null) {
             mOptions = new UCrop.Options();
-            int color = getResources().getColor(R.color.topBarBackground);
+            int color = getResources().getColor(R.color.cbTopBarBackground);
             mOptions.setToolbarColor(color);
             mOptions.setToolbarWidgetColor(getResources().getColor(R.color.textBlack));
             mOptions.setStatusBarColor(getResources().getColor(R.color.textBlack));

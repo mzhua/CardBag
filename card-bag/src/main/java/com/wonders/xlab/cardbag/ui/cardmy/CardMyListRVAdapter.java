@@ -12,6 +12,7 @@ import android.widget.TextView;
 import com.github.promeg.pinyinhelper.Pinyin;
 import com.wonders.xlab.cardbag.R;
 import com.wonders.xlab.cardbag.base.BaseRecyclerViewAdapter;
+import com.wonders.xlab.cardbag.base.MultiSelectionRecyclerViewAdapter;
 import com.wonders.xlab.cardbag.data.entity.CardEntity;
 import com.wonders.xlab.cardbag.util.ImageViewUtil;
 
@@ -23,7 +24,7 @@ import java.util.List;
  * Created by hua on 16/8/22.
  */
 
-public class CardMyListRVAdapter extends BaseRecyclerViewAdapter<CardEntity, CardMyListRVAdapter.ItemViewHolder> {
+public class CardMyListRVAdapter extends MultiSelectionRecyclerViewAdapter<CardEntity, CardMyListRVAdapter.ItemViewHolder> {
 
     @Override
     public void setDatas(List<CardEntity> mBeanList) {

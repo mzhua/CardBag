@@ -12,6 +12,7 @@ import android.widget.TextView;
 
 import com.wonders.xlab.cardbag.R;
 import com.wonders.xlab.cardbag.base.BaseRecyclerViewAdapter;
+import com.wonders.xlab.cardbag.base.MultiSelectionRecyclerViewAdapter;
 import com.wonders.xlab.cardbag.data.entity.CardEntity;
 import com.wonders.xlab.cardbag.util.ImageViewUtil;
 
@@ -19,19 +20,7 @@ import com.wonders.xlab.cardbag.util.ImageViewUtil;
  * Created by hua on 16/8/22.
  */
 
-public class CardMyIconRVAdapter extends BaseRecyclerViewAdapter<CardEntity,CardMyIconRVAdapter.ItemViewHolder> {
-
-    private boolean mSelectionMode;
-
-    private OnSelectionModeChangeListener mOnSelectionModeChangeListener;
-
-    public void setOnSelectionModeChangeListener(OnSelectionModeChangeListener onSelectionModeChangeListener) {
-        mOnSelectionModeChangeListener = onSelectionModeChangeListener;
-    }
-
-    public interface OnSelectionModeChangeListener{
-        void onSelectModeChange(boolean isSelectionMode);
-    }
+public class CardMyIconRVAdapter extends MultiSelectionRecyclerViewAdapter<CardEntity,CardMyIconRVAdapter.ItemViewHolder> {
 
     @Override
     public ItemViewHolder onCreateViewHolder(ViewGroup parent, int viewType) {
@@ -40,7 +29,28 @@ public class CardMyIconRVAdapter extends BaseRecyclerViewAdapter<CardEntity,Card
     }
 
     @Override
+    protected boolean onItemClick(ItemViewHolder holder, int position) {
+        super.onItemClick(holder, position);
+        if (isSelectionMode()) {
+            holder.mCheckBox.setChecked(!holder.mCheckBox.isChecked());
+            return true;
+        } else {
+            return false;
+        }
+    }
+
+    @Override
+    protected boolean onItemLongClick(ItemViewHolder holder, int position) {
+        super.onItemLongClick(holder, position);
+        if (isSelectionMode()) {
+            holder.mCheckBox.setChecked(!holder.mCheckBox.isChecked());
+        }
+        return true;
+    }
+
+    @Override
     public void onBindViewHolder(final ItemViewHolder holder, int position) {
+        super.onBindViewHolder(holder,position);
         CardEntity cardEntity = getBean(position);
         holder.mTextView.setText(cardEntity.getCardName());
         ImageViewUtil.load(holder.itemView.getContext(),cardEntity.getImgUrl(),holder.mImageView);
@@ -50,39 +60,6 @@ public class CardMyIconRVAdapter extends BaseRecyclerViewAdapter<CardEntity,Card
             holder.mCheckBox.setChecked(false);
             holder.mCheckBox.setVisibility(View.GONE);
         }
-        holder.itemView.setOnLongClickListener(new View.OnLongClickListener() {
-            @Override
-            public boolean onLongClick(View v) {
-                setSelectionMode(true);
-                if (null != mOnSelectionModeChangeListener) {
-                    mOnSelectionModeChangeListener.onSelectModeChange(true);
-                }
-                holder.mCheckBox.setChecked(true);
-                notifyDataSetChanged();
-                return true;
-            }
-        });
-        holder.itemView.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-                if (isSelectionMode()) {
-                    holder.mCheckBox.setChecked(!holder.mCheckBox.isChecked());
-                } else {
-                    if (null != getOnClickListener()) {
-                        getOnClickListener().onItemClick(holder.getAdapterPosition());
-                    }
-                }
-            }
-        });
-    }
-
-    public boolean isSelectionMode() {
-        return mSelectionMode;
-    }
-
-    public void setSelectionMode(boolean selectionMode) {
-        mSelectionMode = selectionMode;
-        notifyDataSetChanged();
     }
 
     class ItemViewHolder extends RecyclerView.ViewHolder{
