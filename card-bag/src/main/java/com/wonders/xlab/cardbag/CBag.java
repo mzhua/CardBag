@@ -80,8 +80,6 @@ public class CBag {
      *
      */
     public static class Options {
-        public static final String EXTRA_COLOR_PRIMARY = EXTRA_PREFIX + ".ColorPrimary";
-        public static final String EXTRA_COLOR_PRIMARY_DARK = EXTRA_PREFIX + ".ColorPrimaryDark";
         public static final String EXTRA_TOP_BAR_COLOR = EXTRA_PREFIX + ".TopBarColor";
         public static final String EXTRA_TOP_BAR_WIDGET_COLOR = EXTRA_PREFIX + ".TopBarWidgetColor";
         public static final String EXTRA_TOP_BAR_TITLE_GRAVITY = EXTRA_PREFIX + ".TopBarTitleGravity";
@@ -107,18 +105,14 @@ public class CBag {
             return mOptionBundle;
         }
 
-        public void setColorPrimary(@ColorInt int colorPrimary) {
-            mOptionBundle.putInt(EXTRA_COLOR_PRIMARY, colorPrimary);
-        }
-
-        public void setColorPrimaryDark(@ColorInt int colorPrimaryDark) {
-            mOptionBundle.putInt(EXTRA_COLOR_PRIMARY_DARK, colorPrimaryDark);
-        }
-
         public void setTopBarColor(@ColorInt int topBarColor) {
             mOptionBundle.putInt(EXTRA_TOP_BAR_COLOR, topBarColor);
         }
 
+        /**
+         * color of menu and navigation icon
+         * @param topBarWidgetColor
+         */
         public void setTopBarWidgetColor(@ColorInt int topBarWidgetColor) {
             mOptionBundle.putInt(EXTRA_TOP_BAR_WIDGET_COLOR, topBarWidgetColor);
         }

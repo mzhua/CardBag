@@ -32,7 +32,7 @@ dependencies {
     compile fileTree(include: ['*.jar'], dir: 'libs')
     testCompile 'junit:junit:4.12'
     compile project(':card-bag')
-//    compile 'com.wonders.xlab.cardbag:card-bag:1.0.3'
+//    compile 'com.wonders.xlab.cardbag:card-bag:1.0.4'
     compile 'com.android.support:appcompat-v7:23.4.0'
     compile 'com.android.support:design:23.4.0'
 }

@@ -32,6 +32,8 @@ public class CardShowActivity extends MVPActivity<CardShowContract.Presenter> im
 
     private CardEntity mSelectedCardEntity;
 
+    private boolean mShowMenu;
+
     @Override
     public CardShowContract.Presenter getPresenter() {
         if (null == mPresenter) {
@@ -84,8 +86,10 @@ public class CardShowActivity extends MVPActivity<CardShowContract.Presenter> im
 
     @Override
     public boolean onCreateOptionsMenu(Menu menu) {
-        getMenuInflater().inflate(R.menu.card_show_activity, menu);
-        return true;
+        if (mShowMenu) {
+            getMenuInflater().inflate(R.menu.card_show_activity, menu);
+        }
+        return mShowMenu;
     }
 
     @Override
@@ -112,6 +116,12 @@ public class CardShowActivity extends MVPActivity<CardShowContract.Presenter> im
                 mCardShadowTransformer.enableScaling(true);
             }
         });
+    }
+
+    @Override
+    public void showMenu(boolean show) {
+        mShowMenu = show;
+        supportInvalidateOptionsMenu();
     }
 
     @Override

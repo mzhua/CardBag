@@ -27,6 +27,7 @@ import com.wonders.xlab.cardbag.util.DensityUtil;
 import com.wonders.xlab.cardbag.widget.SideBar;
 import com.wonders.xlab.cardbag.widget.XToolBarLayout;
 import com.wonders.xlab.cardbag.widget.decoration.HorizontalDividerItemDecoration;
+import com.wonders.xlab.cardbag.widget.rvwrapper.EmptyWrapper;
 
 import java.lang.annotation.Retention;
 import java.lang.annotation.RetentionPolicy;
@@ -50,6 +51,8 @@ public class CardMyActivity extends MVPActivity<CardMyContract.Presenter> implem
 
     @MenuMode
     private int mMenuMode = MENU_MODE_ICON;
+    private EmptyWrapper mIconEmptyWrapper;
+    private EmptyWrapper mListEmptyWrapper;
 
     @Retention(RetentionPolicy.SOURCE)
     @IntDef({MENU_MODE_LIST, MENU_MODE_ICON, MENU_MODE_DELETE})
@@ -122,6 +125,9 @@ public class CardMyActivity extends MVPActivity<CardMyContract.Presenter> implem
     public void showMyCards(List<CardEntity> cardEntityList) {
         if (mIconRVAdapter == null) {
             mIconRVAdapter = new CardMyIconRVAdapter();
+            mIconEmptyWrapper = new EmptyWrapper(mIconRVAdapter);
+            mIconEmptyWrapper.setEmptyView(R.layout.cb_empty_view);
+
             mIconRVAdapter.setOnClickListener(new BaseRecyclerViewAdapter.OnClickListener() {
                 @Override
                 public void onItemClick(int position) {
@@ -136,11 +142,13 @@ public class CardMyActivity extends MVPActivity<CardMyContract.Presenter> implem
                     }
                 }
             });
-            mIconRecyclerView.setAdapter(mIconRVAdapter);
         }
+        mIconRecyclerView.setAdapter(mIconEmptyWrapper);
         mIconRVAdapter.setDatas(cardEntityList);
         if (mListRVAdapter == null) {
             mListRVAdapter = new CardMyListRVAdapter();
+            mListEmptyWrapper = new EmptyWrapper(mListRVAdapter);
+            mListEmptyWrapper.setEmptyView(R.layout.cb_empty_view);
             mListRVAdapter.setOnClickListener(new BaseRecyclerViewAdapter.OnClickListener() {
                 @Override
                 public void onItemClick(int position) {
@@ -155,8 +163,8 @@ public class CardMyActivity extends MVPActivity<CardMyContract.Presenter> implem
                     }
                 }
             });
-            mListRecyclerView.setAdapter(mListRVAdapter);
         }
+        mListRecyclerView.setAdapter(mListEmptyWrapper);
         mListRVAdapter.setDatas(cardEntityList);
     }
 
@@ -266,5 +274,14 @@ public class CardMyActivity extends MVPActivity<CardMyContract.Presenter> implem
             return;
         }
         super.onBackPressed();
+    }
+
+    @Override
+    protected void onDestroy() {
+        super.onDestroy();
+        mIconRVAdapter = null;
+        mListRVAdapter = null;
+        mIconEmptyWrapper = null;
+        mListEmptyWrapper = null;
     }
 }

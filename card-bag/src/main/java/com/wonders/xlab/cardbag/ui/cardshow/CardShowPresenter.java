@@ -21,7 +21,13 @@ public class CardShowPresenter extends BasePresenter implements CardShowContract
         mModel.getAllCards(new BaseContract.Model.Callback<List<CardEntity>>() {
             @Override
             public void onSuccess(List<CardEntity> cardEntityList) {
-                mView.showCardViewPager(cardEntityList);
+                if (cardEntityList == null || cardEntityList.size() == 0) {
+                    mView.showToastMessage("没有卡片数据,请先在管理卡片中尽心添加");
+                    mView.showMenu(false);
+                } else {
+                    mView.showMenu(true);
+                    mView.showCardViewPager(cardEntityList);
+                }
             }
 
             @Override

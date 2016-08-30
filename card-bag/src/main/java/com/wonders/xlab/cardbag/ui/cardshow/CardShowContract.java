@@ -12,6 +12,8 @@ import java.util.List;
 public interface CardShowContract {
     interface View extends BaseContract.View {
         void showCardViewPager(List<CardEntity> cardEntityList);
+
+        void showMenu(boolean show);
     }
 
     interface Presenter extends BaseContract.Presenter {

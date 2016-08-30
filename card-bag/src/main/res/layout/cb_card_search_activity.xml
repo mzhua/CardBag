@@ -47,6 +47,7 @@
             android:hint="请输入卡片名称"
             android:imeOptions="actionSearch"
             android:inputType="text"
+            android:focusable="true"
             android:maxLength="10"
             android:maxLines="1"
             android:paddingBottom="8dp"

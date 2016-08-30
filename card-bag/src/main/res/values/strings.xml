@@ -18,4 +18,5 @@
     <string name="hello_world">Hello world!</string>
     <string name="title_card_show">使用卡片</string>
     <string name="menu_card_show_edit">编辑</string>
+    <string name="tip_no_card">你还没有卡片\n点击右下角 + 进行添加</string>
 </resources>
