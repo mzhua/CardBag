@@ -29,10 +29,10 @@
         <activity
             android:name="com.yalantis.ucrop.UCropActivity"
             android:screenOrientation="portrait"
-            android:theme="@style/Theme.AppCompat.Light.NoActionBar"/>
+            android:theme="@style/CBAppTheme.NoActionBar"/>
         <activity
             android:name=".ui.cardshow.CardShowActivity"
-            android:theme="@style/Theme.AppCompat.Light.NoActionBar">
+            android:theme="@style/CBAppTheme.NoActionBar">
         </activity>
     </application>
 

@@ -1,1 +1,1 @@
-include ':app', ':qr-scanner', ':card-bag', ':x-contacts'
+include ':app', ':qr-scanner', ':card-bag'

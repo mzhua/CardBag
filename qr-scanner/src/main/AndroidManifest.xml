@@ -6,7 +6,9 @@
     <application
         android:label="@string/cb_app_name"
         android:supportsRtl="true">
-        <activity android:name=".XQrScannerActivity">
+        <activity
+            android:name=".XQrScannerActivity"
+            android:theme="@style/QRAppTheme.NoActionBar">
         </activity>
     </application>
 

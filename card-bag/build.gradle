@@ -51,7 +51,6 @@ dependencies {
     //    compile 'com.wonders.xlab.xcontacts:x-contacts:1.0.1'
     //    compile 'com.wonders.xlab.qrscanner:qr-scanner:1.0.2'
     compile project(':qr-scanner')
-    compile project(':x-contacts')
 }
 
 task clearJar(type: Delete) {
