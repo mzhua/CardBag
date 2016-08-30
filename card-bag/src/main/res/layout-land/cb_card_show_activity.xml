@@ -1,0 +1,28 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+              xmlns:app="http://schemas.android.com/apk/res-auto"
+              xmlns:tools="http://schemas.android.com/tools"
+              android:layout_width="match_parent"
+              android:layout_height="match_parent"
+              android:animateLayoutChanges="true"
+              android:background="@color/background"
+              android:fitsSystemWindows="true"
+              android:orientation="vertical"
+              tools:context="com.wonders.xlab.cardbag.ui.cardshow.CardShowActivity">
+
+    <com.wonders.xlab.cardbag.widget.XToolBarLayout
+        android:id="@+id/xtbl"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        app:xtblShowDivider="true"
+        app:xtblTitleText="@string/title_card_show"/>
+
+    <android.support.v4.view.ViewPager
+        android:id="@+id/viewPager"
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:clipToPadding="false"
+        android:overScrollMode="never"
+        android:paddingLeft="@dimen/card_padding"
+        android:paddingRight="@dimen/card_padding"/>
+</LinearLayout>

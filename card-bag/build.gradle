@@ -22,9 +22,12 @@ android {
         }
 
         release {
-            minifyEnabled false
+            minifyEnabled true
             proguardFiles getDefaultProguardFile('proguard-android.txt'), 'proguard-rules.pro'
         }
+    }
+    lintOptions {
+        abortOnError false
     }
 }
 
@@ -35,6 +38,8 @@ dependencies {
     })
     compile 'com.android.support:appcompat-v7:23.4.0'
     compile 'com.android.support:recyclerview-v7:23.4.0'
+    compile 'com.android.support:cardview-v7:23.4.0'
+
     testCompile 'junit:junit:4.12'
     testCompile 'org.mockito:mockito-core:1.10.19'
     testCompile 'org.robolectric:robolectric:3.1.2'
@@ -46,10 +51,8 @@ dependencies {
     // ~80KB
     //    compile 'top.zibin:Luban:1.0.8'
     //    compile 'com.github.lovetuzitong:MultiImageSelector:1.2'
-    //    compile 'com.wonders.xlab.xcontacts:x-contacts:1.0.1'
-    //    compile 'com.wonders.xlab.qrscanner:qr-scanner:1.0.2'
-    compile project(':qr-scanner')
-    compile project(':x-contacts')
+        compile 'com.wonders.xlab.qrscanner:qr-scanner:1.0.3'
+//    compile project(':qr-scanner')
 }
 
 task clearJar(type: Delete) {
@@ -69,7 +72,7 @@ publish {
     userOrg = 'mzhua'
     groupId = 'com.wonders.xlab.cardbag'
     artifactId = 'card-bag'
-    publishVersion = '1.0.3'
+    publishVersion = '1.0.4'
     desc = 'Oh hi, this is a nice description for a project, right?'
     website = 'https://gitlab.com/Mzhua/card-bag'
 }

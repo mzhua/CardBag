@@ -8,7 +8,7 @@ import android.view.View;
 import com.wonders.xlab.cardbag.R;
 import com.wonders.xlab.cardbag.manager.RealmManager;
 import com.wonders.xlab.cardbag.ui.cardmy.CardMyActivity;
-import com.wonders.xlab.cardbag.widget.TopBar;
+import com.wonders.xlab.cardbag.ui.cardshow.CardShowActivity;
 import com.wonders.xlab.cardbag.widget.XToolBarLayout;
 
 public class HomeActivity extends Activity {
@@ -28,5 +28,6 @@ public class HomeActivity extends Activity {
     }
 
     public void useCard(View view) {
+        startActivity(new Intent(this, CardShowActivity.class));
     }
 }

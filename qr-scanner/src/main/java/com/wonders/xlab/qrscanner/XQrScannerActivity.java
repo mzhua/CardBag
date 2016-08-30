@@ -1,6 +1,7 @@
 package com.wonders.xlab.qrscanner;
 
 import android.Manifest;
+import android.app.Activity;
 import android.content.Intent;
 import android.content.pm.PackageManager;
 import android.os.Build;
@@ -12,7 +13,7 @@ import android.widget.Toast;
 import cn.bingoogolapple.qrcode.core.QRCodeView;
 import cn.bingoogolapple.qrcode.zxing.ZXingView;
 
-public class XQrScannerActivity extends AppCompatActivity implements QRCodeView.Delegate {
+public class XQrScannerActivity extends Activity implements QRCodeView.Delegate {
 
     private static final int PERMISSION_REQUEST_CODE_CAMERA = 1234;
     private ZXingView mZXingView;

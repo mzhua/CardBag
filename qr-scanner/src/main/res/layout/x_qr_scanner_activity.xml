@@ -1,11 +1,28 @@
 <?xml version="1.0" encoding="utf-8"?>
-<RelativeLayout
+<LinearLayout
     xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto"
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
+    android:orientation="vertical"
     tools:context=".XQrScannerActivity">
+
+    <android.support.v7.widget.Toolbar
+        android:id="@+id/toolbar"
+        android:layout_width="match_parent"
+        android:layout_height="?attr/actionBarSize"
+        app:background="@color/qrTopBarBackground">
+
+        <TextView
+            android:id="@+id/toolbar_title"
+            style="@style/TextAppearance.Widget.AppCompat.Toolbar.Title"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_gravity="center"
+            android:text="@string/qrAppName"
+            android:textColor="@color/qrTopBarTitleColor"/>
+    </android.support.v7.widget.Toolbar>
 
     <cn.bingoogolapple.qrcode.zxing.ZXingView
         android:id="@+id/zxingview"
@@ -14,13 +31,16 @@
         app:qrcv_animTime="1000"
         app:qrcv_borderColor="@android:color/white"
         app:qrcv_borderSize="1dp"
-        app:qrcv_cornerColor="@color/colorPrimaryDark"
+        app:qrcv_cornerColor="@android:color/black"
         app:qrcv_cornerLength="20dp"
         app:qrcv_cornerSize="3dp"
-        app:qrcv_maskColor="#33FFFFFF"
+        app:qrcv_maskColor="#a51d1d1d"
         app:qrcv_rectWidth="200dp"
         app:qrcv_scanLineColor="@color/colorPrimaryDark"
         app:qrcv_scanLineSize="1dp"
+        app:qrcv_qrCodeTipText="@string/qrScanTip"
+        app:qrcv_isTipTextBelowRect="true"
+        app:qrcv_tipTextColor="@android:color/white"
         app:qrcv_topOffset="90dp"/>
 
-</RelativeLayout>
+</LinearLayout>

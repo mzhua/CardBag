@@ -1,4 +1,7 @@
 <?xml version="1.0" encoding="utf-8"?>
 <resources>
+    <color name="colorPrimary">#3d4fc7</color>
     <color name="colorPrimaryDark">#303F9F</color>
+    <color name="qrTopBarBackground">@android:color/white</color>
+    <color name="qrTopBarTitleColor">@android:color/black</color>
 </resources>

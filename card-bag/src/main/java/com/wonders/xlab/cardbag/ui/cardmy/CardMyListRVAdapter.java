@@ -3,6 +3,7 @@ package com.wonders.xlab.cardbag.ui.cardmy;
 import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
 import android.support.v7.widget.StaggeredGridLayoutManager;
+import android.text.TextUtils;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -31,6 +32,9 @@ public class CardMyListRVAdapter extends MultiSelectionRecyclerViewAdapter<Long,
         Collections.sort(mBeanList, new Comparator<CardEntity>() {
             @Override
             public int compare(CardEntity lhs, CardEntity rhs) {
+                if (TextUtils.isEmpty(lhs.getCardName())) {
+                    return -1;
+                }
                 return Pinyin.toPinyin(lhs.getCardName().charAt(0)).toUpperCase().compareTo(Pinyin.toPinyin(rhs.getCardName().charAt(0)).toUpperCase());
             }
         });

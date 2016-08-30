@@ -12,4 +12,5 @@
     <dimen name="top_bar_title_size">20sp</dimen>
     <dimen name="top_bar_menu_size">16dp</dimen>
     <dimen name="round_corner_bg_radius">8dp</dimen>
+    <dimen name="card_padding">30dp</dimen>
 </resources>

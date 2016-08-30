@@ -47,6 +47,7 @@ public class CardSearchActivity extends MVPActivity<CardSearchContract.Presenter
         mRecyclerView.setItemAnimator(new DefaultItemAnimator());
         mRecyclerView.setLayoutManager(new GridLayoutManager(this, 2, GridLayoutManager.VERTICAL, false));
 
+        mEtCardName.requestFocus();
         mEtCardName.setOnEditorActionListener(new TextView.OnEditorActionListener() {
             @Override
             public boolean onEditorAction(TextView v, int actionId, KeyEvent event) {

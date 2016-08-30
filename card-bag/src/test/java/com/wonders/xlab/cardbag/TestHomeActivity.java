@@ -1,3 +1,4 @@
+/*
 package com.wonders.xlab.cardbag;
 
 import com.wonders.xlab.cardbag.ui.home.HomeActivity;
@@ -11,9 +12,11 @@ import org.robolectric.Shadows;
 import org.robolectric.annotation.Config;
 import org.robolectric.shadows.ShadowActivity;
 
+*/
 /**
  * Created by hua on 16/8/18.
- */
+ *//*
+
 @RunWith(RobolectricTestRunner.class)
 @Config(constants = BuildConfig.class, sdk = 21)
 public class TestHomeActivity {
@@ -26,7 +29,8 @@ public class TestHomeActivity {
         homeActivity = Robolectric.setupActivity(HomeActivity.class);
         shadowActivity = Shadows.shadowOf(homeActivity);
     }
-    /*@Test
+    */
+/*@Test
     public void testContactsBtnClick() {
         View view = homeActivity.findViewById(R.id.btn_contacts);
         assertNotNull(view);
@@ -46,6 +50,8 @@ public class TestHomeActivity {
         Intent expectedIntent = new Intent(homeActivity, XQrScannerActivity.class);
         Intent nextStartedActivity = shadowActivity.getNextStartedActivity();
         assertEquals("start wrong activity",expectedIntent.getComponent(), nextStartedActivity.getComponent());
-    }*/
+    }*//*
+
 
 }
+*/
