@@ -10,7 +10,6 @@ import android.support.annotation.IntDef;
 import android.support.annotation.NonNull;
 
 import com.wonders.xlab.cardbag.ui.home.HomeActivity;
-import com.wonders.xlab.cardbag.widget.TopBar;
 
 import java.lang.annotation.Retention;
 import java.lang.annotation.RetentionPolicy;
@@ -76,25 +75,24 @@ public class CBag {
         return mCBagIntent;
     }
 
+    private static final int GRAVITY_TITLE_MASK = 1;
+    private static final int GRAVITY_TITLE_LEFT = GRAVITY_TITLE_MASK << 1;
+    private static final int GRAVITY_TITLE_CENTER = GRAVITY_TITLE_MASK << 2;
+
+    @Retention(RetentionPolicy.SOURCE)
+    @IntDef({GRAVITY_TITLE_LEFT, GRAVITY_TITLE_CENTER})
+    public @interface TitleGravity {
+    }
     /**
      *
      */
-    public static class Options {
+    public class Options {
         public static final String EXTRA_TOP_BAR_COLOR = EXTRA_PREFIX + ".TopBarColor";
         public static final String EXTRA_TOP_BAR_WIDGET_COLOR = EXTRA_PREFIX + ".TopBarWidgetColor";
         public static final String EXTRA_TOP_BAR_TITLE_GRAVITY = EXTRA_PREFIX + ".TopBarTitleGravity";
         public static final String EXTRA_TOP_BAR_TEXT_COLOR = EXTRA_PREFIX + ".TopBarTextColor";
 
         private final Bundle mOptionBundle;
-
-        private final int GRAVITY_TITLE_MASK = 1;
-        private final int GRAVITY_TITLE_LEFT = GRAVITY_TITLE_MASK << 1;
-        private final int GRAVITY_TITLE_CENTER = GRAVITY_TITLE_MASK << 2;
-
-        @Retention(RetentionPolicy.SOURCE)
-        @IntDef({GRAVITY_TITLE_LEFT, GRAVITY_TITLE_CENTER})
-        public @interface TitleGravity {
-        }
 
         public Options() {
             mOptionBundle = new Bundle();
