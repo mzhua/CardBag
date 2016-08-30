@@ -3,6 +3,7 @@ package com.wonders.xlab.cardbag.util;
 import android.content.Context;
 import android.os.Environment;
 import android.support.annotation.NonNull;
+import android.text.TextUtils;
 import android.widget.Toast;
 
 import java.io.File;
@@ -45,6 +46,14 @@ public class FileUtil {
         }
         Toast.makeText(context, ERROR_CREATE_FILE_FAILED, Toast.LENGTH_SHORT).show();
         return null;
+    }
+
+    public static boolean deleteFile(String filePath) {
+        if (!isExternalStorageWritable() || TextUtils.isEmpty(filePath)) {
+            return false;
+        }
+        File file = new File(filePath);
+        return file.exists() && file.delete();
     }
 
     @NonNull
