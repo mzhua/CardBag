@@ -1,0 +1,74 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+                xmlns:app="http://schemas.android.com/apk/res-auto"
+                xmlns:tools="http://schemas.android.com/tools"
+                android:layout_width="match_parent"
+                android:layout_height="match_parent"
+                android:animateLayoutChanges="true"
+                android:background="@color/background"
+                android:fitsSystemWindows="true"
+                android:orientation="vertical"
+                tools:context="com.wonders.xlab.cardbag.ui.cardshow.CardShowActivity">
+
+    <com.wonders.xlab.cardbag.widget.XToolBarLayout
+        android:id="@+id/xtbl"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        app:xtblShowDivider="true"
+        app:xtblTitleText="@string/title_card_show"/>
+
+
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_marginBottom="36dp"
+        android:layout_marginLeft="@dimen/activity_horizontal_margin"
+        android:layout_marginRight="@dimen/activity_horizontal_margin"
+        android:layout_marginTop="20dp"
+        android:gravity="center_vertical"
+        android:orientation="horizontal"
+        android:paddingLeft="@dimen/activity_horizontal_margin"
+        android:paddingRight="@dimen/activity_horizontal_margin">
+
+        <com.wonders.xlab.cardbag.widget.RatioImageView
+            android:id="@+id/iv_card"
+            android:layout_width="0dp"
+            android:layout_height="wrap_content"
+            android:layout_weight="3"
+            android:background="@drawable/round_corner_app_grey_bg"
+            android:scaleType="centerCrop"
+            app:rivBaseDirection="horizontal"
+            app:rivHorizontalWeight="@integer/iv_horizontal_weight"
+            app:rivVerticalWeight="@integer/iv_vertical_weight"/>
+
+        <TextView
+            android:id="@+id/tv_card_name"
+            style="@style/NormalSizeBlackColorTextView"
+            android:layout_width="0dp"
+            android:layout_height="wrap_content"
+            android:layout_marginLeft="20dp"
+            android:layout_weight="3"
+            android:maxLength="30"
+            android:paddingBottom="8dp"
+            android:paddingLeft="16dp"
+            android:paddingRight="16dp"
+            android:paddingTop="8dp"
+            android:singleLine="true"/>
+
+    </LinearLayout>
+
+    <View
+        android:layout_width="match_parent"
+        android:layout_height="1dp"
+        android:background="@color/cbDivider"/>
+
+    <android.support.v4.view.ViewPager
+        android:id="@+id/viewPager"
+        android:layout_width="match_parent"
+        android:layout_height="300dp"
+        android:layout_marginTop="36dp"
+        android:clipToPadding="false"
+        android:overScrollMode="ifContentScrolls"
+        android:padding="@dimen/card_padding"/>
+
+</LinearLayout>

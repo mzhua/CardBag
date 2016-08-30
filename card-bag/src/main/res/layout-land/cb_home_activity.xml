@@ -1,0 +1,47 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout
+    xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:id="@+id/cb_home_activity"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:background="@color/background"
+    android:fitsSystemWindows="true"
+    android:orientation="vertical"
+    tools:context=".ui.home.HomeActivity">
+
+    <com.wonders.xlab.cardbag.widget.XToolBarLayout
+        android:id="@+id/xtbl"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        app:xtblShowDivider="true"
+        app:xtblTitleText="@string/cb_app_name"/>
+
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:orientation="horizontal">
+
+        <ImageButton
+            android:id="@+id/btn_use_card"
+            android:layout_width="0dp"
+            android:layout_height="match_parent"
+            android:layout_weight="1"
+            android:background="?android:attr/selectableItemBackground"
+            android:contentDescription="@string/content_desc_use_card"
+            android:onClick="useCard"
+            android:src="@drawable/ic_use_card"/>
+
+        <ImageButton
+            android:id="@+id/btn_manage_card"
+            android:layout_width="0dp"
+            android:layout_height="match_parent"
+            android:layout_weight="1"
+            android:background="?android:attr/selectableItemBackground"
+            android:contentDescription="@string/content_desc_manage_card"
+            android:onClick="manageCard"
+            android:src="@drawable/ic_manage_card"/>
+    </LinearLayout>
+
+</LinearLayout>

@@ -26,9 +26,7 @@ public class CardMyModel extends BaseModel implements CardMyContract.Model {
     public void getMyCards(final Callback<List<CardEntity>> callback) {
         RealmResults<CardEntity> allAsync = realm.where(CardEntity.class).findAllSorted("mCreateDate", Sort.DESCENDING);
         List<CardEntity> cardEntityList = new ArrayList<>();
-        for (CardEntity cardEntity : allAsync) {
-            cardEntityList.add(cardEntity);
-        }
+        cardEntityList.addAll(allAsync);
         callback.onSuccess(cardEntityList);
     }
 

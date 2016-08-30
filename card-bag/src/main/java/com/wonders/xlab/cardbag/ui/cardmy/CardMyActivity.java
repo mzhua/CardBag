@@ -125,9 +125,7 @@ public class CardMyActivity extends MVPActivity<CardMyContract.Presenter> implem
             mIconRVAdapter.setOnClickListener(new BaseRecyclerViewAdapter.OnClickListener() {
                 @Override
                 public void onItemClick(int position) {
-                    Intent intent = new Intent(CardMyActivity.this, CardEditActivity.class);
-                    intent.putExtra("data", mIconRVAdapter.getBean(position));
-                    startActivityForResult(intent, 12);
+                    goToEditActivity(mIconRVAdapter.getBean(position), 12);
                 }
             });
             mIconRVAdapter.setOnSelectionModeChangeListener(new MultiSelectionRecyclerViewAdapter.OnSelectionModeChangeListener() {
@@ -146,9 +144,7 @@ public class CardMyActivity extends MVPActivity<CardMyContract.Presenter> implem
             mListRVAdapter.setOnClickListener(new BaseRecyclerViewAdapter.OnClickListener() {
                 @Override
                 public void onItemClick(int position) {
-                    Intent intent = new Intent(CardMyActivity.this, CardEditActivity.class);
-                    intent.putExtra("data", mListRVAdapter.getBean(position));
-                    startActivityForResult(intent, 21);
+                    goToEditActivity(mListRVAdapter.getBean(position), 21);
                 }
             });
             mListRVAdapter.setOnSelectionModeChangeListener(new MultiSelectionRecyclerViewAdapter.OnSelectionModeChangeListener() {
@@ -162,6 +158,17 @@ public class CardMyActivity extends MVPActivity<CardMyContract.Presenter> implem
             mListRecyclerView.setAdapter(mListRVAdapter);
         }
         mListRVAdapter.setDatas(cardEntityList);
+    }
+
+    /**
+     * start {@link CardEditActivity}
+     * @param bean
+     * @param requestCode
+     */
+    private void goToEditActivity(CardEntity bean, int requestCode) {
+        Intent intent = new Intent(CardMyActivity.this, CardEditActivity.class);
+        intent.putExtra("data", bean);
+        startActivityForResult(intent, requestCode);
     }
 
     @Override

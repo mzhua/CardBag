@@ -15,4 +15,7 @@
     <string name="crop_picture_failed">图片裁剪失败</string>
     <string name="title_card_my">我的卡片</string>
     <string name="title_card_search">搜索卡片</string>
+    <string name="hello_world">Hello world!</string>
+    <string name="title_card_show">使用卡片</string>
+    <string name="menu_card_show_edit">编辑</string>
 </resources>

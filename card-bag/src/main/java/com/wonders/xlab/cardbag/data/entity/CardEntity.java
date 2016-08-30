@@ -28,6 +28,10 @@ public class CardEntity extends RealmObject implements Parcelable {
     }
 
     public CardEntity(CardEntity cardEntity) {
+        copy(cardEntity);
+    }
+
+    public void copy(CardEntity cardEntity) {
         if (cardEntity != null) {
             setId(cardEntity.getId());
             setCardName(cardEntity.getCardName());
