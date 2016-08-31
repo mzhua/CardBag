@@ -18,6 +18,8 @@ import java.lang.annotation.RetentionPolicy;
  * Created by hua on 16/8/16.
  */
 public class CBag {
+    public static final String HTTP_API_CARDS_SEARCH = "https://api.leancloud.cn/1.1/cloudQuery?cql=select * from cards where card_name regexp \"[card_name_value].*\"";//卡片搜索接口
+
     private static final String EXTRA_PREFIX = BuildConfig.APPLICATION_ID;
     private static CBag cBag;
 
@@ -83,6 +85,7 @@ public class CBag {
     @IntDef({GRAVITY_TITLE_LEFT, GRAVITY_TITLE_CENTER})
     public @interface TitleGravity {
     }
+
     /**
      *
      */
@@ -109,6 +112,7 @@ public class CBag {
 
         /**
          * color of menu and navigation icon
+         *
          * @param topBarWidgetColor
          */
         public void setTopBarWidgetColor(@ColorInt int topBarWidgetColor) {

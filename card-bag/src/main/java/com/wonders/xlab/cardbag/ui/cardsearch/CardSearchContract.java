@@ -1,7 +1,7 @@
 package com.wonders.xlab.cardbag.ui.cardsearch;
 
 import com.wonders.xlab.cardbag.base.BaseContract;
-import com.wonders.xlab.cardbag.data.entity.CardEntity;
+import com.wonders.xlab.cardbag.data.entity.CardSearchEntity;
 
 import java.util.List;
 
@@ -11,10 +11,14 @@ import java.util.List;
 
 public interface CardSearchContract {
     interface View extends BaseContract.View{
-        void showSearchResult(List<CardEntity> cardEntityList);
+        void showSearchResult(List<CardSearchEntity.ResultsEntity> cardEntityList);
     }
 
     interface Presenter extends BaseContract.Presenter{
         void searchByCardName(String cardName);
+    }
+
+    interface Model extends BaseContract.Model{
+        void searchByCardName(String cardName, Callback<CardSearchEntity> callback);
     }
 }

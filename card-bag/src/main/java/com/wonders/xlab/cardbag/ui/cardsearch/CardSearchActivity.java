@@ -5,19 +5,22 @@ import android.os.Bundle;
 import android.support.v7.widget.DefaultItemAnimator;
 import android.support.v7.widget.GridLayoutManager;
 import android.support.v7.widget.RecyclerView;
+import android.text.TextUtils;
 import android.view.KeyEvent;
 import android.view.inputmethod.EditorInfo;
 import android.widget.EditText;
 import android.widget.TextView;
 
 import com.wonders.xlab.cardbag.R;
-import com.wonders.xlab.cardbag.base.BaseContract;
 import com.wonders.xlab.cardbag.base.BaseRecyclerViewAdapter;
 import com.wonders.xlab.cardbag.base.MVPActivity;
 import com.wonders.xlab.cardbag.data.entity.CardEntity;
+import com.wonders.xlab.cardbag.data.entity.CardSearchEntity;
 import com.wonders.xlab.cardbag.ui.cardedit.CardEditActivity;
 
 import java.util.List;
+
+import okhttp3.OkHttpClient;
 
 public class CardSearchActivity extends MVPActivity<CardSearchContract.Presenter> implements CardSearchContract.View {
     private final int REQUEST_CODE_CARD_EDIT = 1234;
@@ -32,7 +35,7 @@ public class CardSearchActivity extends MVPActivity<CardSearchContract.Presenter
     @Override
     public CardSearchContract.Presenter getPresenter() {
         if (mPresenter == null) {
-            mPresenter = new CardSearchPresenter(this);
+            mPresenter = new CardSearchPresenter(this, new CardSearchModel(new OkHttpClient()));
         }
         return mPresenter;
     }
@@ -62,15 +65,19 @@ public class CardSearchActivity extends MVPActivity<CardSearchContract.Presenter
     }
 
     @Override
-    public void showSearchResult(List<CardEntity> cardEntityList) {
+    public void showSearchResult(List<CardSearchEntity.ResultsEntity> cardEntityList) {
         if (null == mCardSearchRVAdapter) {
             mCardSearchRVAdapter = new CardSearchRVAdapter();
             mCardSearchRVAdapter.setOnClickListener(new BaseRecyclerViewAdapter.OnClickListener() {
                 @Override
                 public void onItemClick(int position) {
                     Intent intent = new Intent(CardSearchActivity.this, CardEditActivity.class);
-                    CardEntity bean = mCardSearchRVAdapter.getBean(position);
-                    bean.setCardName(mEtCardName.getText().toString());
+
+                    CardSearchEntity.ResultsEntity entity = mCardSearchRVAdapter.getBean(position);
+
+                    CardEntity bean = new CardEntity();
+                    bean.setImgUrl(entity.getCard_img_url());
+                    bean.setCardName(TextUtils.isEmpty(entity.getCard_name()) ? mEtCardName.getText().toString() : entity.getCard_name());
                     intent.putExtra("data", bean);
                     startActivityForResult(intent, REQUEST_CODE_CARD_EDIT);
                 }

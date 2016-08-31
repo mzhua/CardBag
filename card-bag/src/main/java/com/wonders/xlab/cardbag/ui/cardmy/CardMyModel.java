@@ -1,10 +1,9 @@
-package com.wonders.xlab.cardbag.data;
+package com.wonders.xlab.cardbag.ui.cardmy;
 
 import com.wonders.xlab.cardbag.base.BaseModel;
 import com.wonders.xlab.cardbag.base.DefaultException;
 import com.wonders.xlab.cardbag.data.entity.CardEntity;
 import com.wonders.xlab.cardbag.manager.RealmManager;
-import com.wonders.xlab.cardbag.ui.cardmy.CardMyContract;
 import com.wonders.xlab.cardbag.util.FileUtil;
 
 import java.util.ArrayList;

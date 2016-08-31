@@ -13,7 +13,7 @@ import java.util.List;
  */
 public abstract class BaseRecyclerViewAdapter<Bean, VH extends RecyclerView.ViewHolder> extends RecyclerView.Adapter<VH> {
 
-    private List<Bean> mBeanList;
+    private List<Bean> mDatas;
 
     private OnClickListener mOnClickListener;
 
@@ -81,17 +81,22 @@ public abstract class BaseRecyclerViewAdapter<Bean, VH extends RecyclerView.View
 
     @Override
     public int getItemCount() {
-        return mBeanList == null ? 0 : mBeanList.size();
+        return mDatas == null ? 0 : mDatas.size();
+    }
+
+    @Override
+    public int getItemViewType(int position) {
+        return super.getItemViewType(position);
     }
 
     public void insertToFist(Bean bean) {
         if (bean == null) {
             return;
         }
-        if (mBeanList == null) {
-            mBeanList = new ArrayList<>();
+        if (mDatas == null) {
+            mDatas = new ArrayList<>();
         }
-        mBeanList.add(0, bean);
+        mDatas.add(0, bean);
         notifyItemInserted(0);
     }
 
@@ -99,16 +104,16 @@ public abstract class BaseRecyclerViewAdapter<Bean, VH extends RecyclerView.View
         if (bean == null) {
             return;
         }
-        if (mBeanList == null) {
-            mBeanList = new ArrayList<>();
+        if (mDatas == null) {
+            mDatas = new ArrayList<>();
         }
-        mBeanList.add(bean);
-        notifyItemInserted(mBeanList.size());
+        mDatas.add(bean);
+        notifyItemInserted(mDatas.size());
     }
 
     public void remove(int position) {
-        if (mBeanList != null && mBeanList.size() > position) {
-            mBeanList.remove(position);
+        if (mDatas != null && mDatas.size() > position) {
+            mDatas.remove(position);
             notifyItemRemoved(position);
         }
     }
@@ -119,19 +124,19 @@ public abstract class BaseRecyclerViewAdapter<Bean, VH extends RecyclerView.View
      * @param bean
      */
     public void remove(Bean bean) {
-        if (mBeanList != null) {
-            int i = mBeanList.indexOf(bean);
+        if (mDatas != null) {
+            int i = mDatas.indexOf(bean);
             if (i >= 0) {
-                mBeanList.remove(bean);
+                mDatas.remove(bean);
                 notifyItemRemoved(i);
             }
         }
     }
 
     public void clear() {
-        if (mBeanList != null) {
-            int size = mBeanList.size();
-            mBeanList.clear();
+        if (mDatas != null) {
+            int size = mDatas.size();
+            mDatas.clear();
             notifyItemRangeRemoved(0, size);
         }
     }
@@ -143,55 +148,60 @@ public abstract class BaseRecyclerViewAdapter<Bean, VH extends RecyclerView.View
      * @param toPosition
      */
     public void swap(int fromPosition, int toPosition) {
+        if (this.mDatas == null || this.mDatas.size() > fromPosition || this.mDatas.size() > toPosition) {
+            return;
+        }
         if (fromPosition < toPosition) {
             for (int i = fromPosition; i < toPosition; i++) {
-                Collections.swap(this.mBeanList, i, i + 1);
+                Collections.swap(this.mDatas, i, i + 1);
             }
         } else {
             for (int i = fromPosition; i > toPosition; i--) {
-                Collections.swap(this.mBeanList, i, i - 1);
+                Collections.swap(this.mDatas, i, i - 1);
             }
         }
         notifyItemMoved(fromPosition, toPosition);
     }
 
-    public void setDatas(List<Bean> mBeanList) {
-        if (this.mBeanList == null) {
-            this.mBeanList = new ArrayList<>();
-        } else {
-            this.mBeanList.clear();
+    /**
+     *
+     * @param srcData source data list
+     * @param clear true:clear datas before add
+     */
+    private void initDatasWithSrc(List<Bean> srcData, boolean clear) {
+        if (this.mDatas == null) {
+            this.mDatas = new ArrayList<>();
+        } else if (clear) {
+            this.mDatas.clear();
         }
-        if (mBeanList == null) {
+        if (srcData == null) {
             return;
         }
-        this.mBeanList.addAll(mBeanList);
+        this.mDatas.addAll(srcData);
+    }
+
+    public void setDatas(List<Bean> mBeanList) {
+        initDatasWithSrc(mBeanList,true);
         notifyDataSetChanged();
     }
 
     public void appendDatas(List<Bean> mBeanList) {
-        if (mBeanList == null) {
-            return;
-        }
-        if (this.mBeanList == null) {
-            this.mBeanList = new ArrayList<>();
-        }
-        int size = this.mBeanList.size();
-        this.mBeanList.addAll(mBeanList);
-        notifyItemRangeInserted(size, mBeanList.size());
+        int oldSize = this.mDatas.size();
+        initDatasWithSrc(mBeanList,false);
+        notifyItemRangeInserted(oldSize, mBeanList.size());
     }
 
-    public List<Bean> getBeanList() {
-        if (mBeanList == null) {
-            mBeanList = new ArrayList<>();
+    public List<Bean> getDatas() {
+        if (mDatas == null) {
+            mDatas = new ArrayList<>();
         }
-        return mBeanList;
+        return mDatas;
     }
 
     public Bean getBean(int position) {
-        if (mBeanList != null && mBeanList.size() > position) {
-            return mBeanList.get(position);
+        if (mDatas != null && mDatas.size() > position) {
+            return mDatas.get(position);
         }
         return null;
-
     }
 }

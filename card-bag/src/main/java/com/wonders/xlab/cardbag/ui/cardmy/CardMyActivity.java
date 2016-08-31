@@ -19,7 +19,6 @@ import com.wonders.xlab.cardbag.R;
 import com.wonders.xlab.cardbag.base.BaseRecyclerViewAdapter;
 import com.wonders.xlab.cardbag.base.MVPActivity;
 import com.wonders.xlab.cardbag.base.MultiSelectionRecyclerViewAdapter;
-import com.wonders.xlab.cardbag.data.CardMyModel;
 import com.wonders.xlab.cardbag.data.entity.CardEntity;
 import com.wonders.xlab.cardbag.ui.cardedit.CardEditActivity;
 import com.wonders.xlab.cardbag.ui.cardsearch.CardSearchActivity;

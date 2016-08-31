@@ -29,7 +29,7 @@ public abstract class MultiSelectionRecyclerViewAdapter<ID, Bean, VH extends Rec
     protected boolean onItemClick(VH holder, int position) {
         if (isSelectionMode()) {
             updateSelectedItemIdentities(getIdentity(getBean(position)));
-            notifyItemChanged(position);
+            this.notifyItemChanged(position);
         }
         return false;
     }
@@ -48,7 +48,7 @@ public abstract class MultiSelectionRecyclerViewAdapter<ID, Bean, VH extends Rec
             updateSelectedItemIdentities(getIdentity(getBean(position)));
             setSelectionMode(true);
 
-            notifyItemChanged(position);
+            this.notifyItemChanged(position);
         }
         return false;
     }
@@ -64,7 +64,7 @@ public abstract class MultiSelectionRecyclerViewAdapter<ID, Bean, VH extends Rec
         }
     }
 
-    public boolean isSelectionMode() {
+    protected boolean isSelectionMode() {
         return mSelectionMode;
     }
 

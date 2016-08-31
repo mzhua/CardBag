@@ -17,7 +17,17 @@
 #}
 
 -keep class com.wonders.xlab.cardbag.CBag { *; }
+-keep class com.wonders.xlab.cardbag.data.entity.** { *; }
 
 -dontwarn com.yalantis.ucrop**
 -keep class com.yalantis.ucrop** { *; }
 -keep interface com.yalantis.ucrop** { *; }
+
+#okhttp
+-dontwarn okhttp3.**
+-keep class okhttp3.**{*;}
+
+
+#okio
+-dontwarn okio.**
+-keep class okio.**{*;}

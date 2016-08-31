@@ -2,7 +2,6 @@ package com.wonders.xlab.cardbag.ui.cardsearch;
 
 import android.support.v7.widget.RecyclerView;
 import android.text.TextUtils;
-import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -11,7 +10,7 @@ import android.widget.TextView;
 
 import com.wonders.xlab.cardbag.R;
 import com.wonders.xlab.cardbag.base.BaseRecyclerViewAdapter;
-import com.wonders.xlab.cardbag.data.entity.CardEntity;
+import com.wonders.xlab.cardbag.data.entity.CardSearchEntity;
 import com.wonders.xlab.cardbag.util.ImageViewUtil;
 
 import java.util.List;
@@ -20,15 +19,15 @@ import java.util.List;
  * Created by hua on 16/8/22.
  */
 
-public class CardSearchRVAdapter extends BaseRecyclerViewAdapter<CardEntity, RecyclerView.ViewHolder> {
+public class CardSearchRVAdapter extends BaseRecyclerViewAdapter<CardSearchEntity.ResultsEntity, RecyclerView.ViewHolder> {
 
     private final int ITEM_TYPE_CARD = 1;
     private final int ITEM_TYPE_NOT_FOUND = 0;
 
     @Override
-    public void setDatas(List<CardEntity> mBeanList) {
+    public void setDatas(List<CardSearchEntity.ResultsEntity> mBeanList) {
         super.setDatas(mBeanList);
-        appendToLast(new CardEntity());//手动添加卡片
+        appendToLast(new CardSearchEntity.ResultsEntity());//手动添加卡片
     }
 
     @Override
@@ -47,8 +46,9 @@ public class CardSearchRVAdapter extends BaseRecyclerViewAdapter<CardEntity, Rec
 
     @Override
     public int getItemViewType(int position) {
-        CardEntity bean = getBean(position);
-        return bean.getId() == 0 ? ITEM_TYPE_NOT_FOUND : ITEM_TYPE_CARD;
+        super.getItemViewType(position);
+        CardSearchEntity.ResultsEntity bean = getBean(position);
+        return  TextUtils.isEmpty(bean.getObjectId()) ? ITEM_TYPE_NOT_FOUND : ITEM_TYPE_CARD;
     }
 
     @Override
@@ -66,9 +66,9 @@ public class CardSearchRVAdapter extends BaseRecyclerViewAdapter<CardEntity, Rec
         super.onBindViewHolder(holder, position);
         if (getItemViewType(position) == ITEM_TYPE_CARD) {
             ItemViewHolder viewHolder = (ItemViewHolder) holder;
-            CardEntity cardEntity = getBean(position);
-            viewHolder.mTextView.setText(cardEntity.getCardName());
-            ImageViewUtil.load(holder.itemView.getContext(), cardEntity.getImgUrl(), viewHolder.mImageView);
+            CardSearchEntity.ResultsEntity cardEntity = getBean(position);
+            viewHolder.mTextView.setText(cardEntity.getCard_name());
+            ImageViewUtil.load(holder.itemView.getContext(), cardEntity.getCard_img_url(), viewHolder.mImageView);
         }
     }
 

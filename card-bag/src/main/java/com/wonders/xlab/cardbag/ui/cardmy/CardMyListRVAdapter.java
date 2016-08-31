@@ -46,14 +46,14 @@ public class CardMyListRVAdapter extends MultiSelectionRecyclerViewAdapter<Long,
         if (c.equals("#")) {
             layoutManager.scrollToPosition(0);
         } else {
-            for (CardEntity entity : getBeanList()) {
+            for (CardEntity entity : getDatas()) {
                 if (Pinyin.toPinyin(entity.getCardName().charAt(0)).toUpperCase().charAt(0) == c.toUpperCase().charAt(0)) {
                     if (layoutManager instanceof LinearLayoutManager) {
-                        ((LinearLayoutManager) layoutManager).scrollToPositionWithOffset(getBeanList().indexOf(entity), 0);
+                        ((LinearLayoutManager) layoutManager).scrollToPositionWithOffset(getDatas().indexOf(entity), 0);
                     } else if (layoutManager instanceof StaggeredGridLayoutManager) {
-                        ((StaggeredGridLayoutManager) layoutManager).scrollToPositionWithOffset(getBeanList().indexOf(entity), 0);
+                        ((StaggeredGridLayoutManager) layoutManager).scrollToPositionWithOffset(getDatas().indexOf(entity), 0);
                     } else {
-                        layoutManager.scrollToPosition(getBeanList().indexOf(entity));
+                        layoutManager.scrollToPosition(getDatas().indexOf(entity));
                     }
                     break;
                 }
