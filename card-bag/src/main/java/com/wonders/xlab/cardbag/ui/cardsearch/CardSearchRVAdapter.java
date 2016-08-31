@@ -27,7 +27,7 @@ public class CardSearchRVAdapter extends BaseRecyclerViewAdapter<CardSearchEntit
     @Override
     public void setDatas(List<CardSearchEntity.ResultsEntity> mBeanList) {
         super.setDatas(mBeanList);
-        appendToLast(new CardSearchEntity.ResultsEntity());//手动添加卡片
+        insertToFist(new CardSearchEntity.ResultsEntity());//手动添加卡片
     }
 
     @Override
