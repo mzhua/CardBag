@@ -11,16 +11,15 @@ import android.view.inputmethod.EditorInfo;
 import android.widget.EditText;
 import android.widget.TextView;
 
+import com.wonders.xlab.cardbag.CBag;
 import com.wonders.xlab.cardbag.R;
-import com.wonders.xlab.cardbag.base.adapter.BaseRecyclerViewAdapter;
 import com.wonders.xlab.cardbag.base.MVPActivity;
+import com.wonders.xlab.cardbag.base.adapter.BaseRecyclerViewAdapter;
 import com.wonders.xlab.cardbag.data.entity.CardEntity;
 import com.wonders.xlab.cardbag.data.entity.CardSearchEntity;
 import com.wonders.xlab.cardbag.ui.cardedit.CardEditActivity;
 
 import java.util.List;
-
-import okhttp3.OkHttpClient;
 
 public class CardSearchActivity extends MVPActivity<CardSearchContract.Presenter> implements CardSearchContract.View {
     private final int REQUEST_CODE_CARD_EDIT = 1234;
@@ -35,7 +34,7 @@ public class CardSearchActivity extends MVPActivity<CardSearchContract.Presenter
     @Override
     public CardSearchContract.Presenter getPresenter() {
         if (mPresenter == null) {
-            mPresenter = new CardSearchPresenter(this, new CardSearchModel(new OkHttpClient()));
+            mPresenter = new CardSearchPresenter(this, CBag.get().getCardSearchModel());
         }
         return mPresenter;
     }

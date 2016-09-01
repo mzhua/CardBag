@@ -18,19 +18,11 @@ public class MainActivity extends AppCompatActivity {
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main);
-
-//        Realm.getDefaultInstance().beginTransaction();
-//        TestRealm realm = Realm.getDefaultInstance().createObject(TestRealm.class);
-//        realm.setId("111");
-//        Realm.getDefaultInstance().commitTransaction();
     }
 
     public void openCardBag(View view) {
-//        TestRealm first = Realm.getDefaultInstance().where(TestRealm.class).findFirst();
-//        if (first != null) {
-//            Toast.makeText(this, first.getId(), Toast.LENGTH_SHORT).show();
-//        }
-        CBag.get().start(this);
+        CBag.get().setCardSearchModel(new CardSearchModelImpl())
+                .start(this);
     }
 
     public void scan(View view) {

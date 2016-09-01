@@ -4,6 +4,6 @@
     <color name="colorPrimaryDark">#303F9F</color>
     <color name="colorAccent">#FF4081</color>
 
-    <color name="cbTopBarTitleColor">@color/textWhite</color>
-    <color name="cbTopBarBackground">@color/colorPrimary</color>
+    <color name="cbTopBarTitleColor">@color/textBlack</color>
+    <color name="cbTopBarBackground">@android:color/white</color>
 </resources>

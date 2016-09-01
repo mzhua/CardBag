@@ -116,7 +116,7 @@ public class CardShowActivity extends MVPActivity<CardShowContract.Presenter> im
      * @param cardName
      */
     private void setupCardNameAndImg(String imgUrl, String cardName) {
-        if (mTvCardName != null && mIvCardImg != null) {
+        if (mTvCardName == null || mIvCardImg == null) {
             return;
         }
         ImageViewUtil.load(CardShowActivity.this, imgUrl, mIvCardImg);

@@ -16,22 +16,20 @@ import okhttp3.OkHttpClient;
 import okhttp3.Request;
 import okhttp3.Response;
 
-import static com.wonders.xlab.cardbag.CBag.HTTP_API_CARDS_SEARCH;
-
 /**
  * Created by hua on 16/8/31.
  */
 
-public class CardSearchModel extends BaseModel implements CardSearchContract.Model {
-
+class CardSearchModel extends BaseModel implements CardSearchContract.Model {
+    private final String URL_PLACE_HOLDER_CARD_NAME_VALUE = "[card_name_value]";
+    private final String HTTP_URL_CARD_SEARCH = "https://api.leancloud.cn/1.1/cloudQuery?cql=select * from cards where card_name regexp \"[card_name_value].*\"";
     private OkHttpClient mOkHttpClient;
     private Request.Builder mBuilder;
     private Call mCall;
     private final Gson mGson;
 
-    public CardSearchModel(OkHttpClient mOkHttpClient) {
-        this.mOkHttpClient = mOkHttpClient;
-
+    CardSearchModel() {
+        this.mOkHttpClient = new OkHttpClient();
         mBuilder = new Request.Builder()
                 .addHeader("X-LC-Id", "27bHde5iXz1tTpQmbwRcenxg-gzGzoHsz")
                 .addHeader("X-LC-Key", "THX77SeFRWJpGzL4QXwlWSCQ")
@@ -41,11 +39,7 @@ public class CardSearchModel extends BaseModel implements CardSearchContract.Mod
 
     @Override
     public void searchByCardName(String cardName, final Callback<CardSearchEntity> callback) {
-        if (mCall != null && !mCall.isCanceled()) {
-            mCall.cancel();
-        }
-
-        mCall = mOkHttpClient.newCall(mBuilder.url(HTTP_API_CARDS_SEARCH.replace("[card_name_value]", cardName)).build());
+        setupCall(cardName);
         mCall.enqueue(new okhttp3.Callback() {
             @Override
             public void onFailure(Call call, IOException e) {
@@ -82,4 +76,16 @@ public class CardSearchModel extends BaseModel implements CardSearchContract.Mod
             }
         });
     }
+
+    private void setupCall(String cardName) {
+        if (mCall != null && !mCall.isCanceled()) {
+            mCall.cancel();
+        }
+        mCall = mOkHttpClient.newCall(mBuilder.url(assembleCardSearchUrl(cardName)).build());
+    }
+
+    private String assembleCardSearchUrl(String cardName) {
+        return HTTP_URL_CARD_SEARCH.replace(URL_PLACE_HOLDER_CARD_NAME_VALUE, cardName);
+    }
+
 }

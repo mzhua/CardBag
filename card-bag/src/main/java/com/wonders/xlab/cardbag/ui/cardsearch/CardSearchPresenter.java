@@ -9,13 +9,21 @@ import com.wonders.xlab.cardbag.data.entity.CardSearchEntity;
  * Created by hua on 16/8/23.
  */
 
-public class CardSearchPresenter extends BasePresenter implements CardSearchContract.Presenter{
+class CardSearchPresenter extends BasePresenter implements CardSearchContract.Presenter {
     private CardSearchContract.View mView;
     private CardSearchContract.Model mModel;
 
-    public CardSearchPresenter(CardSearchContract.View view,CardSearchContract.Model model) {
+    /**
+     * @param view
+     * @param model if model is null, then search card from owe own server
+     */
+    CardSearchPresenter(CardSearchContract.View view, CardSearchContract.Model model) {
         mView = view;
+        if (model == null) {
+            model = new CardSearchModel();
+        }
         mModel = model;
+        attachModels(mModel);
     }
 
     @Override
