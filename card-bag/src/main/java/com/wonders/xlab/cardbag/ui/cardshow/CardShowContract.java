@@ -13,6 +13,8 @@ public interface CardShowContract {
     interface View extends BaseContract.View {
         void showCardViewPager(List<CardEntity> cardEntityList);
 
+        void noCardData();
+
         void showMenu(boolean show);
     }
 

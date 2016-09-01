@@ -25,4 +25,14 @@
         <item name="android:textColor">@color/textBlack</item>
     </style>
 
+    <style name="ToolBar" parent="Theme.AppCompat.Light.DarkActionBar">
+        <item name="actionMenuTextColor">@color/cbTopBarTitleColor</item>
+    </style>
+
+    <style name="XToolBarLayout">
+        <item name="xtblShowDivider">true</item>
+        <item name="xtblTitleColor">@color/cbTopBarTitleColor</item>
+        <item name="xtblBackgroundColor">@color/cbTopBarBackground</item>
+        <item name="xtblTitleGravity">@integer/cbTopBarGravity</item>
+    </style>
 </resources>

@@ -13,7 +13,7 @@ import android.widget.TextView;
 
 import com.github.promeg.pinyinhelper.Pinyin;
 import com.wonders.xlab.cardbag.R;
-import com.wonders.xlab.cardbag.base.MultiSelectionRecyclerViewAdapter;
+import com.wonders.xlab.cardbag.base.adapter.MultiSelectionRecyclerViewAdapter;
 import com.wonders.xlab.cardbag.data.entity.CardEntity;
 import com.wonders.xlab.cardbag.util.ImageViewUtil;
 

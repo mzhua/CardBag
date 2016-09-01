@@ -12,7 +12,7 @@ import android.widget.EditText;
 import android.widget.TextView;
 
 import com.wonders.xlab.cardbag.R;
-import com.wonders.xlab.cardbag.base.BaseRecyclerViewAdapter;
+import com.wonders.xlab.cardbag.base.adapter.BaseRecyclerViewAdapter;
 import com.wonders.xlab.cardbag.base.MVPActivity;
 import com.wonders.xlab.cardbag.data.entity.CardEntity;
 import com.wonders.xlab.cardbag.data.entity.CardSearchEntity;

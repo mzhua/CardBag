@@ -1,0 +1,26 @@
+<resources>
+    <string name="bar_code_place_holder">xxxx xxxx xxxx x</string>
+    <string name="card_edit_cover_modify_bar_code">Click To Scan Barcode</string>
+    <string name="card_edit_cover_modify_card_back">Edit Back Page</string>
+    <string name="card_edit_cover_modify_card_front">Edit Front Page</string>
+    <string name="card_not_found_notice">Not Found?\n+ Add A New Card</string>
+    <string name="card_show_no_card_data_notice">Don\'t have any cards yet, please add a card from Manage Card first</string>
+    <string name="cb_app_name">Electric Card Manager</string>
+    <string name="content_desc_manage_card">Manage Card</string>
+    <string name="content_desc_use_card">Use Card</string>
+    <string name="crop_picture_failed">Failed to crop photo</string>
+    <string name="hello_world">Hello world!</string>
+    <string name="menu_card_show_edit">Edit</string>
+    <string name="menu_text_card_edit_finish">Finish</string>
+    <string name="please_input_card_name_hint">input card name</string>
+    <string name="save_photo_failed">Save photo failed, please check if app have the right to write external storage</string>
+    <string name="tip_no_card">Don\'t have any cards yet\nPlease click the + right bottom to add a new card</string>
+    <string name="title_card_edit_add">Add Card</string>
+    <string name="title_card_edit_edit">Edit Card</string>
+    <string name="title_card_my">My Card</string>
+    <string name="title_card_search">Search Card</string>
+    <string name="title_card_show">Use Card</string>
+    <string name="menu_card_my_list">List</string>
+    <string name="menu_card_my_icon">Icon</string>
+    <string name="menu_card_my_delete">Delete</string>
+</resources>

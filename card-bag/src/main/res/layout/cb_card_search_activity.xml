@@ -13,10 +13,11 @@
     tools:context="com.wonders.xlab.cardbag.ui.cardsearch.CardSearchActivity">
 
     <com.wonders.xlab.cardbag.widget.XToolBarLayout
+        android:id="@+id/xtbl"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         app:xtblTitleText="@string/title_card_search"
-        app:xtblShowDivider="true"/>
+        app:theme="@style/XToolBarLayout"/>
 
     <LinearLayout
         android:layout_width="match_parent"

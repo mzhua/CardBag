@@ -21,6 +21,7 @@ import java.util.List;
 
 public class CardShowActivity extends MVPActivity<CardShowContract.Presenter> implements CardShowContract.View {
 
+    private final int REQUEST_CODE_EDIT = 12;
     private XToolBarLayout mToolBarLayout;
     private RatioImageView mIvCardImg;
     private TextView mTvCardName;
@@ -30,8 +31,14 @@ public class CardShowActivity extends MVPActivity<CardShowContract.Presenter> im
     private CardShowPagerAdapter mCardAdapter;
     private ShadowTransformer mCardShadowTransformer;
 
+    /**
+     * cache the selected card info
+     */
     private CardEntity mSelectedCardEntity;
 
+    /**
+     * if there is no card data, then hide the menu, or show the edit menu
+     */
     private boolean mShowMenu;
 
     @Override
@@ -63,8 +70,7 @@ public class CardShowActivity extends MVPActivity<CardShowContract.Presenter> im
                 if (newMetrics.orientation == Configuration.ORIENTATION_PORTRAIT) {
                     mToolBarLayout.setTitle(getResources().getString(R.string.title_card_show));
                     if (null != bean) {
-                        ImageViewUtil.load(CardShowActivity.this, bean.getImgUrl(), mIvCardImg);
-                        mTvCardName.setText(bean.getCardName());
+                        setupCardNameAndImg(bean.getImgUrl(), bean.getCardName());
                     }
                 } else {
                     if (null != bean) {
@@ -85,9 +91,69 @@ public class CardShowActivity extends MVPActivity<CardShowContract.Presenter> im
     }
 
     @Override
+    public void showCardViewPager(List<CardEntity> cardEntityList) {
+        if (mCardAdapter == null) {
+            mCardAdapter = new CardShowPagerAdapter();
+            mViewPager.setAdapter(mCardAdapter);
+            mCardShadowTransformer = new ShadowTransformer(mViewPager, mCardAdapter);
+        }
+        mCardAdapter.setData(cardEntityList);
+
+        if (cardEntityList != null && cardEntityList.size() > mViewPager.getCurrentItem()) {
+            setupCardNameAndImg(cardEntityList.get(mViewPager.getCurrentItem()).getImgUrl(), cardEntityList.get(mViewPager.getCurrentItem()).getCardName());
+        }
+        mViewPager.post(new Runnable() {
+            @Override
+            public void run() {
+                mCardShadowTransformer.enableScaling(true);
+            }
+        });
+    }
+
+    /**
+     * when the orientation is landscape, mTvCardName and mIvCardImg don't exist
+     * @param imgUrl
+     * @param cardName
+     */
+    private void setupCardNameAndImg(String imgUrl, String cardName) {
+        if (mTvCardName != null && mIvCardImg != null) {
+            return;
+        }
+        ImageViewUtil.load(CardShowActivity.this, imgUrl, mIvCardImg);
+        mTvCardName.setText(cardName);
+    }
+
+    @Override
+    public void noCardData() {
+        showLongToast(getString(R.string.card_show_no_card_data_notice));
+    }
+
+    @Override
+    public void showMenu(boolean show) {
+        mShowMenu = show;
+        supportInvalidateOptionsMenu();
+    }
+
+    @Override
+    protected void onActivityResult(int requestCode, int resultCode, Intent data) {
+        super.onActivityResult(requestCode, resultCode, data);
+        if (requestCode == REQUEST_CODE_EDIT && resultCode == RESULT_OK) {
+            getPresenter().getAllCards();
+        }
+    }
+
+    @Override
     public boolean onCreateOptionsMenu(Menu menu) {
         if (mShowMenu) {
             getMenuInflater().inflate(R.menu.card_show_activity, menu);
+        }
+        return mShowMenu;
+    }
+
+    @Override
+    public boolean onPrepareOptionsMenu(Menu menu) {
+        if (mShowMenu) {
+            setupMenuIcon(menu.findItem(R.id.menu_card_show_edit));
         }
         return mShowMenu;
     }
@@ -97,31 +163,9 @@ public class CardShowActivity extends MVPActivity<CardShowContract.Presenter> im
         if (item.getItemId() == R.id.menu_card_show_edit) {
             Intent intent = new Intent(this, CardEditActivity.class);
             intent.putExtra("data", mSelectedCardEntity);
-            startActivityForResult(intent, 12);
+            startActivityForResult(intent, REQUEST_CODE_EDIT);
         }
         return super.onOptionsItemSelected(item);
-    }
-
-    @Override
-    public void showCardViewPager(List<CardEntity> cardEntityList) {
-        if (mCardAdapter == null) {
-            mCardAdapter = new CardShowPagerAdapter();
-            mViewPager.setAdapter(mCardAdapter);
-            mCardShadowTransformer = new ShadowTransformer(mViewPager, mCardAdapter);
-        }
-        mCardAdapter.setData(cardEntityList);
-        mViewPager.post(new Runnable() {
-            @Override
-            public void run() {
-                mCardShadowTransformer.enableScaling(true);
-            }
-        });
-    }
-
-    @Override
-    public void showMenu(boolean show) {
-        mShowMenu = show;
-        supportInvalidateOptionsMenu();
     }
 
     @Override

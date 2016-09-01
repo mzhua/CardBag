@@ -22,7 +22,7 @@ public class CardShowPresenter extends BasePresenter implements CardShowContract
             @Override
             public void onSuccess(List<CardEntity> cardEntityList) {
                 if (cardEntityList == null || cardEntityList.size() == 0) {
-                    mView.showToastMessage("没有卡片数据,请先在管理卡片中尽心添加");
+                    mView.noCardData();
                     mView.showMenu(false);
                 } else {
                     mView.showMenu(true);

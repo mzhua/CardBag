@@ -1,25 +1,54 @@
 package com.wonders.xlab.cardbag.base;
 
-import android.app.Activity;
 import android.app.ProgressDialog;
 import android.content.DialogInterface;
+import android.graphics.PorterDuff;
+import android.graphics.drawable.Drawable;
 import android.os.IBinder;
 import android.support.v7.app.ActionBar;
 import android.support.v7.app.AlertDialog;
 import android.support.v7.app.AppCompatActivity;
 import android.support.v7.widget.Toolbar;
+import android.text.SpannableString;
 import android.text.TextUtils;
+import android.text.style.ForegroundColorSpan;
+import android.view.MenuItem;
 import android.view.inputmethod.InputMethodManager;
 import android.widget.Toast;
+
+import com.wonders.xlab.cardbag.R;
 
 /**
  * Created by hua on 16/8/19.
  */
-public class BaseActivity extends AppCompatActivity implements BaseContract.View{
+public class BaseActivity extends AppCompatActivity implements BaseContract.View {
     private ProgressDialog mProgressDialog;
     private AlertDialog.Builder mBuilder;
     private AlertDialog mAlertDialog;
     private Toast mToast;
+
+    /**
+     * change the menu vector icon's color to fit the toolbar background
+     * @param menuItem
+     */
+    protected void setupMenuIcon(MenuItem menuItem) {
+        Drawable menuItemDrawable = menuItem.getIcon();
+        if (menuItemDrawable != null) {
+            menuItemDrawable.mutate();
+            menuItemDrawable.setColorFilter(getResources().getColor(R.color.cbTopBarTitleColor), PorterDuff.Mode.SRC_ATOP);
+            menuItem.setIcon(menuItemDrawable);
+        }
+    }
+
+    /**
+     * change the menu text color to fit the toolbar background
+     * @param menuItem
+     */
+    protected void setupMenuText(MenuItem menuItem) {
+        SpannableString s = new SpannableString(menuItem.getTitle());
+        s.setSpan(new ForegroundColorSpan(getResources().getColor(R.color.cbTopBarTitleColor)), 0, s.length(), 0);
+        menuItem.setTitle(s);
+    }
 
     protected void setupActionBar(Toolbar toolbar) {
         setSupportActionBar(toolbar);

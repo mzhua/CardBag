@@ -5,6 +5,7 @@
     android:id="@+id/toolbar"
     android:layout_width="match_parent"
     android:layout_height="?android:attr/actionBarSize"
+    android:theme="@style/ToolBar"
     app:background="@color/cbTopBarBackground"
     app:popupTheme="@style/AppTheme.PopupOverlay">
 

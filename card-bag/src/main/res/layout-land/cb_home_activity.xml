@@ -15,8 +15,8 @@
         android:id="@+id/xtbl"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        app:xtblShowDivider="true"
-        app:xtblTitleText="@string/cb_app_name"/>
+        app:xtblTitleText="@string/cb_app_name"
+        app:theme="@style/XToolBarLayout"/>
 
     <LinearLayout
         android:layout_width="match_parent"

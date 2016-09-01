@@ -16,7 +16,7 @@
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         app:xtblTitleText="@string/cb_app_name"
-        app:xtblShowDivider="true"/>
+        app:theme="@style/XToolBarLayout"/>
 
     <ImageButton
         android:id="@+id/btn_use_card"

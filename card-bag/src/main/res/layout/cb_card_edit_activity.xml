@@ -13,7 +13,7 @@
         android:id="@+id/xtbl"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        app:xtblShowDivider="true"
+        app:theme="@style/XToolBarLayout"
         app:xtblTitleText="@string/title_card_edit_add"/>
 
     <android.support.v4.widget.NestedScrollView

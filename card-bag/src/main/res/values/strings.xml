@@ -19,4 +19,8 @@
     <string name="title_card_show">使用卡片</string>
     <string name="menu_card_show_edit">编辑</string>
     <string name="tip_no_card">你还没有卡片\n点击右下角 + 进行添加</string>
+    <string name="card_show_no_card_data_notice">没有卡片数据,请先在管理卡片中进行添加</string>
+    <string name="menu_card_my_list">列表</string>
+    <string name="menu_card_my_icon">图标</string>
+    <string name="menu_card_my_delete">删除</string>
 </resources>

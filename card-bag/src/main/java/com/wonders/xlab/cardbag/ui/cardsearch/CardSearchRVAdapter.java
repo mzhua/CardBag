@@ -9,7 +9,7 @@ import android.widget.ImageView;
 import android.widget.TextView;
 
 import com.wonders.xlab.cardbag.R;
-import com.wonders.xlab.cardbag.base.BaseRecyclerViewAdapter;
+import com.wonders.xlab.cardbag.base.adapter.BaseRecyclerViewAdapter;
 import com.wonders.xlab.cardbag.data.entity.CardSearchEntity;
 import com.wonders.xlab.cardbag.util.ImageViewUtil;
 

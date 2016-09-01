@@ -5,8 +5,10 @@ import android.net.Uri;
 import android.os.Bundle;
 import android.provider.MediaStore;
 import android.text.Editable;
+import android.text.SpannableString;
 import android.text.TextUtils;
 import android.text.TextWatcher;
+import android.text.style.ForegroundColorSpan;
 import android.view.Menu;
 import android.view.MenuItem;
 import android.view.View;
@@ -146,9 +148,9 @@ public class CardEditActivity extends MVPActivity<CardEditContract.Presenter> im
             mOptions = new UCrop.Options();
             int color = getResources().getColor(R.color.cbTopBarBackground);
             mOptions.setToolbarColor(color);
-            mOptions.setToolbarWidgetColor(getResources().getColor(R.color.textBlack));
+            mOptions.setToolbarWidgetColor(getResources().getColor(R.color.cbTopBarTitleColor));
             mOptions.setStatusBarColor(getResources().getColor(R.color.textBlack));
-            mOptions.setLogoColor(getResources().getColor(R.color.textBlack));
+            mOptions.setLogoColor(getResources().getColor(R.color.cbTopBarTitleColor));
         }
     }
 
@@ -279,18 +281,29 @@ public class CardEditActivity extends MVPActivity<CardEditContract.Presenter> im
     }
 
     @Override
+    public boolean onPrepareOptionsMenu(Menu menu) {
+        MenuItem item = menu.findItem(R.id.menu_card_edit_save);
+        setupMenuText(item);
+        return true;
+    }
+
+    @Override
     public boolean onOptionsItemSelected(MenuItem item) {
         if (item.getItemId() == R.id.menu_card_edit_save) {
-            if (mCardEntity == null) {
-                mCardEntity = new CardEntity();
-            }
-            mCardEntity.setCardName(mEtCardName.getText().toString());
-            mCardEntity.setBarCode(mTvBarCode.getText().toString());
-            mCardEntity.setFrontImgFilePath(mCardFrontPhotoPath);
-            mCardEntity.setBackImgFilePath(mCardBackPhotoPath);
-
-            getPresenter().saveCard(mCardEntity);
+            saveCardInfo();
         }
         return super.onOptionsItemSelected(item);
+    }
+
+    private void saveCardInfo() {
+        if (mCardEntity == null) {
+            mCardEntity = new CardEntity();
+        }
+        mCardEntity.setCardName(mEtCardName.getText().toString());
+        mCardEntity.setBarCode(mTvBarCode.getText().toString());
+        mCardEntity.setFrontImgFilePath(mCardFrontPhotoPath);
+        mCardEntity.setBackImgFilePath(mCardBackPhotoPath);
+
+        getPresenter().saveCard(mCardEntity);
     }
 }

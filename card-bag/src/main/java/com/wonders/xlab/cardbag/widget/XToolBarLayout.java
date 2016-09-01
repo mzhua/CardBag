@@ -84,7 +84,7 @@ public class XToolBarLayout extends LinearLayout {
         mToolbar = (Toolbar) LayoutInflater.from(context).inflate(R.layout.cb_tool_bar, this, false);
         addView(mToolbar);
         mToolbar.setBackgroundColor(mBackgroundColor);
-
+        mToolbar.setTitleTextColor(mTitleColor);
         setupTitleView();
 
         setupDividerView();
@@ -146,9 +146,9 @@ public class XToolBarLayout extends LinearLayout {
         mBackgroundColor = backgroundColor;
     }
 
-    public void setNavigationIcon(@DrawableRes int drawableResId,int colorFilter) {
+    public void setNavigationIcon(@DrawableRes int drawableResId) {
         Drawable stateButtonDrawable = ContextCompat.getDrawable(mContext, drawableResId).mutate();
-        stateButtonDrawable.setColorFilter(colorFilter, PorterDuff.Mode.MULTIPLY);
+        stateButtonDrawable.setColorFilter(mTitleColor, PorterDuff.Mode.SRC_ATOP);
         getToolbar().setNavigationIcon(stateButtonDrawable);
     }
 

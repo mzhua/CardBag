@@ -16,9 +16,9 @@ import android.view.View;
 import android.widget.ImageView;
 
 import com.wonders.xlab.cardbag.R;
-import com.wonders.xlab.cardbag.base.BaseRecyclerViewAdapter;
+import com.wonders.xlab.cardbag.base.adapter.BaseRecyclerViewAdapter;
 import com.wonders.xlab.cardbag.base.MVPActivity;
-import com.wonders.xlab.cardbag.base.MultiSelectionRecyclerViewAdapter;
+import com.wonders.xlab.cardbag.base.adapter.MultiSelectionRecyclerViewAdapter;
 import com.wonders.xlab.cardbag.data.entity.CardEntity;
 import com.wonders.xlab.cardbag.ui.cardedit.CardEditActivity;
 import com.wonders.xlab.cardbag.ui.cardsearch.CardSearchActivity;
@@ -216,7 +216,7 @@ public class CardMyActivity extends MVPActivity<CardMyContract.Presenter> implem
         mMenuMode = menuMode;
 
         if (menuMode == MENU_MODE_DELETE) {
-            mXToolBarLayout.setNavigationIcon(R.drawable.ic_clear_black_24dp, ContextCompat.getColor(this, android.R.color.black));
+            mXToolBarLayout.setNavigationIcon(R.drawable.ic_clear_black_24dp);
             mIvAdd.setVisibility(View.GONE);
         }
 
@@ -226,25 +226,22 @@ public class CardMyActivity extends MVPActivity<CardMyContract.Presenter> implem
     @Override
     public boolean onCreateOptionsMenu(Menu menu) {
         getMenuInflater().inflate(R.menu.card_my_activity, menu);
-
-        MenuItem menuItemCrop = menu.findItem(R.id.menu_card_my_delete);
-        Drawable menuItemCropIcon = menuItemCrop.getIcon();
-        if (menuItemCropIcon != null) {
-            menuItemCropIcon.mutate();
-            menuItemCropIcon.setColorFilter(ContextCompat.getColor(this, android.R.color.black), PorterDuff.Mode.SRC_ATOP);
-            menuItemCrop.setIcon(menuItemCropIcon);
-        }
-
         return true;
     }
 
     @Override
     public boolean onPrepareOptionsMenu(Menu menu) {
-        menu.findItem(R.id.menu_card_my_list).setVisible(getMenuMode() == MENU_MODE_ICON);
-        menu.findItem(R.id.menu_card_my_icon).setVisible(getMenuMode() == MENU_MODE_LIST);
-        menu.findItem(R.id.menu_card_my_delete).setVisible(getMenuMode() == MENU_MODE_DELETE);
+        MenuItem menuItemList = menu.findItem(R.id.menu_card_my_list);
+        menuItemList.setVisible(getMenuMode() == MENU_MODE_ICON);
+        MenuItem menuItemIcon = menu.findItem(R.id.menu_card_my_icon);
+        menuItemIcon.setVisible(getMenuMode() == MENU_MODE_LIST);
+        MenuItem itemDelete = menu.findItem(R.id.menu_card_my_delete);
+        itemDelete.setVisible(getMenuMode() == MENU_MODE_DELETE);
 
-        return super.onPrepareOptionsMenu(menu);
+        setupMenuIcon(itemDelete);
+        setupMenuIcon(menuItemIcon);
+        setupMenuIcon(menuItemList);
+        return true;
     }
 
     @Override

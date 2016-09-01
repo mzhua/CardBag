@@ -1,4 +1,4 @@
-package com.wonders.xlab.cardbag.base;
+package com.wonders.xlab.cardbag.base.adapter;
 
 import android.support.v7.widget.RecyclerView;
 

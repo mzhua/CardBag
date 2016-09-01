@@ -14,8 +14,8 @@
         android:id="@+id/xtbl"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        app:xtblShowDivider="true"
-        app:xtblTitleText="@string/title_card_show"/>
+        app:xtblTitleText="@string/title_card_show"
+        app:theme="@style/XToolBarLayout"/>
 
 
     <LinearLayout
