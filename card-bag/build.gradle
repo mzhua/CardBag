@@ -51,8 +51,8 @@ dependencies {
     // ~80KB
     //    compile 'top.zibin:Luban:1.0.8'
     //    compile 'com.github.lovetuzitong:MultiImageSelector:1.2'
-    compile 'com.wonders.xlab.qrscanner:qr-scanner:1.0.3'
-//    compile project(':qr-scanner')
+//    compile 'com.wonders.xlab.qrscanner:qr-scanner:1.0.3'
+    compile project(':qr-scanner')
 }
 
 task clearJar(type: Delete) {

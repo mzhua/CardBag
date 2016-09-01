@@ -58,6 +58,14 @@ public class CardShowActivity extends MVPActivity<CardShowContract.Presenter> im
         mIvCardImg = (RatioImageView) findViewById(R.id.iv_card);
         mTvCardName = (TextView) findViewById(R.id.tv_card_name);
 
+        initViewPager();
+
+        setupActionBar(mToolBarLayout.getToolbar());
+
+        getPresenter().getAllCards();
+    }
+
+    private void initViewPager() {
         mViewPager.setPageTransformer(false, mCardShadowTransformer);
         mViewPager.setOffscreenPageLimit(3);
         mViewPager.addOnPageChangeListener(new ViewPager.SimpleOnPageChangeListener() {
@@ -84,10 +92,6 @@ public class CardShowActivity extends MVPActivity<CardShowContract.Presenter> im
                 super.onPageSelected(position);
             }
         });
-
-        setupActionBar(mToolBarLayout.getToolbar());
-
-        getPresenter().getAllCards();
     }
 
     @Override
