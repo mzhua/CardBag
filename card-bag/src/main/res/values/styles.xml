@@ -3,9 +3,6 @@
     <!-- Base application theme. -->
     <style name="CBAppTheme" parent="Theme.AppCompat.Light.DarkActionBar">
         <!-- Customize your theme here. -->
-        <item name="colorPrimary">@color/colorPrimary</item>
-        <item name="colorPrimaryDark">@color/colorPrimaryDark</item>
-        <item name="colorAccent">@color/colorAccent</item>
     </style>
 
     <style name="CBAppTheme.NoActionBar">
@@ -17,12 +14,12 @@
 
     <style name="NormalSizeBlackColorTextView">
         <item name="android:textSize">@dimen/text_size_normal</item>
-        <item name="android:textColor">@color/textBlack</item>
+        <item name="android:textColor">@color/cbTextBlack</item>
     </style>
 
     <style name="LargeSizeBlackColorTextView">
         <item name="android:textSize">@dimen/text_size_large</item>
-        <item name="android:textColor">@color/textBlack</item>
+        <item name="android:textColor">@color/cbTextBlack</item>
     </style>
 
     <style name="ToolBar" parent="Theme.AppCompat.Light.DarkActionBar">

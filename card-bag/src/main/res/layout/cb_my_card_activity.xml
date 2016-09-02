@@ -6,7 +6,7 @@
     android:layout_width="match_parent"
     android:layout_height="match_parent"
     android:animateLayoutChanges="true"
-    android:background="@color/background"
+    android:background="@color/cbBackground"
     android:fitsSystemWindows="true"
     tools:context="com.wonders.xlab.cardbag.ui.cardmy.CardMyActivity">
 
@@ -15,7 +15,7 @@
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         app:theme="@style/XToolBarLayout"
-        app:xtblTitleText="@string/title_card_my"/>
+        app:xtblTitleText="@string/cb_title_card_my"/>
 
     <android.support.v7.widget.RecyclerView
         android:id="@+id/recycler_view"

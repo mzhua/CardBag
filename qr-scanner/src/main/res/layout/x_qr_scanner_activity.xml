@@ -36,7 +36,7 @@
         app:qrcv_cornerSize="3dp"
         app:qrcv_maskColor="#a51d1d1d"
         app:qrcv_rectWidth="200dp"
-        app:qrcv_scanLineColor="@color/colorPrimaryDark"
+        app:qrcv_scanLineColor="@color/qrTopBarBackground"
         app:qrcv_scanLineSize="1dp"
         app:qrcv_qrCodeTipText="@string/qrScanTip"
         app:qrcv_isTipTextBelowRect="true"

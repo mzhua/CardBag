@@ -237,7 +237,7 @@ public class TopBar extends RelativeLayout {
 
     private int getTextColor() {
         if (getBackground() == null) {
-            return getResources().getColor(R.color.textBlack);
+            return getResources().getColor(R.color.cbTextBlack);
         } else {
             return mTitleColor;
         }

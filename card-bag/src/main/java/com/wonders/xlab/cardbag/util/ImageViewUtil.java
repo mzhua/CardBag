@@ -53,7 +53,7 @@ public class ImageViewUtil {
         }
         Picasso.with(context)
                 .load(resId)
-                .placeholder(R.color.imageBackgroundHolder)
+                .placeholder(R.color.cbImageBackgroundHolder)
                 .transform(ROUNDED_CORNERS_TRANSFORM)
                 .into(imageView);
     }

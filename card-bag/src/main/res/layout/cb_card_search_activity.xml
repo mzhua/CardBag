@@ -6,7 +6,7 @@
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    android:background="@color/background"
+    android:background="@color/cbBackground"
     android:descendantFocusability="beforeDescendants"
     android:focusableInTouchMode="true"
     android:orientation="vertical"
@@ -16,7 +16,7 @@
         android:id="@+id/xtbl"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        app:xtblTitleText="@string/title_card_search"
+        app:xtblTitleText="@string/cb_title_card_search"
         app:theme="@style/XToolBarLayout"/>
 
     <LinearLayout
@@ -54,7 +54,7 @@
             android:paddingBottom="8dp"
             android:paddingTop="8dp"
             android:selectAllOnFocus="true"
-            android:textColorHint="@color/textGrey"
+            android:textColorHint="@color/cbTextGrey"
             android:textSize="@dimen/text_size_normal"/>
 
         <TextView

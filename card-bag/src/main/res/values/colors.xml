@@ -1,22 +1,18 @@
 <?xml version="1.0" encoding="utf-8"?>
 <resources xmlns:tools="http://schemas.android.com/tools">
-    <color name="colorPrimary">@android:color/white</color>
-    <color name="colorPrimaryDark">#a1a1a1</color>
-    <color name="colorAccent">#FF4081</color>
+    <color name="cbAppGrey">#EBEBEB</color>
 
-    <color name="appGrey">#EBEBEB</color>
+    <color name="cbImageBackgroundHolder">#c6bebebe</color>
+    <color name="cbBackground">@android:color/white</color>
 
-    <color name="imageBackgroundHolder">#c6bebebe</color>
-    <color name="background">@android:color/white</color>
-
-    <color name="textBlack">#212121</color>
-    <color name="textWhite">@android:color/white</color>
-    <color name="textGrey">#818181</color>
+    <color name="cbTextBlack">#212121</color>
+    <color name="cbTextWhite">@android:color/white</color>
+    <color name="cbTextGrey">#818181</color>
 
     <color name="cbDivider">#EBEBEB</color>
-    <color name="foreground_cover">#6a848484</color>
+    <color name="cbForegroundCover">#6a848484</color>
 
-    <color name="cbTopBarTitleColor">@color/textBlack</color>
+    <color name="cbTopBarTitleColor">@color/cbTextBlack</color>
     <color name="cbTopBarBackground">@android:color/white</color>
 
     <color name="ucrop_color_toolbar_widget" tools:override="true">@color/cbTopBarBackground</color>

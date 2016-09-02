@@ -12,13 +12,13 @@
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         app:rvBaseDirection="horizontal"
-        app:rvHorizontalWeight="@integer/iv_horizontal_weight"
-        app:rvVerticalWeight="@integer/iv_vertical_weight"/>
+        app:rvHorizontalWeight="@integer/cbIvHorizontalWeight"
+        app:rvVerticalWeight="@integer/cbIvVerticalWeight"/>
 
     <TextView
         android:layout_width="match_parent"
         android:layout_height="match_parent"
         android:gravity="center"
-        android:text="@string/card_not_found_notice"
-        android:textColor="@color/textWhite"/>
+        android:text="@string/cb_card_not_found_notice"
+        android:textColor="@color/cbTextWhite"/>
 </FrameLayout>

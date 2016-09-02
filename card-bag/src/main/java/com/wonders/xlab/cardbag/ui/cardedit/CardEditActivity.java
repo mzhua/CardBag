@@ -117,7 +117,7 @@ public class CardEditActivity extends MVPActivity<CardEditContract.Presenter> im
             }
         }
 
-        mToolBarLayout.setTitle(mCardEntity == null || TextUtils.isEmpty(mCardEntity.getBarCode()) ? getString(R.string.title_card_edit_add) : getString(R.string.title_card_edit_edit));
+        mToolBarLayout.setTitle(mCardEntity == null || TextUtils.isEmpty(mCardEntity.getBarCode()) ? getString(R.string.cb_title_card_edit_add) : getString(R.string.cb_title_card_edit_edit));
     }
 
     private void setupViewListener() {
@@ -156,7 +156,7 @@ public class CardEditActivity extends MVPActivity<CardEditContract.Presenter> im
             int color = getResources().getColor(R.color.cbTopBarBackground);
             mOptions.setToolbarColor(color);
             mOptions.setToolbarWidgetColor(getResources().getColor(R.color.cbTopBarTitleColor));
-            mOptions.setStatusBarColor(getResources().getColor(R.color.textBlack));
+            mOptions.setStatusBarColor(getResources().getColor(R.color.cbTextBlack));
             mOptions.setLogoColor(getResources().getColor(R.color.cbTopBarTitleColor));
         }
     }
@@ -233,7 +233,7 @@ public class CardEditActivity extends MVPActivity<CardEditContract.Presenter> im
                 break;
         }
         if (pathUri == null) {
-            showShortToast(getString(R.string.crop_picture_failed));
+            showShortToast(getString(R.string.cb_crop_picture_failed));
             return;
         }
         UCrop.of(pathUri, pathUri)
@@ -253,7 +253,7 @@ public class CardEditActivity extends MVPActivity<CardEditContract.Presenter> im
             try {
                 photoFile = FileUtil.createTempFile(this, fileName);
                 if (photoFile == null) {
-                    showShortToast(getString(R.string.save_photo_failed));
+                    showShortToast(getString(R.string.cb_save_photo_failed));
                     return;
                 }
                 switch (requestCode) {
@@ -266,7 +266,7 @@ public class CardEditActivity extends MVPActivity<CardEditContract.Presenter> im
                 }
             } catch (IOException ex) {
                 // Error occurred while creating the File
-                showShortToast(getString(R.string.save_photo_failed));
+                showShortToast(getString(R.string.cb_save_photo_failed));
             }
             // Continue only if the File was successfully created
             Uri photoURI = Uri.fromFile(photoFile);//FileProvider.getUriForFile(this,"com.wonders.xlab.cardbag.fileprovider",photoFile);

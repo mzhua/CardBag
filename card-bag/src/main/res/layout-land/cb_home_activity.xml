@@ -6,7 +6,7 @@
     android:id="@+id/cb_home_activity"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    android:background="@color/background"
+    android:background="@color/cbBackground"
     android:fitsSystemWindows="true"
     android:orientation="vertical"
     tools:context=".ui.home.HomeActivity">
@@ -29,7 +29,7 @@
             android:layout_height="match_parent"
             android:layout_weight="1"
             android:background="?android:attr/selectableItemBackground"
-            android:contentDescription="@string/content_desc_use_card"
+            android:contentDescription="@string/cb_content_desc_use_card"
             android:onClick="useCard"
             android:src="@drawable/ic_use_card"/>
 
@@ -39,7 +39,7 @@
             android:layout_height="match_parent"
             android:layout_weight="1"
             android:background="?android:attr/selectableItemBackground"
-            android:contentDescription="@string/content_desc_manage_card"
+            android:contentDescription="@string/cb_content_desc_manage_card"
             android:onClick="manageCard"
             android:src="@drawable/ic_manage_card"/>
     </LinearLayout>

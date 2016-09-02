@@ -5,7 +5,7 @@
                 android:layout_width="match_parent"
                 android:layout_height="match_parent"
                 android:animateLayoutChanges="true"
-                android:background="@color/background"
+                android:background="@color/cbBackground"
                 android:fitsSystemWindows="true"
                 android:orientation="vertical"
                 tools:context="com.wonders.xlab.cardbag.ui.cardshow.CardShowActivity">
@@ -14,7 +14,7 @@
         android:id="@+id/xtbl"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        app:xtblTitleText="@string/title_card_show"
+        app:xtblTitleText="@string/cb_title_card_show"
         app:theme="@style/XToolBarLayout"/>
 
 
@@ -37,8 +37,8 @@
             android:layout_weight="3"
             android:scaleType="centerCrop"
             app:rivBaseDirection="horizontal"
-            app:rivHorizontalWeight="@integer/iv_horizontal_weight"
-            app:rivVerticalWeight="@integer/iv_vertical_weight"/>
+            app:rivHorizontalWeight="@integer/cbIvHorizontalWeight"
+            app:rivVerticalWeight="@integer/cbIvVerticalWeight"/>
 
         <TextView
             android:id="@+id/tv_card_name"

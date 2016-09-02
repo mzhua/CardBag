@@ -4,7 +4,7 @@
               xmlns:tools="http://schemas.android.com/tools"
               android:layout_width="match_parent"
               android:layout_height="match_parent"
-              android:background="@color/background"
+              android:background="@color/cbBackground"
               android:fitsSystemWindows="true"
               android:orientation="vertical"
               tools:context="com.wonders.xlab.cardbag.ui.cardedit.CardEditActivity">
@@ -14,7 +14,7 @@
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         app:theme="@style/XToolBarLayout"
-        app:xtblTitleText="@string/title_card_edit_add"/>
+        app:xtblTitleText="@string/cb_title_card_edit_add"/>
 
     <android.support.v4.widget.NestedScrollView
         android:layout_width="match_parent"
@@ -44,8 +44,8 @@
                     android:background="@drawable/round_corner_app_grey_bg"
                     android:scaleType="centerCrop"
                     app:rivBaseDirection="horizontal"
-                    app:rivHorizontalWeight="@integer/iv_horizontal_weight"
-                    app:rivVerticalWeight="@integer/iv_vertical_weight"/>
+                    app:rivHorizontalWeight="@integer/cbIvHorizontalWeight"
+                    app:rivVerticalWeight="@integer/cbIvVerticalWeight"/>
 
                 <RelativeLayout
                     android:layout_width="0dp"
@@ -61,7 +61,7 @@
                         android:layout_height="wrap_content"
                         android:layout_toLeftOf="@+id/iv_clear"
                         android:background="@android:color/transparent"
-                        android:hint="@string/please_input_card_name_hint"
+                        android:hint="@string/cb_please_input_card_name_hint"
                         android:maxLength="30"
                         android:paddingBottom="8dp"
                         android:paddingLeft="16dp"
@@ -96,9 +96,9 @@
                 android:onClick="scanBarCode"
                 android:scaleType="centerCrop"
                 app:rivBaseDirection="horizontal"
-                app:rivForegroundColor="@color/foreground_cover"
+                app:rivForegroundColor="@color/cbForegroundCover"
                 app:rivForegroundCornerRadius="0dp"
-                app:rivForegroundText="@string/card_edit_cover_modify_bar_code"
+                app:rivForegroundText="@string/cb_card_edit_cover_modify_bar_code"
                 app:rivForegroundTextSize="@dimen/text_size_large"
                 app:rivHorizontalWeight="3"
                 app:rivVerticalWeight="1"/>
@@ -110,7 +110,7 @@
                 android:layout_height="wrap_content"
                 android:layout_marginTop="10dp"
                 android:gravity="center"
-                android:hint="@string/bar_code_place_holder"
+                android:hint="@string/cb_bar_code_place_holder"
                 android:maxLines="2"/>
 
             <LinearLayout
@@ -128,11 +128,11 @@
                     android:onClick="shotCardFront"
                     android:scaleType="centerCrop"
                     app:rivBaseDirection="horizontal"
-                    app:rivForegroundColor="@color/foreground_cover"
-                    app:rivForegroundText="@string/card_edit_cover_modify_card_front"
+                    app:rivForegroundColor="@color/cbForegroundCover"
+                    app:rivForegroundText="@string/cb_card_edit_cover_modify_card_front"
                     app:rivForegroundTextSize="@dimen/text_size_large"
-                    app:rivHorizontalWeight="@integer/iv_horizontal_weight"
-                    app:rivVerticalWeight="@integer/iv_vertical_weight"/>
+                    app:rivHorizontalWeight="@integer/cbIvHorizontalWeight"
+                    app:rivVerticalWeight="@integer/cbIvVerticalWeight"/>
 
                 <com.wonders.xlab.cardbag.widget.RatioImageView
                     android:id="@+id/iv_card_back"
@@ -143,11 +143,11 @@
                     android:onClick="shotCardBack"
                     android:scaleType="centerCrop"
                     app:rivBaseDirection="horizontal"
-                    app:rivForegroundColor="@color/foreground_cover"
-                    app:rivForegroundText="@string/card_edit_cover_modify_card_back"
+                    app:rivForegroundColor="@color/cbForegroundCover"
+                    app:rivForegroundText="@string/cb_card_edit_cover_modify_card_back"
                     app:rivForegroundTextSize="@dimen/text_size_large"
-                    app:rivHorizontalWeight="@integer/iv_horizontal_weight"
-                    app:rivVerticalWeight="@integer/iv_vertical_weight"/>
+                    app:rivHorizontalWeight="@integer/cbIvHorizontalWeight"
+                    app:rivVerticalWeight="@integer/cbIvVerticalWeight"/>
 
             </LinearLayout>
         </LinearLayout>

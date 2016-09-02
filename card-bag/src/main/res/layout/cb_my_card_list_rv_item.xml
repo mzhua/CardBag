@@ -16,8 +16,8 @@
         android:layout_marginLeft="16dp"
         android:scaleType="centerCrop"
         app:rivBaseDirection="vertical"
-        app:rivHorizontalWeight="@integer/iv_horizontal_weight"
-        app:rivVerticalWeight="@integer/iv_vertical_weight"/>
+        app:rivHorizontalWeight="@integer/cbIvHorizontalWeight"
+        app:rivVerticalWeight="@integer/cbIvVerticalWeight"/>
 
     <TextView
         android:id="@+id/tv_name"

@@ -4,19 +4,35 @@ import android.Manifest;
 import android.app.Activity;
 import android.content.Intent;
 import android.content.pm.PackageManager;
+import android.graphics.PorterDuff;
+import android.graphics.drawable.Drawable;
 import android.os.Build;
 import android.os.Bundle;
+import android.support.annotation.DrawableRes;
 import android.support.annotation.NonNull;
+import android.support.v4.content.ContextCompat;
+import android.support.v7.app.ActionBar;
 import android.support.v7.app.AppCompatActivity;
+import android.support.v7.widget.Toolbar;
+import android.view.Gravity;
+import android.view.View;
+import android.view.ViewGroup;
+import android.widget.TextView;
 import android.widget.Toast;
 
 import cn.bingoogolapple.qrcode.core.QRCodeView;
 import cn.bingoogolapple.qrcode.zxing.ZXingView;
 
-public class XQrScannerActivity extends Activity implements QRCodeView.Delegate {
+import static com.wonders.xlab.qrscanner.R.id.toolbar;
 
-    private static final int PERMISSION_REQUEST_CODE_CAMERA = 1234;
+public class XQrScannerActivity extends AppCompatActivity implements QRCodeView.Delegate {
+
+    private final int PERMISSION_REQUEST_CODE_CAMERA = 1234;
+    private final int GRAVITY_TITLE_LEFT = 1;
+    private final int GRAVITY_TITLE_CENTER = 3;
     private ZXingView mZXingView;
+    private Toolbar mToolbar;
+    private TextView mTvTitle;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -24,9 +40,43 @@ public class XQrScannerActivity extends Activity implements QRCodeView.Delegate 
         requestPermission();
 
         setContentView(R.layout.x_qr_scanner_activity);
+        mToolbar = (Toolbar) findViewById(toolbar);
+        mTvTitle = (TextView) findViewById(R.id.toolbar_title);
         mZXingView = (ZXingView) findViewById(R.id.zxingview);
         mZXingView.setDelegate(this);
 
+        setSupportActionBar(mToolbar);
+        final ActionBar actionBar = getSupportActionBar();
+        if (actionBar != null) {
+            actionBar.setDisplayShowTitleEnabled(false);
+        }
+        setNavigationIcon(R.drawable.ic_arrow_back_black_24dp);
+        mToolbar.setNavigationOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                finish();
+            }
+        });
+
+        Toolbar.LayoutParams layoutParams = (Toolbar.LayoutParams) mTvTitle.getLayoutParams();
+        if (layoutParams == null) {
+            layoutParams = new Toolbar.LayoutParams(ViewGroup.LayoutParams.WRAP_CONTENT, ViewGroup.LayoutParams.WRAP_CONTENT);
+        }
+        switch (getResources().getInteger(R.integer.qrTopBarTitleGravity)) {
+            case GRAVITY_TITLE_CENTER:
+                layoutParams.gravity = Gravity.CENTER;
+                break;
+            case GRAVITY_TITLE_LEFT:
+                layoutParams.gravity = Gravity.CENTER_VERTICAL | Gravity.LEFT;
+                break;
+        }
+
+    }
+
+    public void setNavigationIcon(@DrawableRes int drawableResId) {
+        Drawable stateButtonDrawable = ContextCompat.getDrawable(this, drawableResId).mutate();
+        stateButtonDrawable.setColorFilter(ContextCompat.getColor(this, R.color.qrTopBarTitleColor), PorterDuff.Mode.SRC_ATOP);
+        mToolbar.setNavigationIcon(stateButtonDrawable);
     }
 
     private void requestPermission() {

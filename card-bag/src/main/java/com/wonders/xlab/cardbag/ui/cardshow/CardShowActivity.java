@@ -85,7 +85,7 @@ public class CardShowActivity extends MVPActivity<CardShowContract.Presenter> im
                 mSelectedCardEntity = bean;
 
                 if (newMetrics.orientation == Configuration.ORIENTATION_PORTRAIT) {
-                    mToolBarLayout.setTitle(getResources().getString(R.string.title_card_show));
+                    mToolBarLayout.setTitle(getResources().getString(R.string.cb_title_card_show));
                     if (null != bean) {
                         setupCardNameAndImg(bean.getImgUrl(), bean.getCardName());
                     }
@@ -139,7 +139,7 @@ public class CardShowActivity extends MVPActivity<CardShowContract.Presenter> im
 
     @Override
     public void noCardData() {
-        showLongToast(getString(R.string.card_show_no_card_data_notice));
+        showLongToast(getString(R.string.cb_card_show_no_card_data_notice));
     }
 
     @Override

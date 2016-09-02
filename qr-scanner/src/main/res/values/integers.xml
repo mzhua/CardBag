@@ -1,0 +1,6 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <integer name="qrTopBarGravityLeft">1</integer>
+    <integer name="qrTopBarGravityCenter">3</integer>
+    <integer name="qrTopBarTitleGravity">@integer/qrTopBarGravityLeft</integer>
+</resources>
