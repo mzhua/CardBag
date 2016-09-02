@@ -38,7 +38,7 @@ public class CardMyPresenter extends BasePresenter implements CardMyContract.Pre
     }
 
     @Override
-    public void deleteCards(HashSet<Long> ids) {
+    public void deleteCards(HashSet<String> ids) {
         if (ids == null || ids.isEmpty()) {
             mView.showToastMessage("数据为空");
             return;

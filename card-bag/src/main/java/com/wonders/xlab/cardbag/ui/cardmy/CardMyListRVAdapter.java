@@ -25,7 +25,7 @@ import java.util.List;
  * Created by hua on 16/8/22.
  */
 
-public class CardMyListRVAdapter extends MultiSelectionRecyclerViewAdapter<Long, CardEntity, CardMyListRVAdapter.ItemViewHolder> {
+public class CardMyListRVAdapter extends MultiSelectionRecyclerViewAdapter<String, CardEntity, CardMyListRVAdapter.ItemViewHolder> {
 
     @Override
     public void setDatas(List<CardEntity> mBeanList) {
@@ -65,7 +65,7 @@ public class CardMyListRVAdapter extends MultiSelectionRecyclerViewAdapter<Long,
     }
 
     @Override
-    public Long getIdentity(CardEntity cardEntity) {
+    public String getIdentity(CardEntity cardEntity) {
         return cardEntity.getId();
     }
 

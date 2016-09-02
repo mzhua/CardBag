@@ -16,6 +16,6 @@ public interface CardContract {
 
         void getAllCards(BaseContract.Model.Callback<List<CardEntity>> callback);
 
-        void deleteCards(HashSet<Long> ids, BaseContract.Model.Callback<String> callback);
+        void deleteCards(HashSet<String> ids, Callback<String> callback);
     }
 }

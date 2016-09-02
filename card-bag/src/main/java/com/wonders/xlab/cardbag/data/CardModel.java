@@ -42,7 +42,7 @@ public class CardModel extends BaseModel implements CardContract.Model {
     }
 
     @Override
-    public synchronized void deleteCards(HashSet<Long> ids, Callback<String> callback) {
+    public synchronized void deleteCards(HashSet<String> ids, Callback<String> callback) {
         List<CardEntity> cardEntities = mCBCardBagDB.queryByIds(ids);
         if (cardEntities != null) {
             for (CardEntity cardEntity : cardEntities) {

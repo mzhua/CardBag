@@ -17,7 +17,7 @@ import com.wonders.xlab.cardbag.util.ImageViewUtil;
  * Created by hua on 16/8/22.
  */
 
-public class CardMyIconRVAdapter extends MultiSelectionRecyclerViewAdapter<Long, CardEntity, CardMyIconRVAdapter.ItemViewHolder> {
+public class CardMyIconRVAdapter extends MultiSelectionRecyclerViewAdapter<String, CardEntity, CardMyIconRVAdapter.ItemViewHolder> {
 
     @Override
     public ItemViewHolder onCreateViewHolder(ViewGroup parent, int viewType) {
@@ -26,7 +26,7 @@ public class CardMyIconRVAdapter extends MultiSelectionRecyclerViewAdapter<Long,
     }
 
     @Override
-    public Long getIdentity(CardEntity cardEntity) {
+    public String getIdentity(CardEntity cardEntity) {
         return cardEntity.getId();
     }
 

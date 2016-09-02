@@ -20,6 +20,6 @@ public interface CardMyContract {
     interface Presenter extends BaseContract.Presenter{
         void getMyCards();
 
-        void deleteCards(HashSet<Long> ids);
+        void deleteCards(HashSet<String> ids);
     }
 }

@@ -8,6 +8,8 @@ import com.wonders.xlab.cardbag.base.DefaultException;
 import com.wonders.xlab.cardbag.data.CardContract;
 import com.wonders.xlab.cardbag.data.entity.CardEntity;
 
+import java.util.UUID;
+
 /**
  * Created by hua on 16/8/26.
  */
@@ -32,7 +34,7 @@ public class CardEditPresenter extends BasePresenter implements CardEditContract
             return;
         }
         long timeMillis = System.currentTimeMillis();
-        cardEntity.setId(cardEntity.getId() == 0 ? timeMillis : cardEntity.getId());
+        cardEntity.setId(UUID.randomUUID().toString());
         cardEntity.setCreateDate(timeMillis);
         mModel.saveCard(cardEntity, new BaseContract.Model.Callback<String>() {
             @Override

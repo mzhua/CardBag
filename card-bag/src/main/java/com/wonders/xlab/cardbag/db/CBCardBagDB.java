@@ -45,6 +45,14 @@ public class CBCardBagDB {
      */
     public long insertOrReplace(CardEntity entity) {
         SQLiteDatabase db = mCBDbHelper.getWritableDatabase();
+        ContentValues values = convertEntityToContentValues(entity);
+        long l = db.insertWithOnConflict(CardEntry.TABLE_NAME, null, values, SQLiteDatabase.CONFLICT_REPLACE);
+        db.close();
+        return l;
+    }
+
+    @NonNull
+    private ContentValues convertEntityToContentValues(CardEntity entity) {
         ContentValues values = new ContentValues();
         values.put(CardEntry._ID, entity.getId());
         values.put(CardEntry.COLUMN_NAME_NAME, entity.getCardName());
@@ -56,9 +64,18 @@ public class CBCardBagDB {
         values.put(CardEntry.COLUMN_NAME_BACK_IMG_FILE_PATH, entity.getBackImgFilePath());
         values.put(CardEntry.COLUMN_NAME_BACK_IMG_URL, entity.getBackImgUrl());
         values.put(CardEntry.COLUMN_NAME_CREATE_DATE, entity.getCreateDate());
-        long l = db.insertWithOnConflict(CardEntry.TABLE_NAME, null, values, SQLiteDatabase.CONFLICT_REPLACE);
+        return values;
+    }
+
+    public void insertOrReplaceWithBatchData(List<CardEntity> cardEntities) {
+        SQLiteDatabase db = mCBDbHelper.getWritableDatabase();
+        db.beginTransaction();
+        for (CardEntity cardEntity : cardEntities) {
+            db.insertWithOnConflict(CardEntry.TABLE_NAME, null, convertEntityToContentValues(cardEntity), SQLiteDatabase.CONFLICT_REPLACE);
+        }
+        db.setTransactionSuccessful();
+        db.endTransaction();
         db.close();
-        return l;
     }
 
     @Nullable
@@ -67,7 +84,7 @@ public class CBCardBagDB {
     }
 
     @Nullable
-    public List<CardEntity> queryByIds(HashSet<Long> ids) {
+    public List<CardEntity> queryByIds(HashSet<String> ids) {
         String[] projection = {
                 CardEntry._ID,
                 CardEntry.COLUMN_NAME_NAME,
@@ -96,7 +113,7 @@ public class CBCardBagDB {
                 cardEntities = new ArrayList<>();
                 do {
                     CardEntity entity = new CardEntity();
-                    entity.setId(cursor.getLong(cursor.getColumnIndexOrThrow(CardEntry._ID)));
+                    entity.setId(cursor.getString(cursor.getColumnIndexOrThrow(CardEntry._ID)));
                     entity.setCardName(cursor.getString(cursor.getColumnIndexOrThrow(CardEntry.COLUMN_NAME_NAME)));
                     entity.setBarCode(cursor.getString(cursor.getColumnIndexOrThrow(CardEntry.COLUMN_NAME_BARCODE)));
                     entity.setImgUrl(cursor.getString(cursor.getColumnIndexOrThrow(CardEntry.COLUMN_NAME_IMG_URL)));
@@ -117,7 +134,7 @@ public class CBCardBagDB {
         return cardEntities;
     }
 
-    public int deleteByIds(HashSet<Long> ids) {
+    public int deleteByIds(HashSet<String> ids) {
         SQLiteDatabase db = mCBDbHelper.getWritableDatabase();
 
         String selection = assembleIdsToSelection(ids);
@@ -127,11 +144,11 @@ public class CBCardBagDB {
     }
 
     @NonNull
-    private String assembleIdsToSelection(HashSet<Long> ids) {
+    private String assembleIdsToSelection(HashSet<String> ids) {
         StringBuilder inQuery = new StringBuilder();
         inQuery.append("(");
         boolean first = true;
-        for (Long item : ids) {
+        for (String item : ids) {
             if (first) {
                 first = false;
                 inQuery.append("'").append(item).append("'");

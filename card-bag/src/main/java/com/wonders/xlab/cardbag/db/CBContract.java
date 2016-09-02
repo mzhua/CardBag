@@ -13,7 +13,7 @@ public final class CBContract {
     public static class CardEntry implements BaseColumns{
         public static final String SQL_CREATE_ENTRIES =
                 "CREATE TABLE " + CardEntry.TABLE_NAME + " (" +
-                        CardEntry._ID + " INTEGER PRIMARY KEY," +
+                        CardEntry._ID + " TEXT PRIMARY KEY," +
                         CardEntry.COLUMN_NAME_NAME + TEXT_TYPE + COMMA_SEP +
                         CardEntry.COLUMN_NAME_BARCODE + TEXT_TYPE + COMMA_SEP +
                         CardEntry.COLUMN_NAME_IMG_URL + TEXT_TYPE + COMMA_SEP +

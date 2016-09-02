@@ -2,6 +2,7 @@ package com.wonders.xlab.cardbag.data.entity;
 
 import android.os.Parcel;
 import android.os.Parcelable;
+import android.support.annotation.NonNull;
 import android.text.TextUtils;
 
 /**
@@ -9,7 +10,8 @@ import android.text.TextUtils;
  */
 
 public class CardEntity implements Parcelable {
-    private long mId;
+    @NonNull
+    private String mId;
     private String mCardName;
     private String mBarCode;
     private String mImgUrl = "http://upload-images.jianshu.io/upload_images/598650-71ec1d3457194419.png?imageMogr2/auto-orient/strip%7CimageView2/2/w/1240";
@@ -114,11 +116,11 @@ public class CardEntity implements Parcelable {
         mCreateDate = createDate;
     }
 
-    public long getId() {
+    public String getId() {
         return mId;
     }
 
-    public void setId(long id) {
+    public void setId(String id) {
         mId = id;
     }
 
@@ -129,7 +131,7 @@ public class CardEntity implements Parcelable {
 
     @Override
     public void writeToParcel(Parcel dest, int flags) {
-        dest.writeLong(this.mId);
+        dest.writeString(this.mId);
         dest.writeString(this.mCardName);
         dest.writeString(this.mBarCode);
         dest.writeString(this.mImgUrl);
@@ -142,7 +144,7 @@ public class CardEntity implements Parcelable {
     }
 
     protected CardEntity(Parcel in) {
-        this.mId = in.readLong();
+        this.mId = in.readString();
         this.mCardName = in.readString();
         this.mBarCode = in.readString();
         this.mImgUrl = in.readString();
@@ -171,14 +173,14 @@ public class CardEntity implements Parcelable {
         if (this == o) return true;
         if (o == null || getClass() != o.getClass()) return false;
 
-        CardEntity that = (CardEntity) o;
+        CardEntity entity = (CardEntity) o;
 
-        return mId == that.mId;
+        return mId.equals(entity.mId);
 
     }
 
     @Override
     public int hashCode() {
-        return (int) (mId ^ (mId >>> 32));
+        return mId.hashCode();
     }
 }
