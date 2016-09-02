@@ -4,7 +4,8 @@ import android.content.ContentValues;
 import android.content.Context;
 import android.database.Cursor;
 import android.database.sqlite.SQLiteDatabase;
-import android.text.TextUtils;
+import android.support.annotation.NonNull;
+import android.support.annotation.Nullable;
 
 import com.wonders.xlab.cardbag.data.entity.CardEntity;
 import com.wonders.xlab.cardbag.db.CBContract.CardEntry;
@@ -20,8 +21,22 @@ import java.util.List;
 public class CBCardBagDB {
     private CBDbHelper mCBDbHelper;
 
-    public CBCardBagDB(Context context) {
+    private static CBCardBagDB instance = null;
+
+    private CBCardBagDB() {
+    }
+
+    private CBCardBagDB(Context context) {
         mCBDbHelper = new CBDbHelper(context);
+    }
+
+    public static CBCardBagDB getInstance(Context context) {
+        synchronized (CBCardBagDB.class) {
+            if (instance == null) {
+                instance = new CBCardBagDB(context);
+            }
+        }
+        return instance;
     }
 
     /**
@@ -46,7 +61,13 @@ public class CBCardBagDB {
         return l;
     }
 
+    @Nullable
     public List<CardEntity> queryAllOrderByCreateDateDesc() throws IllegalArgumentException {
+        return queryByIds(null);
+    }
+
+    @Nullable
+    public List<CardEntity> queryByIds(HashSet<Long> ids) {
         String[] projection = {
                 CardEntry._ID,
                 CardEntry.COLUMN_NAME_NAME,
@@ -63,7 +84,12 @@ public class CBCardBagDB {
                 CardEntry.COLUMN_NAME_CREATE_DATE + " DESC";
 
         SQLiteDatabase db = mCBDbHelper.getReadableDatabase();
-        Cursor cursor = db.query(CardEntry.TABLE_NAME, projection, null, null, null, null, sortOrder);
+
+        String selection = null;
+        if (ids != null && ids.size() > 0) {
+            selection = assembleIdsToSelection(ids);
+        }
+        Cursor cursor = db.query(CardEntry.TABLE_NAME, projection, selection, null, null, null, sortOrder);
         List<CardEntity> cardEntities = null;
         try {
             if (cursor.moveToFirst()) {
@@ -88,19 +114,20 @@ public class CBCardBagDB {
             cursor.close();
             db.close();
         }
-
-        return cardEntities;
-    }
-
-    public List<CardEntity> queryByIds(HashSet<Long> ids) {
-        List<CardEntity> cardEntities = null;
-
         return cardEntities;
     }
 
     public int deleteByIds(HashSet<Long> ids) {
         SQLiteDatabase db = mCBDbHelper.getWritableDatabase();
 
+        String selection = assembleIdsToSelection(ids);
+        int counts = db.delete(CardEntry.TABLE_NAME, selection, null);
+        db.close();
+        return counts;
+    }
+
+    @NonNull
+    private String assembleIdsToSelection(HashSet<Long> ids) {
         StringBuilder inQuery = new StringBuilder();
         inQuery.append("(");
         boolean first = true;
@@ -113,9 +140,6 @@ public class CBCardBagDB {
             }
         }
         inQuery.append(")");
-        String selection = CardEntry._ID + " in " + inQuery.toString();
-        int counts = db.delete(CardEntry.TABLE_NAME, selection, null);
-        db.close();
-        return counts;
+        return CardEntry._ID + " in " + inQuery.toString();
     }
 }

@@ -61,7 +61,7 @@ public class CardMyActivity extends MVPActivity<CardMyContract.Presenter> implem
     @Override
     public CardMyContract.Presenter getPresenter() {
         if (mPresenter == null) {
-            mPresenter = new CardMyPresenter(new CardModel(new CBCardBagDB(this)), this);
+            mPresenter = new CardMyPresenter(new CardModel(CBCardBagDB.getInstance(this)), this);
         }
         return mPresenter;
     }
@@ -108,7 +108,11 @@ public class CardMyActivity extends MVPActivity<CardMyContract.Presenter> implem
         mXToolBarLayout.getToolbar().setNavigationOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                disableSelectionModel();
+                if (getMenuMode() == MENU_MODE_DELETE) {
+                    disableSelectionModel();
+                } else {
+                    finish();
+                }
             }
         });
     }
@@ -200,9 +204,7 @@ public class CardMyActivity extends MVPActivity<CardMyContract.Presenter> implem
     }
 
     private void disableSelectionModel() {
-        mIvAdd.setVisibility(View.VISIBLE);
         setMenuMode(mIconRecyclerView.getVisibility() == View.VISIBLE ? MENU_MODE_ICON : MENU_MODE_LIST);
-        mXToolBarLayout.hideNavigationIcon();
         mIconRVAdapter.setSelectionMode(false);
         mListRVAdapter.setSelectionMode(false);
     }
@@ -217,6 +219,9 @@ public class CardMyActivity extends MVPActivity<CardMyContract.Presenter> implem
         if (menuMode == MENU_MODE_DELETE) {
             mXToolBarLayout.setNavigationIcon(R.drawable.ic_clear_black_24dp);
             mIvAdd.setVisibility(View.GONE);
+        } else {
+            mXToolBarLayout.setNavigationIcon(R.drawable.ic_arrow_back_black_24dp);
+            mIvAdd.setVisibility(View.VISIBLE);
         }
 
         supportInvalidateOptionsMenu();

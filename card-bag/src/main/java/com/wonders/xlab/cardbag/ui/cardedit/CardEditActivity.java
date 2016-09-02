@@ -59,7 +59,7 @@ public class CardEditActivity extends MVPActivity<CardEditContract.Presenter> im
     @Override
     public CardEditContract.Presenter getPresenter() {
         if (null == mPresenter) {
-            mPresenter = new CardEditPresenter(this, new CardModel(new CBCardBagDB(this)));
+            mPresenter = new CardEditPresenter(this, new CardModel(CBCardBagDB.getInstance(this)));
         }
         return mPresenter;
     }
@@ -77,13 +77,14 @@ public class CardEditActivity extends MVPActivity<CardEditContract.Presenter> im
         mTvBarCode = (TextView) findViewById(R.id.tv_bar_code);
         mIvClear = (ImageView) findViewById(R.id.iv_clear);
 
+        setupActionBar(mToolBarLayout.getToolbar());
+
         setupViewListener();
 
         initWithIntentExtra();
 
         initUCropOptions();
 
-        setupActionBar(mToolBarLayout.getToolbar());
     }
 
     private void initWithIntentExtra() {
@@ -139,6 +140,12 @@ public class CardEditActivity extends MVPActivity<CardEditContract.Presenter> im
             @Override
             public void onClick(View v) {
                 mEtCardName.setText("");
+            }
+        });
+        mToolBarLayout.getToolbar().setNavigationOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                finish();
             }
         });
     }

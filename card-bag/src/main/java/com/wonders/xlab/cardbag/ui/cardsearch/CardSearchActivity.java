@@ -7,6 +7,7 @@ import android.support.v7.widget.GridLayoutManager;
 import android.support.v7.widget.RecyclerView;
 import android.text.TextUtils;
 import android.view.KeyEvent;
+import android.view.View;
 import android.view.inputmethod.EditorInfo;
 import android.widget.EditText;
 import android.widget.TextView;
@@ -18,12 +19,14 @@ import com.wonders.xlab.cardbag.base.adapter.BaseRecyclerViewAdapter;
 import com.wonders.xlab.cardbag.data.entity.CardEntity;
 import com.wonders.xlab.cardbag.data.entity.CardSearchEntity;
 import com.wonders.xlab.cardbag.ui.cardedit.CardEditActivity;
+import com.wonders.xlab.cardbag.widget.XToolBarLayout;
 
 import java.util.List;
 
 public class CardSearchActivity extends MVPActivity<CardSearchContract.Presenter> implements CardSearchContract.View {
     private final int REQUEST_CODE_CARD_EDIT = 1234;
 
+    private XToolBarLayout mToolBarLayout;
     private RecyclerView mRecyclerView;
     private EditText mEtCardName;
 
@@ -43,6 +46,7 @@ public class CardSearchActivity extends MVPActivity<CardSearchContract.Presenter
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.cb_card_search_activity);
+        mToolBarLayout = (XToolBarLayout) findViewById(R.id.xtbl);
         mRecyclerView = (RecyclerView) findViewById(R.id.recycler_view);
         mEtCardName = (EditText) findViewById(R.id.et_card_name);
 
@@ -59,6 +63,12 @@ public class CardSearchActivity extends MVPActivity<CardSearchContract.Presenter
                     return true;
                 }
                 return false;
+            }
+        });
+        mToolBarLayout.getToolbar().setNavigationOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                finish();
             }
         });
     }

@@ -64,6 +64,7 @@
             android:clickable="true"
             android:gravity="center"
             android:paddingLeft="8dp"
+            android:visibility="gone"
             android:paddingRight="8dp"
             android:text="取消"
             android:textSize="@dimen/text_size_normal"/>

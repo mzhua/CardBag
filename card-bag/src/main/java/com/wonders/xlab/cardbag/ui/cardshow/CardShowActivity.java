@@ -6,6 +6,7 @@ import android.os.Bundle;
 import android.support.v4.view.ViewPager;
 import android.view.Menu;
 import android.view.MenuItem;
+import android.view.View;
 import android.widget.TextView;
 
 import com.wonders.xlab.cardbag.R;
@@ -46,7 +47,7 @@ public class CardShowActivity extends MVPActivity<CardShowContract.Presenter> im
     @Override
     public CardShowContract.Presenter getPresenter() {
         if (null == mPresenter) {
-            mPresenter = new CardShowPresenter(this, new CardModel(new CBCardBagDB(this)));
+            mPresenter = new CardShowPresenter(this, new CardModel(CBCardBagDB.getInstance(this)));
         }
         return mPresenter;
     }
@@ -64,6 +65,12 @@ public class CardShowActivity extends MVPActivity<CardShowContract.Presenter> im
 
         setupActionBar(mToolBarLayout.getToolbar());
 
+        mToolBarLayout.getToolbar().setNavigationOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                finish();
+            }
+        });
         getPresenter().getAllCards();
     }
 

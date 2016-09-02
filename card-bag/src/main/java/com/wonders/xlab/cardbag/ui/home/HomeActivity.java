@@ -6,7 +6,6 @@ import android.view.View;
 
 import com.wonders.xlab.cardbag.R;
 import com.wonders.xlab.cardbag.base.BaseActivity;
-import com.wonders.xlab.cardbag.manager.RealmManager;
 import com.wonders.xlab.cardbag.ui.cardmy.CardMyActivity;
 import com.wonders.xlab.cardbag.ui.cardshow.CardShowActivity;
 import com.wonders.xlab.cardbag.widget.XToolBarLayout;
@@ -17,8 +16,13 @@ public class HomeActivity extends BaseActivity {
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.cb_home_activity);
-
-        RealmManager.init(getApplicationContext());
+        XToolBarLayout toolBarLayout = (XToolBarLayout) findViewById(R.id.xtbl);
+        toolBarLayout.getToolbar().setNavigationOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                finish();
+            }
+        });
     }
 
     public void manageCard(View view) {

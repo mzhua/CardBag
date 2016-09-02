@@ -4,15 +4,11 @@ import android.os.Parcel;
 import android.os.Parcelable;
 import android.text.TextUtils;
 
-import io.realm.RealmObject;
-import io.realm.annotations.PrimaryKey;
-
 /**
  * Created by hua on 16/8/21.
  */
 
-public class CardEntity extends RealmObject implements Parcelable {
-    @PrimaryKey
+public class CardEntity implements Parcelable {
     private long mId;
     private String mCardName;
     private String mBarCode;

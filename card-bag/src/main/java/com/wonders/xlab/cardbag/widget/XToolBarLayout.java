@@ -76,6 +76,7 @@ public class XToolBarLayout extends LinearLayout {
 
         mToolbar = (Toolbar) LayoutInflater.from(context).inflate(R.layout.cb_tool_bar, this, false);
         addView(mToolbar);
+        setNavigationIcon(R.drawable.ic_arrow_back_black_24dp);
         mToolbar.setBackgroundColor(mBackgroundColor);
         mToolbar.setTitleTextColor(mTitleColor);
         setupTitleView();
