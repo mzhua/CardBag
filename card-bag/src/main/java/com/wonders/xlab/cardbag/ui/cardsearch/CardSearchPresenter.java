@@ -5,6 +5,8 @@ import com.wonders.xlab.cardbag.base.BasePresenter;
 import com.wonders.xlab.cardbag.base.DefaultException;
 import com.wonders.xlab.cardbag.data.entity.CardSearchEntity;
 
+import java.util.List;
+
 /**
  * Created by hua on 16/8/23.
  */
@@ -28,10 +30,10 @@ class CardSearchPresenter extends BasePresenter implements CardSearchContract.Pr
 
     @Override
     public void searchByCardName(String cardName) {
-        mModel.searchByCardName(cardName, new BaseContract.Model.Callback<CardSearchEntity>() {
+        mModel.searchByCardName(cardName, new BaseContract.Model.Callback<List<CardSearchEntity.ResultsEntity>>() {
             @Override
-            public void onSuccess(CardSearchEntity cardSearchEntity) {
-                mView.showSearchResult(cardSearchEntity.getResults());
+            public void onSuccess(List<CardSearchEntity.ResultsEntity> resultsEntities) {
+                mView.showSearchResult(resultsEntities);
             }
 
             @Override

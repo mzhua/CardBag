@@ -12,7 +12,7 @@ import java.util.List;
 
 public class CardSearchModelImpl implements CardSearchContract.Model {
     @Override
-    public void searchByCardName(String cardName, Callback<CardSearchEntity> callback) {
+    public void searchByCardName(String cardName, Callback<List<CardSearchEntity.ResultsEntity>> callback) {
         List<CardSearchEntity.ResultsEntity> cards = new ArrayList<>();
         for (int i = 0; i < 10; i++) {
             CardSearchEntity.ResultsEntity entity = new CardSearchEntity.ResultsEntity();
@@ -21,9 +21,7 @@ public class CardSearchModelImpl implements CardSearchContract.Model {
             entity.setObjectId(""+i);
             cards.add(entity);
         }
-        CardSearchEntity searchEntity = new CardSearchEntity();
-        searchEntity.setResults(cards);
-        callback.onSuccess(searchEntity);
+        callback.onSuccess(cards);
     }
 
     @Override

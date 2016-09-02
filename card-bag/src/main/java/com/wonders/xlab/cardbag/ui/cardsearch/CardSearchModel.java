@@ -10,6 +10,7 @@ import com.wonders.xlab.cardbag.base.DefaultException;
 import com.wonders.xlab.cardbag.data.entity.CardSearchEntity;
 
 import java.io.IOException;
+import java.util.List;
 
 import okhttp3.Call;
 import okhttp3.OkHttpClient;
@@ -38,7 +39,7 @@ class CardSearchModel extends BaseModel implements CardSearchContract.Model {
     }
 
     @Override
-    public void searchByCardName(String cardName, final Callback<CardSearchEntity> callback) {
+    public void searchByCardName(String cardName, final Callback<List<CardSearchEntity.ResultsEntity>> callback) {
         setupCall(cardName);
         mCall.enqueue(new okhttp3.Callback() {
             @Override
@@ -60,7 +61,7 @@ class CardSearchModel extends BaseModel implements CardSearchContract.Model {
                                 callback.onFail(new DefaultException("搜索失败"));
                             } else {
                                 if (cardSearchEntity.getCode() == 200 || cardSearchEntity.getCode() == 0) {
-                                    callback.onSuccess(cardSearchEntity);
+                                    callback.onSuccess(cardSearchEntity.getResults());
                                 } else {
                                     callback.onFail(new DefaultException(cardSearchEntity.getError()));
                                 }

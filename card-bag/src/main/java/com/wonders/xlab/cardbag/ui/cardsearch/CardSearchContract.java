@@ -19,6 +19,6 @@ public interface CardSearchContract {
     }
 
     interface Model extends BaseContract.Model{
-        void searchByCardName(String cardName, Callback<CardSearchEntity> callback);
+        void searchByCardName(String cardName, Callback<List<CardSearchEntity.ResultsEntity>> callback);
     }
 }

@@ -1,9 +1,8 @@
-package com.wonders.xlab.cardbag.util;
+package com.wonders.xlab.cardbag.db;
 
 import android.content.Context;
 
 import com.wonders.xlab.cardbag.data.entity.CardEntity;
-import com.wonders.xlab.cardbag.db.CBCardBagDB;
 
 import java.util.List;
 
