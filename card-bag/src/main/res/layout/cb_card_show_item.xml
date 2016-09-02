@@ -18,6 +18,7 @@
             android:id="@+id/iv_bar_code"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
+            style="@style/ImageViewScaleTypeStyle"
             app:rivBaseDirection="horizontal"
             app:rivHorizontalWeight="3"
             app:rivVerticalWeight="1"/>

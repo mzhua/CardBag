@@ -32,4 +32,8 @@
         <item name="xtblBackgroundColor">@color/cbTopBarBackground</item>
         <item name="xtblTitleGravity">@integer/cbTopBarGravity</item>
     </style>
+
+    <style name="ImageViewScaleTypeStyle">
+        <item name="android:scaleType">centerCrop</item>
+    </style>
 </resources>

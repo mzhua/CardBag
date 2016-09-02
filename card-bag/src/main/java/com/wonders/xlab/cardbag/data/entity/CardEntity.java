@@ -10,11 +10,12 @@ import android.text.TextUtils;
  */
 
 public class CardEntity implements Parcelable {
+    private final String IMG_URL_DEFAULT = "http://ocg8s5zv8.bkt.clouddn.com/pic_vip_card.png";
     @NonNull
     private String mId;
     private String mCardName;
     private String mBarCode;
-    private String mImgUrl = "http://upload-images.jianshu.io/upload_images/598650-71ec1d3457194419.png?imageMogr2/auto-orient/strip%7CimageView2/2/w/1240";
+    private String mImgUrl = "http://ocg8s5zv8.bkt.clouddn.com/pic_vip_card.png";
     private String mImgFilePath;
     private String mFrontImgUrl;
     private String mFrontImgFilePath;
@@ -49,7 +50,7 @@ public class CardEntity implements Parcelable {
     }
 
     public void setImgUrl(String imgUrl) {
-        mImgUrl = !TextUtils.isEmpty(imgUrl) ? imgUrl : "http://upload-images.jianshu.io/upload_images/598650-71ec1d3457194419.png?imageMogr2/auto-orient/strip%7CimageView2/2/w/1240";
+        mImgUrl = !TextUtils.isEmpty(imgUrl) ? imgUrl : IMG_URL_DEFAULT;
     }
 
     public String getCardName() {

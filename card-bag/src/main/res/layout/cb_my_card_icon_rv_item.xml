@@ -12,7 +12,7 @@
         android:id="@+id/iv_card"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:scaleType="centerCrop"
+        style="@style/ImageViewScaleTypeStyle"
         app:rivBaseDirection="horizontal"
         app:rivHorizontalWeight="@integer/cbIvHorizontalWeight"
         app:rivVerticalWeight="@integer/cbIvVerticalWeight"/>

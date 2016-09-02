@@ -16,45 +16,71 @@ import java.io.File;
 
 public class ImageViewUtil {
 
-    private static final RoundedCornersTransform ROUNDED_CORNERS_TRANSFORM = new RoundedCornersTransform();
+    private static RoundedCornersTransform ROUNDED_CORNERS_TRANSFORM;
 
-    public static void load(Context context, Uri uri, ImageView imageView) {
+    public static void load(final Context context, final Uri uri, final ImageView imageView) {
         if (context == null || uri == null || imageView == null) {
             return;
         }
-        Picasso.with(context)
-                .load(uri)
-                .transform(ROUNDED_CORNERS_TRANSFORM)
-                .into(imageView);
+        initTransform(context);
+        imageView.post(new Runnable() {
+            @Override
+            public void run() {
+                Picasso.with(context)
+                        .load(uri)
+                        .resize(imageView.getMeasuredWidth(), imageView.getMeasuredHeight())
+                        .centerCrop()
+                        .transform(ROUNDED_CORNERS_TRANSFORM)
+                        .into(imageView);
+            }
+        });
+
     }
 
     public static void load(Context context, File file, ImageView imageView) {
         if (context == null || file == null || imageView == null) {
             return;
         }
+        initTransform(context);
         Picasso.with(context)
                 .load(file)
+                .transform(ROUNDED_CORNERS_TRANSFORM)
                 .into(imageView);
     }
 
-    public static void load(Context context, String path, ImageView imageView) {
+    public static void load(final Context context, final String path, final ImageView imageView) {
         if (context == null || TextUtils.isEmpty(path) || imageView == null) {
             return;
         }
-        Picasso.with(context)
-                .load(path)
-                .transform(ROUNDED_CORNERS_TRANSFORM)
-                .into(imageView);
+        initTransform(context);
+        imageView.post(new Runnable() {
+            @Override
+            public void run() {
+                Picasso.with(context)
+                        .load(path)
+                        .resize(imageView.getMeasuredWidth(), imageView.getMeasuredHeight())
+                        .centerCrop()
+                        .transform(ROUNDED_CORNERS_TRANSFORM)
+                        .into(imageView);
+            }
+        });
     }
 
     public static void load(Context context, int resId, ImageView imageView) {
         if (context == null || imageView == null) {
             return;
         }
+        initTransform(context);
         Picasso.with(context)
                 .load(resId)
                 .placeholder(R.color.cbImageBackgroundHolder)
                 .transform(ROUNDED_CORNERS_TRANSFORM)
                 .into(imageView);
+    }
+
+    private static void initTransform(Context context) {
+        if (ROUNDED_CORNERS_TRANSFORM == null) {
+            ROUNDED_CORNERS_TRANSFORM = new RoundedCornersTransform(DensityUtil.dp2px(context,8), 0);
+        }
     }
 }

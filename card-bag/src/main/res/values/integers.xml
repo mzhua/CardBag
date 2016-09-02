@@ -1,7 +1,7 @@
 <?xml version="1.0" encoding="utf-8"?>
 <resources>
-    <integer name="cbIvHorizontalWeight">5</integer>
-    <integer name="cbIvVerticalWeight">3</integer>
+    <integer name="cbIvHorizontalWeight">3</integer>
+    <integer name="cbIvVerticalWeight">2</integer>
     <integer name="cbTopBarGravityLeft">2</integer>
     <integer name="cbTopBarGravityCenter">4</integer>
     <integer name="cbTopBarGravity">@integer/cbTopBarGravityLeft</integer>

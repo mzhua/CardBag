@@ -239,8 +239,7 @@ public class CardEditActivity extends MVPActivity<CardEditContract.Presenter> im
             return;
         }
         UCrop.of(pathUri, pathUri)
-                .withAspectRatio(3, 2)
-//                .withMaxResultSize(maxWidth, maxHeight)
+                .withAspectRatio(getResources().getInteger(R.integer.cbIvHorizontalWeight), getResources().getInteger(R.integer.cbIvVerticalWeight))
                 .withOptions(mOptions)
                 .start(this, requestCode);
 
