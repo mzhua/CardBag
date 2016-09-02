@@ -53,6 +53,6 @@ public class CardModel extends BaseModel implements CardContract.Model {
             }
         }
         int counts = mCBCardBagDB.deleteByIds(ids);
-        callback.onSuccess("删除" + counts + "条记录");
+        callback.onSuccess("删除" + counts + "张卡片");
     }
 }

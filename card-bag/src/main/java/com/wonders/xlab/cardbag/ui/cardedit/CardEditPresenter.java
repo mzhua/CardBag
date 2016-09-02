@@ -34,7 +34,7 @@ public class CardEditPresenter extends BasePresenter implements CardEditContract
             return;
         }
         long timeMillis = System.currentTimeMillis();
-        cardEntity.setId(UUID.randomUUID().toString());
+        cardEntity.setId(TextUtils.isEmpty(cardEntity.getId()) ? UUID.randomUUID().toString() : cardEntity.getId());
         cardEntity.setCreateDate(timeMillis);
         mModel.saveCard(cardEntity, new BaseContract.Model.Callback<String>() {
             @Override
