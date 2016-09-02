@@ -15,7 +15,7 @@
 #-keepclassmembers class fqcn.of.javascript.interface.for.webview {
 #   public *;
 #}
--keepattributes Exceptions, InnerClasses
+-dontshrink
 -keep class com.wonders.xlab.cardbag.CBag { *; }
 -keep class com.wonders.xlab.cardbag.db.CBDataSyncHelper { *; }
 -keep class com.wonders.xlab.cardbag.data.entity.** { *; }
