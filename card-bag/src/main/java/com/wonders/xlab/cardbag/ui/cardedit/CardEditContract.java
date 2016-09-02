@@ -15,8 +15,4 @@ public interface CardEditContract {
     interface Presenter extends BaseContract.Presenter {
         void saveCard(CardEntity cardEntity);
     }
-
-    interface Model extends BaseContract.Model {
-        void saveCard(CardEntity cardEntity, BaseContract.Model.Callback<String> callback);
-    }
 }

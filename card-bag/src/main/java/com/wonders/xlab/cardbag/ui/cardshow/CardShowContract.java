@@ -21,8 +21,4 @@ public interface CardShowContract {
     interface Presenter extends BaseContract.Presenter {
         void getAllCards();
     }
-
-    interface Model extends BaseContract.Model {
-        void getAllCards(Callback<List<CardEntity>> callback);
-    }
 }

@@ -25,19 +25,22 @@ import java.util.List;
  * Created by hua on 16/8/22.
  */
 
-public class CardMyListRVAdapter extends MultiSelectionRecyclerViewAdapter<Long,CardEntity, CardMyListRVAdapter.ItemViewHolder> {
+public class CardMyListRVAdapter extends MultiSelectionRecyclerViewAdapter<Long, CardEntity, CardMyListRVAdapter.ItemViewHolder> {
 
     @Override
     public void setDatas(List<CardEntity> mBeanList) {
-        Collections.sort(mBeanList, new Comparator<CardEntity>() {
-            @Override
-            public int compare(CardEntity lhs, CardEntity rhs) {
-                if (TextUtils.isEmpty(lhs.getCardName())) {
-                    return -1;
+        if (mBeanList != null && mBeanList.size() > 0) {
+            Collections.sort(mBeanList, new Comparator<CardEntity>() {
+                @Override
+                public int compare(CardEntity lhs, CardEntity rhs) {
+                    if (TextUtils.isEmpty(lhs.getCardName())) {
+                        return -1;
+                    }
+                    return Pinyin.toPinyin(lhs.getCardName().charAt(0)).toUpperCase().compareTo(Pinyin.toPinyin(rhs.getCardName().charAt(0)).toUpperCase());
                 }
-                return Pinyin.toPinyin(lhs.getCardName().charAt(0)).toUpperCase().compareTo(Pinyin.toPinyin(rhs.getCardName().charAt(0)).toUpperCase());
-            }
-        });
+            });
+        }
+
         super.setDatas(mBeanList);
     }
 

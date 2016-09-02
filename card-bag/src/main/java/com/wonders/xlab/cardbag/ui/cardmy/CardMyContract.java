@@ -22,11 +22,4 @@ public interface CardMyContract {
 
         void deleteCards(HashSet<Long> ids);
     }
-
-    interface Model extends BaseContract.Model {
-        void getMyCards(BaseContract.Model.Callback<List<CardEntity>> callback);
-
-        void deleteCards(HashSet<Long> ids, Callback<String> callback);
-    }
-
 }

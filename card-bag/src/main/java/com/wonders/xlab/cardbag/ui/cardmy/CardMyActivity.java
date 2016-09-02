@@ -1,11 +1,8 @@
 package com.wonders.xlab.cardbag.ui.cardmy;
 
 import android.content.Intent;
-import android.graphics.PorterDuff;
-import android.graphics.drawable.Drawable;
 import android.os.Bundle;
 import android.support.annotation.IntDef;
-import android.support.v4.content.ContextCompat;
 import android.support.v7.widget.DefaultItemAnimator;
 import android.support.v7.widget.GridLayoutManager;
 import android.support.v7.widget.LinearLayoutManager;
@@ -19,7 +16,9 @@ import com.wonders.xlab.cardbag.R;
 import com.wonders.xlab.cardbag.base.adapter.BaseRecyclerViewAdapter;
 import com.wonders.xlab.cardbag.base.MVPActivity;
 import com.wonders.xlab.cardbag.base.adapter.MultiSelectionRecyclerViewAdapter;
+import com.wonders.xlab.cardbag.data.CardModel;
 import com.wonders.xlab.cardbag.data.entity.CardEntity;
+import com.wonders.xlab.cardbag.db.CBCardBagDB;
 import com.wonders.xlab.cardbag.ui.cardedit.CardEditActivity;
 import com.wonders.xlab.cardbag.ui.cardsearch.CardSearchActivity;
 import com.wonders.xlab.cardbag.util.DensityUtil;
@@ -62,7 +61,7 @@ public class CardMyActivity extends MVPActivity<CardMyContract.Presenter> implem
     @Override
     public CardMyContract.Presenter getPresenter() {
         if (mPresenter == null) {
-            mPresenter = new CardMyPresenter(new CardMyModel(), this);
+            mPresenter = new CardMyPresenter(new CardModel(new CBCardBagDB(this)), this);
         }
         return mPresenter;
     }

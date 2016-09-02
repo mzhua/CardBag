@@ -5,6 +5,7 @@ import android.text.TextUtils;
 import com.wonders.xlab.cardbag.base.BaseContract;
 import com.wonders.xlab.cardbag.base.BasePresenter;
 import com.wonders.xlab.cardbag.base.DefaultException;
+import com.wonders.xlab.cardbag.data.CardContract;
 import com.wonders.xlab.cardbag.data.entity.CardEntity;
 
 /**
@@ -13,9 +14,9 @@ import com.wonders.xlab.cardbag.data.entity.CardEntity;
 
 public class CardEditPresenter extends BasePresenter implements CardEditContract.Presenter {
     private CardEditContract.View mView;
-    private CardEditContract.Model mModel;
+    private CardContract.Model mModel;
 
-    public CardEditPresenter(CardEditContract.View view, CardEditContract.Model model) {
+    public CardEditPresenter(CardEditContract.View view, CardContract.Model model) {
         mView = view;
         mModel = model;
     }

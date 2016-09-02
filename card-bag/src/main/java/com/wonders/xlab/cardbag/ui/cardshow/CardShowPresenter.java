@@ -3,15 +3,16 @@ package com.wonders.xlab.cardbag.ui.cardshow;
 import com.wonders.xlab.cardbag.base.BaseContract;
 import com.wonders.xlab.cardbag.base.BasePresenter;
 import com.wonders.xlab.cardbag.base.DefaultException;
+import com.wonders.xlab.cardbag.data.CardContract;
 import com.wonders.xlab.cardbag.data.entity.CardEntity;
 
 import java.util.List;
 
 public class CardShowPresenter extends BasePresenter implements CardShowContract.Presenter {
     private CardShowContract.View mView;
-    private CardShowContract.Model mModel;
+    private CardContract.Model mModel;
 
-    public CardShowPresenter(CardShowContract.View view, CardShowContract.Model model) {
+    public CardShowPresenter(CardShowContract.View view, CardContract.Model model) {
         mView = view;
         mModel = model;
     }

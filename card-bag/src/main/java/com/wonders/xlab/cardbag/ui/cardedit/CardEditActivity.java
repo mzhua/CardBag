@@ -5,10 +5,8 @@ import android.net.Uri;
 import android.os.Bundle;
 import android.provider.MediaStore;
 import android.text.Editable;
-import android.text.SpannableString;
 import android.text.TextUtils;
 import android.text.TextWatcher;
-import android.text.style.ForegroundColorSpan;
 import android.view.Menu;
 import android.view.MenuItem;
 import android.view.View;
@@ -18,7 +16,9 @@ import android.widget.TextView;
 
 import com.wonders.xlab.cardbag.R;
 import com.wonders.xlab.cardbag.base.MVPActivity;
+import com.wonders.xlab.cardbag.data.CardModel;
 import com.wonders.xlab.cardbag.data.entity.CardEntity;
+import com.wonders.xlab.cardbag.db.CBCardBagDB;
 import com.wonders.xlab.cardbag.util.FileUtil;
 import com.wonders.xlab.cardbag.util.ImageViewUtil;
 import com.wonders.xlab.cardbag.widget.RatioImageView;
@@ -59,7 +59,7 @@ public class CardEditActivity extends MVPActivity<CardEditContract.Presenter> im
     @Override
     public CardEditContract.Presenter getPresenter() {
         if (null == mPresenter) {
-            mPresenter = new CardEditPresenter(this, new CardEditModel());
+            mPresenter = new CardEditPresenter(this, new CardModel(new CBCardBagDB(this)));
         }
         return mPresenter;
     }
