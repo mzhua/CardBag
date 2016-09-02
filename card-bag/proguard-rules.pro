@@ -17,6 +17,7 @@
 #}
 
 -keep class com.wonders.xlab.cardbag.CBag { *; }
+-keep class com.wonders.xlab.cardbag.db.CBDataSyncHelper { *; }
 -keep class com.wonders.xlab.cardbag.data.entity.** { *; }
 
 -dontwarn com.yalantis.ucrop**

@@ -17,8 +17,8 @@ public class CardSearchModelImpl implements CardSearchContract.Model {
         for (int i = 0; i < 10; i++) {
             CardSearchEntity.ResultsEntity entity = new CardSearchEntity.ResultsEntity();
             entity.setCard_img_url("http://img.taopic.com/uploads/allimg/121217/267860-12121H0414065.jpg");
-            entity.setCard_name("name"+i);
-            entity.setObjectId(""+i);
+            entity.setCard_name("name" + i);
+            entity.setObjectId("" + i);
             cards.add(entity);
         }
         callback.onSuccess(cards);

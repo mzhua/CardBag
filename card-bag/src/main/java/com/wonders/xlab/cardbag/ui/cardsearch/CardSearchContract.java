@@ -10,15 +10,15 @@ import java.util.List;
  */
 
 public interface CardSearchContract {
-    interface View extends BaseContract.View{
+    interface View extends BaseContract.View {
         void showSearchResult(List<CardSearchEntity.ResultsEntity> cardEntityList);
     }
 
-    interface Presenter extends BaseContract.Presenter{
+    interface Presenter extends BaseContract.Presenter {
         void searchByCardName(String cardName);
     }
 
-    interface Model extends BaseContract.Model{
+    interface Model extends BaseContract.Model {
         void searchByCardName(String cardName, Callback<List<CardSearchEntity.ResultsEntity>> callback);
     }
 }
