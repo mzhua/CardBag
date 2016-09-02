@@ -1,11 +1,9 @@
 package com.wonders.xlab.cardbag.widget;
 
-import android.annotation.TargetApi;
 import android.content.Context;
 import android.content.res.TypedArray;
 import android.graphics.PorterDuff;
 import android.graphics.drawable.Drawable;
-import android.os.Build;
 import android.support.annotation.DrawableRes;
 import android.support.annotation.IntDef;
 import android.support.annotation.NonNull;
@@ -61,23 +59,18 @@ public class XToolBarLayout extends LinearLayout {
     }
 
     public XToolBarLayout(Context context, AttributeSet attrs, int defStyleAttr) {
-        this(context, attrs, defStyleAttr, 0);
-    }
-
-    @TargetApi(Build.VERSION_CODES.LOLLIPOP)
-    public XToolBarLayout(Context context, AttributeSet attrs, int defStyleAttr, int defStyleRes) {
-        super(context, attrs, defStyleAttr, defStyleRes);
+        super(context, attrs, defStyleAttr);
         this.setOrientation(VERTICAL);
         mContext = context;
 
-        TypedArray array = context.obtainStyledAttributes(attrs, R.styleable.XToolBarLayout, defStyleAttr, defStyleRes);
+        TypedArray array = context.obtainStyledAttributes(attrs, R.styleable.XToolBarLayout, defStyleAttr, 0);
         mTitleText = array.getString(R.styleable.XToolBarLayout_xtblTitleText);
         if (TextUtils.isEmpty(mTitleText)) {
             mTitleText = getResources().getString(R.string.cb_app_name);
         }
         mTitleGravity = array.getInt(R.styleable.XToolBarLayout_xtblTitleGravity, GRAVITY_TITLE_CENTER);
-        mTitleColor = array.getColor(R.styleable.XToolBarLayout_xtblTitleColor, ContextCompat.getColor(context,R.color.cbTopBarTitleColor));
-        mBackgroundColor = array.getColor(R.styleable.XToolBarLayout_xtblBackgroundColor, ContextCompat.getColor(context,R.color.cbTopBarBackground));
+        mTitleColor = array.getColor(R.styleable.XToolBarLayout_xtblTitleColor, ContextCompat.getColor(context, R.color.cbTopBarTitleColor));
+        mBackgroundColor = array.getColor(R.styleable.XToolBarLayout_xtblBackgroundColor, ContextCompat.getColor(context, R.color.cbTopBarBackground));
         mShowDivider = array.getBoolean(R.styleable.XToolBarLayout_xtblShowDivider, false);
         array.recycle();
 
@@ -113,7 +106,7 @@ public class XToolBarLayout extends LinearLayout {
             if (mDividerView == null) {
                 mDividerView = new View(mContext);
                 mDividerView.setId(R.id.divider);
-                mDividerView.setBackgroundColor(ContextCompat.getColor(mContext,R.color.cbDivider));
+                mDividerView.setBackgroundColor(ContextCompat.getColor(mContext, R.color.cbDivider));
                 LinearLayout.LayoutParams layoutParams = new LinearLayout.LayoutParams(ViewGroup.LayoutParams.MATCH_PARENT, DensityUtil.dp2px(mContext, DIVIDER_HEIGHT_DEFAULT));
                 mDividerView.setLayoutParams(layoutParams);
                 addView(mDividerView);

@@ -42,4 +42,9 @@ public class XQrScanner {
         fragment.startActivityForResult(new Intent(fragment.getActivity(), XQrScannerActivity.class), requestCode);
         return this;
     }
+
+    public XQrScanner startForResult(android.support.v4.app.Fragment fragment, int requestCode) {
+        fragment.startActivityForResult(new Intent(fragment.getActivity(), XQrScannerActivity.class), requestCode);
+        return this;
+    }
 }
