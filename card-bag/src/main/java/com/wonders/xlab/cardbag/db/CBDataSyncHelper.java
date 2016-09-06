@@ -1,6 +1,8 @@
 package com.wonders.xlab.cardbag.db;
 
 import android.content.Context;
+import android.support.annotation.NonNull;
+import android.support.annotation.Nullable;
 
 import com.wonders.xlab.cardbag.data.entity.CardEntity;
 
@@ -11,6 +13,8 @@ import java.util.List;
  */
 
 public class CBDataSyncHelper {
+    private boolean mHasSyncCardData = true;
+
     private static CBDataSyncHelper instance = null;
     private CBCardBagDB mCBCardBagDB;
 
@@ -30,11 +34,27 @@ public class CBDataSyncHelper {
         return instance;
     }
 
-    public void updateCardsInfo(List<CardEntity> cardEntities) {
+    public void updateCardsInfo(@NonNull List<CardEntity> cardEntities) {
         mCBCardBagDB.insertOrReplaceWithBatchData(cardEntities);
     }
 
-    public void getAllCardsInfo() {
-        mCBCardBagDB.queryAllOrderByCreateDateDesc();
+    @Nullable
+    public List<CardEntity> getAllCardsInfo() {
+        return !hasSyncCardData() ? mCBCardBagDB.queryAllOrderByCreateDateDesc() : null;
+    }
+
+    /**
+     *
+     * @return 是否已经同步好数据
+     */
+    public boolean hasSyncCardData() {
+        return mHasSyncCardData;
+    }
+
+    /**
+     * @param hasSyncCardData 是否已经同步好数据
+     */
+    public void hasSyncCardData(boolean hasSyncCardData) {
+        mHasSyncCardData = hasSyncCardData;
     }
 }

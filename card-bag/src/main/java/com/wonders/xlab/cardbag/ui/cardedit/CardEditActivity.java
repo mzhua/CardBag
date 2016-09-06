@@ -4,7 +4,6 @@ import android.content.Intent;
 import android.net.Uri;
 import android.os.Bundle;
 import android.provider.MediaStore;
-import android.telephony.TelephonyManager;
 import android.text.Editable;
 import android.text.TextUtils;
 import android.text.TextWatcher;
@@ -20,6 +19,7 @@ import com.wonders.xlab.cardbag.base.MVPActivity;
 import com.wonders.xlab.cardbag.data.CardModel;
 import com.wonders.xlab.cardbag.data.entity.CardEntity;
 import com.wonders.xlab.cardbag.db.CBCardBagDB;
+import com.wonders.xlab.cardbag.db.CBDataSyncHelper;
 import com.wonders.xlab.cardbag.util.FileUtil;
 import com.wonders.xlab.cardbag.util.ImageViewUtil;
 import com.wonders.xlab.cardbag.widget.RatioImageView;
@@ -30,7 +30,6 @@ import com.yalantis.ucrop.UCrop;
 
 import java.io.File;
 import java.io.IOException;
-import java.util.UUID;
 
 public class CardEditActivity extends MVPActivity<CardEditContract.Presenter> implements CardEditContract.View {
     private final int REQUEST_CODE_MASK = 1;
@@ -278,6 +277,7 @@ public class CardEditActivity extends MVPActivity<CardEditContract.Presenter> im
 
     @Override
     public void saveSuccess() {
+        CBDataSyncHelper.getInstance(this).hasSyncCardData(false);
         setResult(RESULT_OK);
         finish();
     }
