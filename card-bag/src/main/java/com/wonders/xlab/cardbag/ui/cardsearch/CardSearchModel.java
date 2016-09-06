@@ -45,8 +45,14 @@ class CardSearchModel extends BaseModel implements CardSearchContract.Model {
         setupCall(cardName);
         mCall.enqueue(new okhttp3.Callback() {
             @Override
-            public void onFailure(Call call, IOException e) {
-                callback.onFail(new DefaultException(e));
+            public void onFailure(Call call, final IOException e) {
+                final Handler handler = new Handler(Looper.getMainLooper());
+                handler.post(new Runnable() {
+                    @Override
+                    public void run() {
+                        callback.onFail(new DefaultException(e));
+                    }
+                });
             }
 
             @Override
