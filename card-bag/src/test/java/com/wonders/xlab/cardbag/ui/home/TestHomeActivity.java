@@ -1,12 +1,17 @@
 package com.wonders.xlab.cardbag.ui.home;
 
 import android.content.Intent;
+import android.content.res.Configuration;
+import android.support.v7.widget.AppCompatImageButton;
+import android.support.v7.widget.Toolbar;
 import android.view.View;
+import android.widget.LinearLayout;
 
 import com.wonders.xlab.cardbag.BuildConfig;
 import com.wonders.xlab.cardbag.R;
 import com.wonders.xlab.cardbag.ui.cardmy.CardMyActivity;
 import com.wonders.xlab.cardbag.ui.cardshow.CardShowActivity;
+import com.wonders.xlab.cardbag.widget.XToolBarLayout;
 
 import org.junit.Before;
 import org.junit.Ignore;
@@ -20,6 +25,7 @@ import org.robolectric.shadows.ShadowActivity;
 
 import static org.junit.Assert.assertEquals;
 import static org.junit.Assert.assertNotNull;
+import static org.junit.Assert.assertTrue;
 
 /**
  * Created by hua on 16/8/18.
@@ -38,7 +44,6 @@ public class TestHomeActivity {
     }
 
     @Test
-    @Ignore
     public void testUseCardClick() {
         View view = homeActivity.findViewById(R.id.btn_use_card);
         assertNotNull(view);
@@ -50,7 +55,6 @@ public class TestHomeActivity {
     }
 
     @Test
-    @Ignore
     public void testManageCardClick() {
         View view = homeActivity.findViewById(R.id.btn_manage_card);
         assertNotNull(view);
@@ -61,5 +65,27 @@ public class TestHomeActivity {
         assertEquals("start wrong activity", expectedIntent.getComponent(), nextStartedActivity.getComponent());
     }
 
+    @Test
+    public void testClickNavigationThenFinishActivity() {
+        Toolbar toolbar = ((XToolBarLayout) homeActivity.findViewById(R.id.xtbl)).getToolbar();
+        for (int i = 0; i < toolbar.getChildCount(); i++) {
+            View childAt = toolbar.getChildAt(i);
+            if (childAt instanceof AppCompatImageButton) {
+                childAt.performClick();
+                break;
+            }
+        }
+        assertTrue(shadowActivity.isFinishing());
+    }
 
+    @Test
+    @Ignore
+    public void testChangeOrientationToLandscape() {
+        // toggle orientation
+        homeActivity.getResources().getConfiguration().orientation = Configuration.ORIENTATION_LANDSCAPE;
+        LinearLayout linearLayout = (LinearLayout) homeActivity.findViewById(R.id.cb_home_activity);
+        assertNotNull(linearLayout);
+
+        assertEquals(linearLayout.getOrientation(), LinearLayout.HORIZONTAL);
+    }
 }

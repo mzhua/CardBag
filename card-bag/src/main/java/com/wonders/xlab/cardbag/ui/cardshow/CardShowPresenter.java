@@ -33,6 +33,9 @@ public class CardShowPresenter extends BasePresenter implements CardShowContract
 
             @Override
             public void onFail(DefaultException e) {
+                if (e == null) {
+                    e = new DefaultException("获取卡片数据出错");
+                }
                 mView.showToastMessage(e.getMessage());
             }
         });
