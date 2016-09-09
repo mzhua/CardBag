@@ -1,6 +1,7 @@
 package com.wonders.xlab.cardbag.util;
 
 import android.content.Context;
+import android.graphics.Bitmap;
 import android.net.Uri;
 import android.text.TextUtils;
 import android.widget.ImageView;
@@ -28,6 +29,7 @@ public class ImageViewUtil {
             public void run() {
                 Picasso.with(context)
                         .load(uri)
+                        .config(Bitmap.Config.RGB_565)
                         .resize(imageView.getMeasuredWidth(), imageView.getMeasuredHeight())
                         .centerCrop()
                         .transform(ROUNDED_CORNERS_TRANSFORM)
@@ -44,6 +46,7 @@ public class ImageViewUtil {
         initTransform(context);
         Picasso.with(context)
                 .load(file)
+                .config(Bitmap.Config.RGB_565)
                 .transform(ROUNDED_CORNERS_TRANSFORM)
                 .into(imageView);
     }
@@ -58,6 +61,7 @@ public class ImageViewUtil {
             public void run() {
                 Picasso.with(context)
                         .load(path)
+                        .config(Bitmap.Config.RGB_565)
                         .resize(imageView.getMeasuredWidth(), imageView.getMeasuredHeight())
                         .centerCrop()
                         .transform(ROUNDED_CORNERS_TRANSFORM)
@@ -73,6 +77,7 @@ public class ImageViewUtil {
         initTransform(context);
         Picasso.with(context)
                 .load(resId)
+                .config(Bitmap.Config.RGB_565)
                 .placeholder(R.color.cbImageBackgroundHolder)
                 .transform(ROUNDED_CORNERS_TRANSFORM)
                 .into(imageView);

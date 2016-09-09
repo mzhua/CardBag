@@ -7,7 +7,12 @@ import android.view.View;
 import android.widget.Toast;
 
 import com.wonders.xlab.cardbag.CBag;
+import com.wonders.xlab.cardbag.data.entity.CardEntity;
+import com.wonders.xlab.cardbag.db.CBDataSyncHelper;
 import com.wonders.xlab.qrscanner.XQrScanner;
+
+import java.util.ArrayList;
+import java.util.List;
 
 
 public class MainActivity extends AppCompatActivity {
@@ -27,6 +32,23 @@ public class MainActivity extends AppCompatActivity {
 
     public void scan(View view) {
         XQrScanner.getInstance().startForResult(this, REQUEST_CODE_SCAN);
+    }
+
+    /**
+     * 获取SDK中缓存的数据
+     * @param view
+     */
+    public void fetchData(View view) {
+        List<CardEntity> allCardsInfo = CBDataSyncHelper.getInstance(this).getAllCardsInfo();
+    }
+
+    /**
+     * 将服务器保存的数据同步缓存到SDK中
+     * @param view
+     */
+    public void saveData(View view) {
+        List<CardEntity> cardEntities = new ArrayList<>();
+        CBDataSyncHelper.getInstance(this).updateCardsInfo(cardEntities);
     }
 
     @Override

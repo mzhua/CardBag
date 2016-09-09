@@ -18,6 +18,8 @@ import okhttp3.Request;
 import okhttp3.Response;
 
 /**
+ * TODO
+ * 是否需要有我们自己的默认搜索???
  * Created by hua on 16/8/31.
  */
 
@@ -43,8 +45,14 @@ class CardSearchModel extends BaseModel implements CardSearchContract.Model {
         setupCall(cardName);
         mCall.enqueue(new okhttp3.Callback() {
             @Override
-            public void onFailure(Call call, IOException e) {
-                callback.onFail(new DefaultException(e));
+            public void onFailure(Call call, final IOException e) {
+                final Handler handler = new Handler(Looper.getMainLooper());
+                handler.post(new Runnable() {
+                    @Override
+                    public void run() {
+                        callback.onFail(new DefaultException(e));
+                    }
+                });
             }
 
             @Override

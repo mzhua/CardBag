@@ -17,12 +17,6 @@
         <attr name="showDivider" format="boolean"/>
     </declare-styleable>
 
-    <declare-styleable name="RecyclerViewPager">
-        <attr name="rvp_triggerOffset" format="float"/>
-        <attr name="rvp_flingFactor" format="float"/>
-        <attr name="rvp_singlePageFling" format="boolean"/>
-    </declare-styleable>
-
     <declare-styleable name="RatioView">
         <attr name="rvVerticalWeight" format="integer"/>
         <attr name="rvHorizontalWeight" format="integer"/>
