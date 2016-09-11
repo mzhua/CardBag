@@ -34,7 +34,7 @@ public class TestCardShowPresenter {
     CardModel mCardModel;
 
     @Mock
-    CardShowActivity mView;
+    CardShowContract.View mView;
 
     CardShowPresenter mCardShowPresenter;
 

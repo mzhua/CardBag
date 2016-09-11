@@ -32,7 +32,7 @@ import static org.junit.Assert.assertTrue;
  */
 
 @RunWith(RobolectricTestRunner.class)
-@Config(constants = BuildConfig.class, sdk = 21)
+@Config(constants = BuildConfig.class, sdk = 21, manifest = "build/intermediates/manifests/aapt/debug/AndroidManifest.xml")
 public class TestHomeActivity {
     HomeActivity homeActivity;
     ShadowActivity shadowActivity;

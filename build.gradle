@@ -53,7 +53,7 @@ project.ext {
 
     libJunit = "junit:junit:4.12"
     libTestEspressoCore = "com.android.support.test.espresso:espresso-core:2.2.2"
-    libTestMockitoCore = "org.mockito:mockito-core:1.10.19"
+    libTestMockitoCore = "org.mockito:mockito-core:2.1.0-beta.125"
     libTestRobolectric = "org.robolectric:robolectric:3.1.2"
 
     libDagger = "com.google.dagger:dagger:${daggerVersion}"
