@@ -4,7 +4,9 @@ import android.app.ProgressDialog;
 import android.content.DialogInterface;
 import android.graphics.PorterDuff;
 import android.graphics.drawable.Drawable;
+import android.os.Bundle;
 import android.os.IBinder;
+import android.support.annotation.Nullable;
 import android.support.v7.app.ActionBar;
 import android.support.v7.app.AlertDialog;
 import android.support.v7.app.AppCompatActivity;
@@ -26,6 +28,12 @@ public class BaseActivity extends AppCompatActivity implements BaseContract.View
     private AlertDialog.Builder mBuilder;
     private AlertDialog mAlertDialog;
     private Toast mToast;
+
+    @Override
+    protected void onCreate(@Nullable Bundle savedInstanceState) {
+        setTheme(R.style.CBAppTheme_NoActionBar);
+        super.onCreate(savedInstanceState);
+    }
 
     /**
      * change the menu vector icon's color to fit the toolbar background
