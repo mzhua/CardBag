@@ -21,6 +21,7 @@ public class CardEditPresenter extends BasePresenter implements CardEditContract
     public CardEditPresenter(CardEditContract.View view, CardContract.Model model) {
         mView = view;
         mModel = model;
+        attachModels(mModel);
     }
 
     @Override

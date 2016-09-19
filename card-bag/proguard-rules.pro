@@ -27,13 +27,4 @@
 -keep class com.yalantis.ucrop** { *; }
 -keep interface com.yalantis.ucrop** { *; }
 
-#okhttp
--dontwarn okhttp3.**
--keep class okhttp3.**{*;}
-
-
-#okio
--dontwarn okio.**
--keep class okio.**{*;}
-
 -keep class com.squareup.** {*;}

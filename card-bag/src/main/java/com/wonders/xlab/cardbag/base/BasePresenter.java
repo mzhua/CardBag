@@ -20,8 +20,10 @@ public class BasePresenter implements BaseContract.Presenter {
     public void onDestroy() {
         if (mModels != null) {
             for (BaseContract.Model model : mModels) {
-                model.onDestroy();
-                model = null;
+                if (null != model) {
+                    model.onDestroy();
+                    model = null;
+                }
             }
         }
     }

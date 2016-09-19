@@ -1,0 +1,51 @@
+def libVersion = '1.0.7'
+
+group = 'com.wonders.xlab.cardbag'
+version = libVersion
+
+//task generateSourcesJar(type: Jar) {
+//    from android.sourceSets.main.java.srcDirs
+//    classifier 'sources'
+//}
+
+task generateJavadocs(type: Javadoc) {
+    source = android.sourceSets.main.java.srcDirs
+    classpath += project.files(android.getBootClasspath()
+            .join(File.pathSeparator))
+}
+
+task generateJavadocsJar(type: Jar, dependsOn: generateJavadocs) {
+    from generateJavadocs.destinationDir
+    classifier 'javadoc'
+}
+
+artifacts {
+    archives generateJavadocsJar
+//    archives generateSourcesJar
+}
+
+Properties properties = new Properties()
+properties.load(project.rootProject.file('local.properties').newDataInputStream())
+
+bintray {
+    user = properties.getProperty("bintray.user")
+    key = properties.getProperty("bintray.apikey")
+
+    pkg {
+        repo = 'maven'
+        name = 'card-bag'
+
+        version {
+            name = libVersion
+            desc = "card-bag"
+            released = new Date()
+            vcsTag = libVersion
+        }
+
+        licenses = ['GPL-3.0']
+        vcsUrl = 'https://gitlab.com/Mzhua/card-bag.git'
+        websiteUrl = 'https://gitlab.com/Mzhua/card-bag'
+    }
+
+    configurations = ['archives']
+}
