@@ -2,4 +2,6 @@
     <string name="error_open_camera">开启相机出错,请检查相关权限!</string>
     <string name="qrAppName">条形码</string>
     <string name="qrScanTip">将条形码放入框中,即可自动扫描</string>
+    <string name="menu_open_flash">打开闪光灯</string>
+    <string name="menu_close_flash">关闭闪光灯</string>
 </resources>

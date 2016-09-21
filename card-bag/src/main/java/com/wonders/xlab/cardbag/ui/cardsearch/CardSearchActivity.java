@@ -13,6 +13,7 @@ import android.widget.EditText;
 import android.widget.TextView;
 
 import com.wonders.xlab.cardbag.CBag;
+import com.wonders.xlab.cardbag.CBagEventConstant;
 import com.wonders.xlab.cardbag.R;
 import com.wonders.xlab.cardbag.base.MVPActivity;
 import com.wonders.xlab.cardbag.base.adapter.BaseRecyclerViewAdapter;
@@ -71,6 +72,7 @@ public class CardSearchActivity extends MVPActivity<CardSearchContract.Presenter
                 finish();
             }
         });
+        sendBroadcast(CBagEventConstant.EVENT_PAGE_CREATE_CARD_SEARCH, getResources().getString(R.string.cb_title_card_search));
     }
 
     @Override
@@ -104,5 +106,11 @@ public class CardSearchActivity extends MVPActivity<CardSearchContract.Presenter
                 finish();
             }
         }
+    }
+
+    @Override
+    protected void onDestroy() {
+        super.onDestroy();
+        sendBroadcast(CBagEventConstant.EVENT_PAGE_DESTROY_CARD_SEARCH, getResources().getString(R.string.cb_title_card_search));
     }
 }

@@ -1,7 +1,6 @@
 package com.wonders.xlab.qrscanner;
 
 import android.Manifest;
-import android.app.Activity;
 import android.content.Intent;
 import android.content.pm.PackageManager;
 import android.graphics.PorterDuff;
@@ -15,6 +14,8 @@ import android.support.v7.app.ActionBar;
 import android.support.v7.app.AppCompatActivity;
 import android.support.v7.widget.Toolbar;
 import android.view.Gravity;
+import android.view.Menu;
+import android.view.MenuItem;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.TextView;
@@ -33,6 +34,8 @@ public class XQrScannerActivity extends AppCompatActivity implements QRCodeView.
     private ZXingView mZXingView;
     private Toolbar mToolbar;
     private TextView mTvTitle;
+
+    private boolean mIsFlashLightOpened = false;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -117,6 +120,51 @@ public class XQrScannerActivity extends AppCompatActivity implements QRCodeView.
     }
 
     @Override
+    public boolean onCreateOptionsMenu(Menu menu) {
+        getMenuInflater().inflate(R.menu.menu_qr_scanner, menu);
+        return true;
+    }
+
+    @Override
+    public boolean onPrepareOptionsMenu(Menu menu) {
+        MenuItem itemOn = menu.findItem(R.id.menu_flash_on);
+        MenuItem itemOff = menu.findItem(R.id.menu_flash_off);
+        setupMenuIcon(itemOn);
+        setupMenuIcon(itemOff);
+        if (mIsFlashLightOpened) {
+            itemOn.setVisible(false);
+            itemOff.setVisible(true);
+        } else {
+            itemOn.setVisible(true);
+            itemOff.setVisible(false);
+        }
+        return super.onPrepareOptionsMenu(menu);
+    }
+
+    private void setupMenuIcon(MenuItem menuItem) {
+        Drawable menuItemDrawable = menuItem.getIcon();
+        if (menuItemDrawable != null) {
+            menuItemDrawable.mutate();
+            menuItemDrawable.setColorFilter(getResources().getColor(R.color.qrTopBarTitleColor), PorterDuff.Mode.SRC_ATOP);
+            menuItem.setIcon(menuItemDrawable);
+        }
+    }
+
+    @Override
+    public boolean onOptionsItemSelected(MenuItem item) {
+        if (item.getItemId() == R.id.menu_flash_on) {
+            mZXingView.openFlashlight();
+            mIsFlashLightOpened = true;
+        } else if (item.getItemId() == R.id.menu_flash_off) {
+            mZXingView.closeFlashlight();
+            mIsFlashLightOpened = false;
+        }
+
+        invalidateOptionsMenu();
+        return super.onOptionsItemSelected(item);
+    }
+
+    @Override
     protected void onStop() {
         mZXingView.stopCamera();
         super.onStop();
@@ -124,6 +172,9 @@ public class XQrScannerActivity extends AppCompatActivity implements QRCodeView.
 
     @Override
     protected void onDestroy() {
+        if (mIsFlashLightOpened) {
+            mZXingView.closeFlashlight();
+        }
         mZXingView.onDestroy();
         super.onDestroy();
     }

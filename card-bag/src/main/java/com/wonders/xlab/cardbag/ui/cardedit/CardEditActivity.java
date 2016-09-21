@@ -14,6 +14,7 @@ import android.widget.EditText;
 import android.widget.ImageView;
 import android.widget.TextView;
 
+import com.wonders.xlab.cardbag.CBagEventConstant;
 import com.wonders.xlab.cardbag.R;
 import com.wonders.xlab.cardbag.base.MVPActivity;
 import com.wonders.xlab.cardbag.data.CardModel;
@@ -85,7 +86,7 @@ public class CardEditActivity extends MVPActivity<CardEditContract.Presenter> im
         initWithIntentExtra();
 
         initUCropOptions();
-
+        sendBroadcast(CBagEventConstant.EVENT_PAGE_CREATE_CARD_EDIT, getResources().getString(R.string.cb_title_card_edit_edit));
     }
 
     private void initWithIntentExtra() {
@@ -165,14 +166,17 @@ public class CardEditActivity extends MVPActivity<CardEditContract.Presenter> im
     public void scanBarCode(View view) {
         XQrScanner.getInstance()
                 .startForResult(this, REQUEST_CODE_SCAN_BAR_CODE);
+        sendBroadcast(CBagEventConstant.EVENT_CLICK_SCAN_BAR_CODE, getResources().getString(R.string.cb_card_edit_cover_modify_bar_code));
     }
 
     public void shotCardFront(View view) {
         dispatchTakePictureIntent("front", REQUEST_CODE_TAKE_PHOTO_CARD_FRONT);
+        sendBroadcast(CBagEventConstant.EVENT_CLICK_TAKE_FRONT_PICTURE, getResources().getString(R.string.cb_card_edit_cover_modify_card_front));
     }
 
     public void shotCardBack(View view) {
         dispatchTakePictureIntent("back", REQUEST_CODE_TAKE_PHOTO_CARD_BACK);
+        sendBroadcast(CBagEventConstant.EVENT_CLICK_TAKE_BACK_PICTURE, getResources().getString(R.string.cb_card_edit_cover_modify_card_back));
     }
 
     @Override
@@ -278,6 +282,7 @@ public class CardEditActivity extends MVPActivity<CardEditContract.Presenter> im
     @Override
     public void saveSuccess() {
         CBDataSyncHelper.getInstance(this).hasSyncCardData(false);
+        sendBroadcast(CBagEventConstant.EVENT_CLICK_SAVE_CARD, getResources().getString(R.string.event_name_save_card_success));
         setResult(RESULT_OK);
         finish();
     }
@@ -313,5 +318,11 @@ public class CardEditActivity extends MVPActivity<CardEditContract.Presenter> im
         mCardEntity.setBackImgFilePath(mCardBackPhotoPath);
 
         getPresenter().saveCard(mCardEntity);
+    }
+
+    @Override
+    protected void onDestroy() {
+        super.onDestroy();
+        sendBroadcast(CBagEventConstant.EVENT_PAGE_DESTROY_CARD_EDIT, getResources().getString(R.string.cb_title_card_edit_edit));
     }
 }

@@ -9,6 +9,7 @@ import android.view.MenuItem;
 import android.view.View;
 import android.widget.TextView;
 
+import com.wonders.xlab.cardbag.CBagEventConstant;
 import com.wonders.xlab.cardbag.R;
 import com.wonders.xlab.cardbag.base.MVPActivity;
 import com.wonders.xlab.cardbag.data.CardModel;
@@ -72,6 +73,7 @@ public class CardShowActivity extends MVPActivity<CardShowContract.Presenter> im
             }
         });
         getPresenter().getAllCards();
+        sendBroadcast(CBagEventConstant.EVENT_PAGE_CREATE_CARD_SHOW, getResources().getString(R.string.cb_title_card_show));
     }
 
     private void initViewPager() {
@@ -187,5 +189,6 @@ public class CardShowActivity extends MVPActivity<CardShowContract.Presenter> im
         super.onDestroy();
         mViewPager.clearOnPageChangeListeners();
         mCardAdapter = null;
+        sendBroadcast(CBagEventConstant.EVENT_PAGE_DESTROY_CARD_SHOW, getResources().getString(R.string.cb_title_card_show));
     }
 }

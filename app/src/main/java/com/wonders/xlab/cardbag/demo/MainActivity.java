@@ -1,12 +1,16 @@
 package com.wonders.xlab.cardbag.demo;
 
+import android.content.BroadcastReceiver;
+import android.content.Context;
 import android.content.Intent;
+import android.content.IntentFilter;
 import android.os.Bundle;
 import android.support.v7.app.AppCompatActivity;
 import android.view.View;
 import android.widget.Toast;
 
 import com.wonders.xlab.cardbag.CBag;
+import com.wonders.xlab.cardbag.CBagEvent;
 import com.wonders.xlab.cardbag.data.entity.CardEntity;
 import com.wonders.xlab.cardbag.db.CBDataSyncHelper;
 import com.wonders.xlab.qrscanner.XQrScanner;
@@ -23,6 +27,13 @@ public class MainActivity extends AppCompatActivity {
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main);
+        IntentFilter filter = new IntentFilter(CBagEvent.getInstance().getActionOfEventBroadcast(this));
+        registerReceiver(new BroadcastReceiver() {
+            @Override
+            public void onReceive(Context context, Intent intent) {
+                Toast.makeText(context, CBagEvent.getInstance().getEventData(context,intent).getEvent() + ":" + CBagEvent.getInstance().getEventData(context,intent).getName(), Toast.LENGTH_SHORT).show();
+            }
+        }, filter);
     }
 
     public void openCardBag(View view) {
@@ -36,6 +47,7 @@ public class MainActivity extends AppCompatActivity {
 
     /**
      * 获取SDK中缓存的数据
+     *
      * @param view
      */
     public void fetchData(View view) {
@@ -44,6 +56,7 @@ public class MainActivity extends AppCompatActivity {
 
     /**
      * 将服务器保存的数据同步缓存到SDK中
+     *
      * @param view
      */
     public void saveData(View view) {

@@ -2,6 +2,7 @@ package com.wonders.xlab.cardbag.base;
 
 import android.app.ProgressDialog;
 import android.content.DialogInterface;
+import android.content.Intent;
 import android.graphics.PorterDuff;
 import android.graphics.drawable.Drawable;
 import android.os.Bundle;
@@ -18,7 +19,10 @@ import android.view.MenuItem;
 import android.view.inputmethod.InputMethodManager;
 import android.widget.Toast;
 
+import com.wonders.xlab.cardbag.CBagEventConstant;
 import com.wonders.xlab.cardbag.R;
+
+import static android.R.attr.type;
 
 /**
  * Created by hua on 16/8/19.
@@ -152,5 +156,13 @@ public class BaseActivity extends AppCompatActivity implements BaseContract.View
     @Override
     public void showToastMessage(String message) {
         showShortToast(message);
+    }
+
+    protected void sendBroadcast(String event, String name) {
+        Intent intent = new Intent(getPackageName() + CBagEventConstant.EVENT_BROADCAST_SUFFIX);
+        intent.putExtra("event", event);
+        intent.putExtra("name", name);
+        intent.putExtra("timeInMill", System.currentTimeMillis());
+        sendBroadcast(intent);
     }
 }

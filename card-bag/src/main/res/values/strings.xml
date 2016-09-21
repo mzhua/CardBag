@@ -23,4 +23,5 @@
     <string name="cb_menu_card_my_list">列表</string>
     <string name="cb_menu_card_my_icon">图标</string>
     <string name="cb_menu_card_my_delete">删除</string>
+    <string name="event_name_save_card_success">点击完成菜单成功保存卡片</string>
 </resources>

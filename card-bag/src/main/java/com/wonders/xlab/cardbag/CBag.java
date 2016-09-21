@@ -14,6 +14,7 @@ import com.wonders.xlab.cardbag.util.LogUtil;
  * Created by hua on 16/8/16.
  */
 public class CBag {
+
     private static CBag cBag;
     private Intent mCBagIntent;
 
