@@ -1,4 +1,4 @@
-def libVersion = '1.0.7'
+def libVersion = '1.0.7.1'
 
 group = 'com.wonders.xlab.cardbag'
 version = libVersion

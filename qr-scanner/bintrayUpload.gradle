@@ -1,4 +1,4 @@
-def libVersion = '0.9.0'
+def libVersion = '0.9.1'
 
 group = 'com.wonders.xlab.qrscanner'
 version = libVersion
