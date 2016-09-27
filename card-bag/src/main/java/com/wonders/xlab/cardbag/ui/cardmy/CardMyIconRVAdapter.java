@@ -1,5 +1,6 @@
 package com.wonders.xlab.cardbag.ui.cardmy;
 
+import android.support.annotation.VisibleForTesting;
 import android.support.v7.widget.RecyclerView;
 import android.text.TextUtils;
 import android.view.LayoutInflater;
@@ -66,6 +67,7 @@ public class CardMyIconRVAdapter extends MultiSelectionRecyclerViewAdapter<Strin
             mCheckBox = (CheckBox) itemView.findViewById(R.id.cb_card);
         }
 
+        @VisibleForTesting
         public boolean hasSameName(String name) {
             if (TextUtils.isEmpty(name)) {
                 return false;
