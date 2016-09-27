@@ -11,11 +11,14 @@ import com.wonders.xlab.cardbag.R;
 
 import java.io.File;
 
+import static android.content.ContentValues.TAG;
+
 /**
  * Created by hua on 16/8/22.
  */
 
 public class ImageViewUtil {
+    private static String TAG = ImageViewUtil.class.getName();
 
     private static RoundedCornersTransform ROUNDED_CORNERS_TRANSFORM;
 
@@ -27,6 +30,10 @@ public class ImageViewUtil {
         imageView.post(new Runnable() {
             @Override
             public void run() {
+                if (imageView.getMeasuredWidth() <= 0 || imageView.getMeasuredHeight() <= 0) {
+                    LogUtil.error(TAG,"At least one dimension has to be positive number of the ImageView");
+                    return;
+                }
                 Picasso.with(context)
                         .load(uri)
                         .config(Bitmap.Config.RGB_565)
@@ -59,6 +66,10 @@ public class ImageViewUtil {
         imageView.post(new Runnable() {
             @Override
             public void run() {
+                if (imageView.getMeasuredWidth() <= 0 || imageView.getMeasuredHeight() <= 0) {
+                    LogUtil.error(TAG,"At least one dimension has to be positive number of the ImageView");
+                    return;
+                }
                 Picasso.with(context)
                         .load(path)
                         .config(Bitmap.Config.RGB_565)
@@ -85,7 +96,7 @@ public class ImageViewUtil {
 
     private static void initTransform(Context context) {
         if (ROUNDED_CORNERS_TRANSFORM == null) {
-            ROUNDED_CORNERS_TRANSFORM = new RoundedCornersTransform(DensityUtil.dp2px(context,8), 0);
+            ROUNDED_CORNERS_TRANSFORM = new RoundedCornersTransform(DensityUtil.dp2px(context, 8), 0);
         }
     }
 }

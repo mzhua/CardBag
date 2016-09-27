@@ -1,6 +1,7 @@
 package com.wonders.xlab.cardbag.ui.cardmy;
 
 import android.support.v7.widget.RecyclerView;
+import android.text.TextUtils;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -63,6 +64,13 @@ public class CardMyIconRVAdapter extends MultiSelectionRecyclerViewAdapter<Strin
             mImageView = (ImageView) itemView.findViewById(R.id.iv_card);
             mTextView = (TextView) itemView.findViewById(R.id.tv_name);
             mCheckBox = (CheckBox) itemView.findViewById(R.id.cb_card);
+        }
+
+        public boolean hasSameName(String name) {
+            if (TextUtils.isEmpty(name)) {
+                return false;
+            }
+            return name.equals(mTextView.getText().toString());
         }
     }
 }
