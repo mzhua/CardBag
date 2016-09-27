@@ -47,6 +47,7 @@ public class CardMyIconRVAdapter extends MultiSelectionRecyclerViewAdapter<Strin
         super.onBindViewHolder(holder, position);
         CardEntity cardEntity = getBean(position);
         holder.mTextView.setText(cardEntity.getCardName());
+        holder.mImageView.setContentDescription(cardEntity.getCardName());
         ImageViewUtil.load(holder.itemView.getContext(), cardEntity.getImgUrl(), holder.mImageView);
         holder.mCheckBox.setVisibility(isSelectionMode() ? View.VISIBLE : View.GONE);
         holder.mCheckBox.setChecked(isSelected(position));
