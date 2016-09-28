@@ -15,7 +15,6 @@ import android.support.test.runner.AndroidJUnit4;
 import android.text.TextUtils;
 
 import com.wonders.xlab.cardbag.R;
-import com.wonders.xlab.cardbag.data.entity.CardEntity;
 import com.wonders.xlab.cardbag.db.CBCardBagDB;
 import com.wonders.xlab.cardbag.ui.cardedit.CardEditActivity;
 import com.wonders.xlab.cardbag.ui.cardsearch.CardSearchActivity;
@@ -256,6 +255,7 @@ public class TestCardMyActivity {
 
     private void addCard(String cardName) {
         onView(withId(R.id.iv_add)).perform(click());
+        onView(withText(R.string.cb_title_card_search)).check(matches(isDisplayed()));
         onView(allOf(withId(R.id.et_card_name), withHint(R.string.hint_et_search_card_name))).perform(typeText(cardName), pressImeActionButton());
         onView(withText(R.string.cb_card_not_found_notice)).perform(click());
         if (TextUtils.isEmpty(cardName)) {
@@ -281,11 +281,6 @@ public class TestCardMyActivity {
 
         onView(withId(R.id.iv_bar_code)).check(matches(withContentDescription(barCode)));
         onView(withId(R.id.tv_bar_code)).check(matches(withText(barCode)));
-    }
-
-    @NonNull
-    private String getId(int i) {
-        return String.valueOf(i);
     }
 
     /**
