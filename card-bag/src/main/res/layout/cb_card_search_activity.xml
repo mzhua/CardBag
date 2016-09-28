@@ -45,7 +45,7 @@
             android:layout_marginLeft="8dp"
             android:layout_weight="1"
             android:background="@android:color/transparent"
-            android:hint="请输入卡片名称"
+            android:hint="@string/hint_et_search_card_name"
             android:imeOptions="actionSearch"
             android:inputType="text"
             android:focusable="true"

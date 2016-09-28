@@ -1,5 +1,8 @@
 package com.wonders.xlab.cardbag.ui.cardmy;
 
+import android.app.Activity;
+import android.app.Instrumentation;
+import android.content.Intent;
 import android.support.annotation.NonNull;
 import android.support.test.InstrumentationRegistry;
 import android.support.test.espresso.NoMatchingViewException;
@@ -9,12 +12,15 @@ import android.support.test.espresso.contrib.RecyclerViewActions;
 import android.support.test.espresso.intent.rule.IntentsTestRule;
 import android.support.test.filters.LargeTest;
 import android.support.test.runner.AndroidJUnit4;
+import android.text.TextUtils;
 
 import com.wonders.xlab.cardbag.R;
 import com.wonders.xlab.cardbag.data.entity.CardEntity;
 import com.wonders.xlab.cardbag.db.CBCardBagDB;
 import com.wonders.xlab.cardbag.ui.cardedit.CardEditActivity;
 import com.wonders.xlab.cardbag.ui.cardsearch.CardSearchActivity;
+import com.wonders.xlab.qrscanner.XQrScanner;
+import com.wonders.xlab.qrscanner.XQrScannerActivity;
 
 import org.hamcrest.Description;
 import org.hamcrest.Matcher;
@@ -28,15 +34,22 @@ import org.junit.runner.RunWith;
 import static android.support.test.espresso.Espresso.onView;
 import static android.support.test.espresso.Espresso.pressBack;
 import static android.support.test.espresso.action.ViewActions.click;
+import static android.support.test.espresso.action.ViewActions.closeSoftKeyboard;
 import static android.support.test.espresso.action.ViewActions.longClick;
+import static android.support.test.espresso.action.ViewActions.pressImeActionButton;
+import static android.support.test.espresso.action.ViewActions.typeText;
 import static android.support.test.espresso.assertion.ViewAssertions.matches;
 import static android.support.test.espresso.contrib.RecyclerViewActions.actionOnItemAtPosition;
 import static android.support.test.espresso.intent.Intents.intended;
+import static android.support.test.espresso.intent.Intents.intending;
+import static android.support.test.espresso.intent.Intents.times;
 import static android.support.test.espresso.intent.matcher.IntentMatchers.hasComponent;
 import static android.support.test.espresso.matcher.RootMatchers.withDecorView;
 import static android.support.test.espresso.matcher.ViewMatchers.hasSibling;
 import static android.support.test.espresso.matcher.ViewMatchers.isChecked;
 import static android.support.test.espresso.matcher.ViewMatchers.isDisplayed;
+import static android.support.test.espresso.matcher.ViewMatchers.withContentDescription;
+import static android.support.test.espresso.matcher.ViewMatchers.withHint;
 import static android.support.test.espresso.matcher.ViewMatchers.withId;
 import static android.support.test.espresso.matcher.ViewMatchers.withText;
 import static com.wonders.xlab.cardbag.CustomMatcher.childAtPosition;
@@ -108,15 +121,16 @@ public class TestCardMyActivity {
 
     @Test
     public void testShowCardsInfoInBothListAndIconModeCorrect() {
-        loadCards(20);
+        launchActivity(true);
+        for (int i = 0; i < 2; i++) {
+            addCard(getCardName(i));
+        }
 
-        launchActivity(false);
-
-        int positionOfItemToCheck = 11;
-        String nameOfItemToCheck = getCardName(positionOfItemToCheck - 1);
+        int itemToCheckPosition = 1;
+        String nameOfItemToCheck = getCardName(itemToCheckPosition);
 
         onView(withId(R.id.recycler_view))
-                .perform(RecyclerViewActions.scrollToPosition(positionOfItemToCheck));
+                .perform(RecyclerViewActions.scrollToPosition(itemToCheckPosition));
         onView(withText(nameOfItemToCheck))
                 .check(matches(isDisplayed()));
 
@@ -126,7 +140,7 @@ public class TestCardMyActivity {
                 .perform(click());
 
         onView(withId(R.id.recycler_view_list))
-                .perform(RecyclerViewActions.scrollToPosition(positionOfItemToCheck));
+                .perform(RecyclerViewActions.scrollToPosition(itemToCheckPosition));
         //the item of list type RecyclerView 's type is LinearLayout
         onView(allOf(withText(nameOfItemToCheck),
                 linearLayoutParent()))
@@ -135,34 +149,31 @@ public class TestCardMyActivity {
 
     @Test
     public void testClickItemThenGoToCardEditInIconMode() {
-        loadCards(1);
+        launchActivity(true);
 
-        launchActivity(false);
+        addCard("CardName");
 
         onView(withId(R.id.recycler_view))
                 .perform(actionOnItemAtPosition(0, click()));
-        intended(hasComponent(CardEditActivity.class.getName()));
+        intended(hasComponent(CardEditActivity.class.getName()), times(2));
     }
 
     @Test
     public void testClickItemThenGoToCardEditInListMode() {
-        loadCards(1);
-
-        launchActivity(false);
-
+        launchActivity(true);
+        addCard("CardName");
         onView(withId(R.id.menu_card_my_list))
                 .perform(click());
 
         onView(withId(R.id.recycler_view_list))
                 .perform(actionOnItemAtPosition(0, click()));
-        intended(hasComponent(CardEditActivity.class.getName()));
+        intended(hasComponent(CardEditActivity.class.getName()), times(2));
     }
 
     @Test
     public void testLongClickToSelectThenPressBackToExitTheSelectMode() {
-        loadCards(1);
-
-        launchActivity(false);
+        launchActivity(true);
+        addCard("CardName");
         ViewInteraction viewInteraction = onView(withId(R.id.recycler_view));
         viewInteraction.perform(RecyclerViewActions.actionOnItemAtPosition(0, longClick()));
 
@@ -181,23 +192,25 @@ public class TestCardMyActivity {
 
     @Test
     public void testLongClickToSelectAndThenDeleteOnCardMode() {
-        int[] positionsToSelect = new int[]{0, 1, 5, 18};
+        int[] positionsToSelect = new int[]{0, 1, 5, 8};
 
-        loadCards(20);
-        launchActivity(false);
+        launchActivity(true);
+        for (int i = 0; i < 10; i++) {
+            addCard(getCardName(i));
+        }
 
         ViewInteraction viewInteraction = onView(withId(R.id.recycler_view));
-        viewInteraction.perform(RecyclerViewActions.actionOnItemAtPosition(positionsToSelect[0], longClick()));
+        viewInteraction.perform(RecyclerViewActions.actionOnHolderItem(hasSameName(getCardName(positionsToSelect[0])), longClick()));
 
         onView(withId(R.id.menu_card_my_delete)).check(matches(isDisplayed()));
         onView(withId(R.id.iv_add)).check(matches(not(isDisplayed())));
 
         //except the first one
         for (int i = 1; i < positionsToSelect.length; i++) {
-            viewInteraction.perform(RecyclerViewActions.actionOnItemAtPosition(positionsToSelect[i], click()));
+            viewInteraction.perform(RecyclerViewActions.actionOnHolderItem(hasSameName(getCardName(positionsToSelect[i])), click()));
         }
         for (int position : positionsToSelect) {
-            viewInteraction.perform(RecyclerViewActions.scrollToPosition(position));
+            viewInteraction.perform(RecyclerViewActions.scrollToHolder(hasSameName(getCardName(position))));
             onView(allOf(withId(R.id.cb_card), hasSibling(withText(getCardName(position)))))
                     .check(matches(isChecked()));
         }
@@ -231,7 +244,7 @@ public class TestCardMyActivity {
 
             @Override
             public void describeTo(Description description) {
-                description.appendText("has the same name");
+                description.appendText(name);
             }
         };
     }
@@ -241,16 +254,33 @@ public class TestCardMyActivity {
         mCBCardBagDB.deleteAll();
     }
 
-    private void loadCards(int counts) {
-        mCBCardBagDB.deleteAll();
-
-        for (int i = 0; i < counts; i++) {
-            CardEntity cardEntity = new CardEntity();
-            cardEntity.setId(getId(i));
-            cardEntity.setCardName(getCardName(i));
-            cardEntity.setImgUrl(IMAGE_URL);
-            mCBCardBagDB.insertOrReplace(cardEntity);
+    private void addCard(String cardName) {
+        onView(withId(R.id.iv_add)).perform(click());
+        onView(allOf(withId(R.id.et_card_name), withHint(R.string.hint_et_search_card_name))).perform(typeText(cardName), pressImeActionButton());
+        onView(withText(R.string.cb_card_not_found_notice)).perform(click());
+        if (TextUtils.isEmpty(cardName)) {
+            onView(withId(R.id.et_card_name)).perform(typeText("CardName"), closeSoftKeyboard());
         }
+
+        scanBarCode();
+
+        onView(withId(R.id.menu_card_edit_save)).perform(click());
+    }
+
+    private void scanBarCode() {
+        String barCode = "12138";
+
+        Intent data = new Intent();
+        data.putExtra(XQrScanner.EXTRA_RESULT_BAR_OR_CODE_STRING, barCode);
+        Instrumentation.ActivityResult result = new Instrumentation.ActivityResult(Activity.RESULT_OK, data);
+        intending(hasComponent(XQrScannerActivity.class.getName())).respondWith(result);
+
+        onView(withId(R.id.iv_bar_code)).perform(click());
+
+//        intended(hasComponent(XQrScannerActivity.class.getName()));
+
+        onView(withId(R.id.iv_bar_code)).check(matches(withContentDescription(barCode)));
+        onView(withId(R.id.tv_bar_code)).check(matches(withText(barCode)));
     }
 
     @NonNull

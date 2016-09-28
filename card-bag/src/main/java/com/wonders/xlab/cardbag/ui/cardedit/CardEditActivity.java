@@ -220,6 +220,7 @@ public class CardEditActivity extends MVPActivity<CardEditContract.Presenter> im
                 BarCodeEncoder ecc = new BarCodeEncoder(mIvBarCode.getWidth(), mIvBarCode.getHeight());
                 try {
                     mIvBarCode.setImageBitmap(ecc.barcode(mBarCode));
+                    mIvBarCode.setContentDescription(mBarCode);
                 } catch (Exception e) {
                     e.printStackTrace();
                 }

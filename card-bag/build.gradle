@@ -43,6 +43,7 @@ dependencies {
     androidTestCompile 'com.android.support.test.espresso:espresso-web:2.2.2'
     androidTestCompile 'com.android.support.test.espresso:espresso-contrib:2.2.2'
     androidTestCompile rootProject.ext.libJunit
+//    androidTestCompile 'com.android.support.test.uiautomator:uiautomator-v18:2.1.2'
 
     testCompile rootProject.ext.libJunit
     testCompile rootProject.ext.libTestMockitoCore
