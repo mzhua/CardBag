@@ -16,6 +16,7 @@ import android.support.test.runner.AndroidJUnit4;
 import android.text.TextUtils;
 
 import com.wonders.xlab.cardbag.R;
+import com.wonders.xlab.cardbag.ToastChecker;
 import com.wonders.xlab.cardbag.db.CBCardBagDB;
 import com.wonders.xlab.cardbag.ui.cardedit.CardEditActivity;
 import com.wonders.xlab.cardbag.ui.cardsearch.CardSearchActivity;
@@ -221,7 +222,8 @@ public class TestCardMyActivity {
                 .perform(click());
 
         //check the toast
-        onView(withText("删除" + positionsToSelect.length + "张卡片")).inRoot(withDecorView(not(is(mIntentsTestRule.getActivity().getWindow().getDecorView())))).check(matches(isDisplayed()));
+        ToastChecker.checkToast("删除" + positionsToSelect.length + "张卡片",mIntentsTestRule);
+//        onView(withText("删除" + positionsToSelect.length + "张卡片")).inRoot(withDecorView(not(is(mIntentsTestRule.getActivity().getWindow().getDecorView())))).check(matches(isDisplayed()));
 
         //check if all selected card have been deleted
         for (int position : positionsToSelect) {
@@ -266,14 +268,18 @@ public class TestCardMyActivity {
 
         scanBarCode();
 
+        takeCardFrontImg();
+
+        onView(withId(R.id.menu_card_edit_save)).perform(click());
+    }
+
+    private void takeCardFrontImg() {
         Intent takePictureIntent = new Intent(MediaStore.ACTION_IMAGE_CAPTURE);
         intending(hasAction(MediaStore.ACTION_IMAGE_CAPTURE)).respondWith(new Instrumentation.ActivityResult(Activity.RESULT_OK,takePictureIntent));
         Intent cropIntent = new Intent();
         intending(hasComponent(UCropActivity.class.getName())).respondWith(new Instrumentation.ActivityResult(Activity.RESULT_OK,cropIntent));
 
         onView(withId(R.id.iv_card_front)).perform(click());
-
-        onView(withId(R.id.menu_card_edit_save)).perform(click());
     }
 
     private void scanBarCode() {

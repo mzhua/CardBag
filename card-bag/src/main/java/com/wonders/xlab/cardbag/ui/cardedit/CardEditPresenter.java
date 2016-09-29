@@ -27,11 +27,11 @@ public class CardEditPresenter extends BasePresenter implements CardEditContract
     @Override
     public void saveCard(CardEntity cardEntity) {
         if (TextUtils.isEmpty(cardEntity.getCardName())) {
-            mView.showToastMessage("请输入卡片名称");
+            mView.showCardNameEmptyMessage();
             return;
         }
         if (TextUtils.isEmpty(cardEntity.getBarCode())) {
-            mView.showToastMessage("请先扫描条形码");
+            mView.showBarCodeNonMessage();
             return;
         }
         long timeMillis = System.currentTimeMillis();

@@ -7,7 +7,6 @@ import android.provider.MediaStore;
 import android.text.Editable;
 import android.text.TextUtils;
 import android.text.TextWatcher;
-import android.util.Log;
 import android.view.Menu;
 import android.view.MenuItem;
 import android.view.View;
@@ -15,6 +14,7 @@ import android.widget.EditText;
 import android.widget.ImageView;
 import android.widget.TextView;
 
+import com.wonders.xlab.cardbag.CBag;
 import com.wonders.xlab.cardbag.CBagEventConstant;
 import com.wonders.xlab.cardbag.R;
 import com.wonders.xlab.cardbag.base.MVPActivity;
@@ -34,6 +34,8 @@ import java.io.File;
 import java.io.IOException;
 
 public class CardEditActivity extends MVPActivity<CardEditContract.Presenter> implements CardEditContract.View {
+    public static final String TMP_FILE_NAME_CARD_FRONT_PICTURE = "front";
+    public static final String TMP_FILE_NAME_CARD_BACK_PICTURE = "back";
     private final int REQUEST_CODE_MASK = 1;
     private final int REQUEST_CODE_SCAN_BAR_CODE = REQUEST_CODE_MASK << 1;
     private final int REQUEST_CODE_TAKE_PHOTO_CARD_FRONT = REQUEST_CODE_MASK << 2;
@@ -80,6 +82,8 @@ public class CardEditActivity extends MVPActivity<CardEditContract.Presenter> im
         mTvBarCode = (TextView) findViewById(R.id.tv_bar_code);
         mIvClear = (ImageView) findViewById(R.id.iv_clear);
 
+        mIvCard.setContentDescription(getResources().getString(R.string.cb_card_edit_img_content_desc));
+
         setupActionBar(mToolBarLayout.getToolbar());
 
         setupViewListener();
@@ -118,6 +122,11 @@ public class CardEditActivity extends MVPActivity<CardEditContract.Presenter> im
             if (mEtCardName.length() > 0) {
                 mEtCardName.setSelection(mEtCardName.length());
             }
+        } else {
+            mCardEntity = new CardEntity();
+            String cardImgUrlDefault = CBag.get().getCardImgUrlDefault();
+            mCardEntity.setImgUrl(cardImgUrlDefault);
+            ImageViewUtil.load(this, cardImgUrlDefault, mIvCard);
         }
 
         mToolBarLayout.setTitle(mCardEntity == null || TextUtils.isEmpty(mCardEntity.getBarCode()) ? getString(R.string.cb_title_card_edit_add) : getString(R.string.cb_title_card_edit_edit));
@@ -171,12 +180,12 @@ public class CardEditActivity extends MVPActivity<CardEditContract.Presenter> im
     }
 
     public void shotCardFront(View view) {
-        dispatchTakePictureIntent("front", REQUEST_CODE_TAKE_PHOTO_CARD_FRONT);
+        dispatchTakePictureIntent(TMP_FILE_NAME_CARD_FRONT_PICTURE, REQUEST_CODE_TAKE_PHOTO_CARD_FRONT);
         sendBroadcast(CBagEventConstant.EVENT_CLICK_TAKE_FRONT_PICTURE, getResources().getString(R.string.cb_card_edit_cover_modify_card_front));
     }
 
     public void shotCardBack(View view) {
-        dispatchTakePictureIntent("back", REQUEST_CODE_TAKE_PHOTO_CARD_BACK);
+        dispatchTakePictureIntent(TMP_FILE_NAME_CARD_BACK_PICTURE, REQUEST_CODE_TAKE_PHOTO_CARD_BACK);
         sendBroadcast(CBagEventConstant.EVENT_CLICK_TAKE_BACK_PICTURE, getResources().getString(R.string.cb_card_edit_cover_modify_card_back));
     }
 
@@ -287,6 +296,16 @@ public class CardEditActivity extends MVPActivity<CardEditContract.Presenter> im
         sendBroadcast(CBagEventConstant.EVENT_CLICK_SAVE_CARD, getResources().getString(R.string.event_name_save_card_success));
         setResult(RESULT_OK);
         finish();
+    }
+
+    @Override
+    public void showCardNameEmptyMessage() {
+        showShortToast(getString(R.string.cb_toast_card_edit_card_name_empty));
+    }
+
+    @Override
+    public void showBarCodeNonMessage() {
+        showShortToast(getString(R.string.cb_toast_card_edit_bar_code_non));
     }
 
     @Override

@@ -25,4 +25,7 @@
     <string name="cb_menu_card_my_delete">删除</string>
     <string name="event_name_save_card_success">点击完成菜单成功保存卡片</string>
     <string name="hint_et_search_card_name">请输入卡片名称</string>
+    <string name="cb_card_edit_img_content_desc">CardImage</string>
+    <string name="cb_toast_card_edit_card_name_empty">请输入卡片名称</string>
+    <string name="cb_toast_card_edit_bar_code_non">请先扫描条形码</string>
 </resources>
