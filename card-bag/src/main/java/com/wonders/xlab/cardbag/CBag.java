@@ -14,6 +14,7 @@ import com.wonders.xlab.cardbag.util.LogUtil;
  * Created by hua on 16/8/16.
  */
 public class CBag {
+    private static String CARD_IMG_URL_DEFAULT = "http://ocg8s5zv8.bkt.clouddn.com/pic_vip_card.png";
 
     private static CBag cBag;
     private Intent mCBagIntent;
@@ -34,6 +35,14 @@ public class CBag {
         return cBag;
     }
 
+    public void setCardImgUrlDefault(String cardImgUrlDefault) {
+        CARD_IMG_URL_DEFAULT = cardImgUrlDefault;
+    }
+
+    public String getCardImgUrlDefault() {
+        return CARD_IMG_URL_DEFAULT;
+    }
+
     public CardSearchContract.Model getCardSearchModel() {
         if (mCardSearchModel == null) {
             LogUtil.error("CBag", "please call CBag.setCardSearchModel() first before card search function");
@@ -44,6 +53,7 @@ public class CBag {
     /**
      * if you want to use your own card search api, then create a class implements CardSearchContract.Model
      * and use the cardName for search, when finish the searching, call callback.onSuccess or callback.onFail to notify CBag to update the results
+     *
      * @param cardSearchModel
      * @return
      */

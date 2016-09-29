@@ -5,6 +5,7 @@ import android.content.DialogInterface;
 import android.content.Intent;
 import android.graphics.PorterDuff;
 import android.graphics.drawable.Drawable;
+import android.os.Build;
 import android.os.Bundle;
 import android.os.IBinder;
 import android.support.annotation.Nullable;
@@ -16,6 +17,7 @@ import android.text.SpannableString;
 import android.text.TextUtils;
 import android.text.style.ForegroundColorSpan;
 import android.view.MenuItem;
+import android.view.Window;
 import android.view.inputmethod.InputMethodManager;
 import android.widget.Toast;
 
@@ -35,7 +37,11 @@ public class BaseActivity extends AppCompatActivity implements BaseContract.View
 
     @Override
     protected void onCreate(@Nullable Bundle savedInstanceState) {
-        setTheme(R.style.CBAppTheme_NoActionBar);
+        if (getResources().getColor(R.color.cbTopBarBackground) == getResources().getColor(android.R.color.white) && Build.VERSION.SDK_INT >= 23) {
+            setTheme(R.style.CBAppTheme_NoActionBar_LightStatusBar);
+        } else {
+            setTheme(R.style.CBAppTheme_NoActionBar);
+        }
         super.onCreate(savedInstanceState);
     }
 

@@ -3,6 +3,7 @@ package com.wonders.xlab.cardbag.ui.cardmy;
 import android.app.Activity;
 import android.app.Instrumentation;
 import android.content.Intent;
+import android.provider.MediaStore;
 import android.support.annotation.NonNull;
 import android.support.test.InstrumentationRegistry;
 import android.support.test.espresso.NoMatchingViewException;
@@ -20,6 +21,7 @@ import com.wonders.xlab.cardbag.ui.cardedit.CardEditActivity;
 import com.wonders.xlab.cardbag.ui.cardsearch.CardSearchActivity;
 import com.wonders.xlab.qrscanner.XQrScanner;
 import com.wonders.xlab.qrscanner.XQrScannerActivity;
+import com.yalantis.ucrop.UCropActivity;
 
 import org.hamcrest.Description;
 import org.hamcrest.Matcher;
@@ -42,6 +44,7 @@ import static android.support.test.espresso.contrib.RecyclerViewActions.actionOn
 import static android.support.test.espresso.intent.Intents.intended;
 import static android.support.test.espresso.intent.Intents.intending;
 import static android.support.test.espresso.intent.Intents.times;
+import static android.support.test.espresso.intent.matcher.IntentMatchers.hasAction;
 import static android.support.test.espresso.intent.matcher.IntentMatchers.hasComponent;
 import static android.support.test.espresso.matcher.RootMatchers.withDecorView;
 import static android.support.test.espresso.matcher.ViewMatchers.hasSibling;
@@ -65,7 +68,6 @@ import static org.junit.Assert.fail;
 @RunWith(AndroidJUnit4.class)
 @LargeTest
 public class TestCardMyActivity {
-    public static final String IMAGE_URL = "http://img.ivsky.com/img/bizhi/img/201105/15/lamborghini_reventon-001.jpg";
     @Rule
     public IntentsTestRule<CardMyActivity> mIntentsTestRule = new IntentsTestRule<>(CardMyActivity.class, true, false);
 
@@ -264,21 +266,24 @@ public class TestCardMyActivity {
 
         scanBarCode();
 
+        Intent takePictureIntent = new Intent(MediaStore.ACTION_IMAGE_CAPTURE);
+        intending(hasAction(MediaStore.ACTION_IMAGE_CAPTURE)).respondWith(new Instrumentation.ActivityResult(Activity.RESULT_OK,takePictureIntent));
+        Intent cropIntent = new Intent();
+        intending(hasComponent(UCropActivity.class.getName())).respondWith(new Instrumentation.ActivityResult(Activity.RESULT_OK,cropIntent));
+
+        onView(withId(R.id.iv_card_front)).perform(click());
+
         onView(withId(R.id.menu_card_edit_save)).perform(click());
     }
 
     private void scanBarCode() {
         String barCode = "12138";
 
-        Intent data = new Intent();
-        data.putExtra(XQrScanner.EXTRA_RESULT_BAR_OR_CODE_STRING, barCode);
-        Instrumentation.ActivityResult result = new Instrumentation.ActivityResult(Activity.RESULT_OK, data);
-        intending(hasComponent(XQrScannerActivity.class.getName())).respondWith(result);
+        Intent scanIntent = new Intent();
+        scanIntent.putExtra(XQrScanner.EXTRA_RESULT_BAR_OR_CODE_STRING, barCode);
+        intending(hasComponent(XQrScannerActivity.class.getName())).respondWith(new Instrumentation.ActivityResult(Activity.RESULT_OK, scanIntent));
 
         onView(withId(R.id.iv_bar_code)).perform(click());
-
-//        intended(hasComponent(XQrScannerActivity.class.getName()));
-
         onView(withId(R.id.iv_bar_code)).check(matches(withContentDescription(barCode)));
         onView(withId(R.id.tv_bar_code)).check(matches(withText(barCode)));
     }

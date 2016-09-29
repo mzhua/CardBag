@@ -33,8 +33,8 @@ android {
 dependencies {
     compile fileTree(include: ['*.jar'], dir: 'libs')
     testCompile rootProject.ext.libJunit
-//    compile project(':card-bag')
-    compile 'com.wonders.xlab.cardbag:card-bag:1.0.7.1'
+    compile project(':card-bag')
+//    compile 'com.wonders.xlab.cardbag:card-bag:1.0.7.1'
     compile rootProject.ext.libSupportAppcompat
     compile rootProject.ext.libSupportDesign
     androidTestCompile 'com.android.support.test.espresso:espresso-core:2.2.2', {

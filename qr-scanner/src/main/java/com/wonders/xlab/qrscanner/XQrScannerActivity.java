@@ -39,6 +39,11 @@ public class XQrScannerActivity extends AppCompatActivity implements QRCodeView.
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
+        if (getResources().getColor(R.color.qrTopBarBackground) == getResources().getColor(android.R.color.white) && Build.VERSION.SDK_INT >= 23) {
+            setTheme(R.style.QRAppTheme_NoActionBar_LightStatusBar);
+        } else {
+            setTheme(R.style.QRAppTheme_NoActionBar);
+        }
         super.onCreate(savedInstanceState);
         requestPermission();
 
