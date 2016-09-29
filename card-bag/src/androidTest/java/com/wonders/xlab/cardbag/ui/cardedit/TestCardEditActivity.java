@@ -5,6 +5,7 @@ import android.app.Instrumentation;
 import android.content.Intent;
 import android.net.Uri;
 import android.provider.MediaStore;
+import android.support.annotation.NonNull;
 import android.support.test.espresso.intent.rule.IntentsTestRule;
 import android.support.test.filters.LargeTest;
 import android.support.test.runner.AndroidJUnit4;
@@ -53,30 +54,61 @@ public class TestCardEditActivity {
     @Rule
     public IntentsTestRule<CardEditActivity> mRule = new IntentsTestRule<>(CardEditActivity.class, true, false);
 
-    private void launchActivity() {
-        Intent intent = new Intent();
-        CardEntity bean = new CardEntity();
-        bean.setImgUrl(CBag.get().getCardImgUrlDefault());
-        intent.putExtra("data", bean);
+    private void launchActivity(Intent intent) {
 
         mRule.launchActivity(intent);
     }
 
+    @NonNull
+    private Intent getIntent(String cardName, String barCode) {
+        Intent intent = new Intent();
+        CardEntity bean = new CardEntity();
+        bean.setImgUrl(CBag.get().getCardImgUrlDefault());
+        bean.setCardName(cardName);
+        bean.setBarCode(barCode);
+        intent.putExtra("data", bean);
+        return intent;
+    }
+
     @Test
-    public void launchWithoutCardName() {
-        launchActivity();
+    public void launchWithoutCardName_addMode() {
+        launchActivity(getIntent(null, null));
         checkAllViewInitialStatus();
     }
 
     @Test
-    public void launchWithoutExtra() {
-        mRule.launchActivity(null);
+    public void launchWithoutExtra_addMod() {
+        launchActivity(null);
         checkAllViewInitialStatus();
+    }
+
+    @Test
+    public void launchWithFullExtra_editMod() {
+        String cardName = "CardName";
+        String barCode = "12138";
+
+        mRule.launchActivity(getIntent(cardName, barCode));
+
+        onView(withId(R.id.iv_card)).check(matches(allOf(withContentDescription(R.string.cb_card_edit_img_content_desc), isDisplayed())));
+        onView(withId(R.id.iv_bar_code)).check(matches(isDisplayed()));
+        onView(withId(R.id.iv_card_front)).check(matches(isDisplayed()));
+        onView(withId(R.id.iv_card_back)).check(matches(isDisplayed()));
+        onView(withId(R.id.tv_bar_code)).check(matches(allOf(withText(barCode), withHint(R.string.cb_bar_code_place_holder), isDisplayed())));
+        onView(withText(R.string.cb_title_card_edit_edit)).check(matches(isDisplayed()));
+        onView(withId(R.id.menu_card_edit_save)).check(matches(allOf(isDisplayed(), withText(R.string.cb_menu_text_card_edit_finish))));
+        onView(withId(R.id.et_card_name)).check(matches(allOf(withText(cardName), withHint(R.string.cb_please_input_card_name_hint), isDisplayed())));
     }
 
     @Test
     public void clickIvBarCode_goScannerActivity() {
-        launchActivity();
+        launchActivity(getIntent(null, null));
+        String barCode = scanBarCode();
+        onView(withId(R.id.iv_bar_code)).check(matches(withContentDescription(barCode)));
+        onView(withId(R.id.tv_bar_code)).check(matches(withText(barCode)));
+    }
+
+    @NonNull
+    private String scanBarCode() {
         String barCode = "12138";
 
         Intent scanIntent = new Intent();
@@ -84,13 +116,12 @@ public class TestCardEditActivity {
         intending(hasComponent(XQrScannerActivity.class.getName())).respondWith(new Instrumentation.ActivityResult(Activity.RESULT_OK, scanIntent));
 
         onView(withId(R.id.iv_bar_code)).perform(click());
-        onView(withId(R.id.iv_bar_code)).check(matches(withContentDescription(barCode)));
-        onView(withId(R.id.tv_bar_code)).check(matches(withText(barCode)));
+        return barCode;
     }
 
     @Test
     public void clickIvCardFront_goTakePicture() throws IOException {
-        launchActivity();
+        launchActivity(getIntent(null, null));
 
         Intent takePictureIntent = new Intent(MediaStore.ACTION_IMAGE_CAPTURE);
         intending(hasAction(MediaStore.ACTION_IMAGE_CAPTURE)).respondWith(new Instrumentation.ActivityResult(Activity.RESULT_OK, takePictureIntent));
@@ -112,7 +143,7 @@ public class TestCardEditActivity {
 
     @Test
     public void clickIvCardBack_goTakePicture() throws IOException {
-        launchActivity();
+        launchActivity(getIntent(null, null));
 
         Intent takePictureIntent = new Intent(MediaStore.ACTION_IMAGE_CAPTURE);
         intending(hasAction(MediaStore.ACTION_IMAGE_CAPTURE)).respondWith(new Instrumentation.ActivityResult(Activity.RESULT_OK, takePictureIntent));
@@ -131,7 +162,7 @@ public class TestCardEditActivity {
 
     @Test
     public void barCodeEmpty_showToast() {
-        launchActivity();
+        launchActivity(getIntent(null, null));
         onView(withId(R.id.et_card_name)).check(matches(withText("")));
         onView(withId(R.id.menu_card_edit_save)).perform(click());
         ToastChecker.checkToast(R.string.cb_toast_card_edit_card_name_empty, mRule);
@@ -140,12 +171,21 @@ public class TestCardEditActivity {
 
     @Test
     public void nameEmpty_showToast() {
-        launchActivity();
+        launchActivity(getIntent(null, null));
         onView(withId(R.id.et_card_name)).perform(typeText("cardName"));
         onView(withId(R.id.tv_bar_code)).check(matches(withText("")));
         onView(withId(R.id.menu_card_edit_save)).perform(click());
         ToastChecker.checkToast(R.string.cb_toast_card_edit_bar_code_non, mRule);
         assertThat(mRule.getActivity().isFinishing(), equalTo(false));
+    }
+
+    @Test
+    public void saveSuccess_finishActivity() {
+        launchActivity(getIntent(null, null));
+        scanBarCode();
+        onView(withId(R.id.et_card_name)).perform(typeText("cardName"));
+        onView(withId(R.id.menu_card_edit_save)).perform(click());
+        assertThat(mRule.getActivity().isFinishing(), equalTo(true));
     }
 
     private void checkAllViewInitialStatus() {
