@@ -54,6 +54,8 @@ public class TestHomeActivity {
         OrientationUtil.rotateToLandscape(mRule);
         onView(withId(R.id.btn_use_card)).check(matches(isDisplayed()));
         onView(withId(R.id.btn_manage_card)).check(matches(isDisplayed()));
+//        LinearLayout parent = (LinearLayout) mRule.getActivity().findViewById(R.id.btn_use_card).getParent();
+//        assertEquals(LinearLayout.HORIZONTAL, parent.getOrientation());
         OrientationUtil.rotateToPortrait(mRule);
     }
 

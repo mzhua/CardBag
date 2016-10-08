@@ -1,0 +1,18 @@
+before_script:
+  - export ANDROID_HOME="/opt/android-sdk"
+  - export PATH=$ANDROID_HOME/tools:$PATH
+  - export PATH=$ANDROID_HOME/platform-tools:$PATH
+  - chmod u+x ./gradlew
+  - echo no | android create avd --force -n testvd -t android-24 --abi armeabi-v7a
+  #- emulator -avd testvd -no-skin -no-audio -no-window &
+  - emulator -avd testvd -no-skin -no-window &
+  - chmod a+x android-wait-for-emulator
+  - ./android-wait-for-emulator
+  - adb shell input keyevent 82 &
+
+build:
+  script:
+    - ./gradlew connectedAndroidTest
+  artifacts:
+    paths:
+    - app/build/outputs/
