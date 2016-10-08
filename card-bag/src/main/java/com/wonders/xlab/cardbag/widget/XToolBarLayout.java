@@ -144,6 +144,7 @@ public class XToolBarLayout extends LinearLayout {
         Drawable stateButtonDrawable = ContextCompat.getDrawable(mContext, drawableResId).mutate();
         stateButtonDrawable.setColorFilter(mTitleColor, PorterDuff.Mode.SRC_ATOP);
         getToolbar().setNavigationIcon(stateButtonDrawable);
+        getToolbar().setNavigationContentDescription(R.string.cb_action_bar_up_description);
     }
 
     public void hideNavigationIcon() {

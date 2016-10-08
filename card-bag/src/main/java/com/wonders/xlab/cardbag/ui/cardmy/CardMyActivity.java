@@ -14,8 +14,8 @@ import android.widget.ImageView;
 
 import com.wonders.xlab.cardbag.CBagEventConstant;
 import com.wonders.xlab.cardbag.R;
-import com.wonders.xlab.cardbag.base.adapter.BaseRecyclerViewAdapter;
 import com.wonders.xlab.cardbag.base.MVPActivity;
+import com.wonders.xlab.cardbag.base.adapter.BaseRecyclerViewAdapter;
 import com.wonders.xlab.cardbag.base.adapter.MultiSelectionRecyclerViewAdapter;
 import com.wonders.xlab.cardbag.data.CardModel;
 import com.wonders.xlab.cardbag.data.entity.CardEntity;
@@ -287,4 +287,5 @@ public class CardMyActivity extends MVPActivity<CardMyContract.Presenter> implem
         mListEmptyWrapper = null;
         sendBroadcast(CBagEventConstant.EVENT_PAGE_DESTROY_CARD_MY, getResources().getString(R.string.cb_title_card_my));
     }
+
 }

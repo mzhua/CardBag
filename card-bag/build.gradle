@@ -49,7 +49,6 @@ dependencies {
     testCompile rootProject.ext.libTestMockitoCore
     testCompile rootProject.ext.libTestRobolectric
 
-    compile 'com.android.support.test.espresso:espresso-idling-resource:2.2.2'
     compile rootProject.ext.libSupportAppcompat
     compile rootProject.ext.libSupportRecyclerView
     compile rootProject.ext.libSupportCardView

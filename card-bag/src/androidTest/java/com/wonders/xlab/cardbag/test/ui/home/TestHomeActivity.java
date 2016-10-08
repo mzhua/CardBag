@@ -32,6 +32,12 @@ public class TestHomeActivity {
     public IntentsTestRule<HomeActivity> mRule = new IntentsTestRule<>(HomeActivity.class);
 
     @Test
+    public void initialCheck() {
+        onView(withId(R.id.btn_use_card)).check(matches(isDisplayed()));
+        onView(withId(R.id.btn_manage_card)).check(matches(isDisplayed()));
+    }
+
+    @Test
     public void clickUseCard_goCardShow() {
         onView(withId(R.id.btn_use_card)).perform(click());
         intended(hasComponent(CardShowActivity.class.getName()));
@@ -45,9 +51,10 @@ public class TestHomeActivity {
 
     @Test
     public void orientationChange_showHorizontalView() {
-        OrientationUtil.rotateOrientation(mRule);
+        OrientationUtil.rotateToLandscape(mRule);
         onView(withId(R.id.btn_use_card)).check(matches(isDisplayed()));
         onView(withId(R.id.btn_manage_card)).check(matches(isDisplayed()));
+        OrientationUtil.rotateToPortrait(mRule);
     }
 
 }
