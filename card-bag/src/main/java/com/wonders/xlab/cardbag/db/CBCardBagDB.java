@@ -6,6 +6,7 @@ import android.database.Cursor;
 import android.database.sqlite.SQLiteDatabase;
 import android.support.annotation.NonNull;
 import android.support.annotation.Nullable;
+import android.support.annotation.VisibleForTesting;
 
 import com.wonders.xlab.cardbag.data.entity.CardEntity;
 import com.wonders.xlab.cardbag.db.CBContract.CardEntry;
@@ -158,5 +159,12 @@ public class CBCardBagDB {
         }
         inQuery.append(")");
         return CardEntry._ID + " in " + inQuery.toString();
+    }
+
+    @VisibleForTesting
+    public void deleteAll() {
+        SQLiteDatabase db = mCBDbHelper.getWritableDatabase();
+        db.delete(CardEntry.TABLE_NAME, null, null);
+        db.close();
     }
 }

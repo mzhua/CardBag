@@ -4,6 +4,7 @@ import android.content.Intent;
 import android.os.Bundle;
 import android.view.View;
 
+import com.wonders.xlab.cardbag.CBagEventConstant;
 import com.wonders.xlab.cardbag.R;
 import com.wonders.xlab.cardbag.base.BaseActivity;
 import com.wonders.xlab.cardbag.ui.cardmy.CardMyActivity;
@@ -23,6 +24,8 @@ public class HomeActivity extends BaseActivity {
                 finish();
             }
         });
+
+        sendBroadcast(CBagEventConstant.EVENT_PAGE_CREATE_HOME, getResources().getString(R.string.cb_app_name));
     }
 
     public void manageCard(View view) {
@@ -31,5 +34,11 @@ public class HomeActivity extends BaseActivity {
 
     public void useCard(View view) {
         startActivity(new Intent(this, CardShowActivity.class));
+    }
+
+    @Override
+    protected void onDestroy() {
+        super.onDestroy();
+        sendBroadcast(CBagEventConstant.EVENT_PAGE_DESTROY_HOME, getResources().getString(R.string.cb_app_name));
     }
 }

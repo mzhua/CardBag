@@ -12,19 +12,15 @@ import com.wonders.xlab.cardbag.db.CBContract.CardEntry;
  */
 
 public class CBDbHelper extends SQLiteOpenHelper {
-    public static final int DATABASE_VERSION = 1;
-    public static final String DATABASE_NAME = "CardBag.db";
+    private static final int DATABASE_VERSION = 1;
+    private static final String DATABASE_NAME = "CardBag.db";
 
-    public CBDbHelper(Context context){
+    public CBDbHelper(Context context) {
         this(context, DATABASE_NAME, null, DATABASE_VERSION);
     }
 
-    public CBDbHelper(Context context, String name, SQLiteDatabase.CursorFactory factory, int version) {
+    private CBDbHelper(Context context, String name, SQLiteDatabase.CursorFactory factory, int version) {
         super(context, DATABASE_NAME, null, DATABASE_VERSION);
-    }
-
-    public CBDbHelper(Context context, String name, SQLiteDatabase.CursorFactory factory, int version, DatabaseErrorHandler errorHandler) {
-        super(context, name, factory, version, errorHandler);
     }
 
     @Override

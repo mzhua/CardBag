@@ -12,6 +12,7 @@ import android.view.MenuItem;
 import android.view.View;
 import android.widget.ImageView;
 
+import com.wonders.xlab.cardbag.CBagEventConstant;
 import com.wonders.xlab.cardbag.R;
 import com.wonders.xlab.cardbag.base.adapter.BaseRecyclerViewAdapter;
 import com.wonders.xlab.cardbag.base.MVPActivity;
@@ -80,6 +81,7 @@ public class CardMyActivity extends MVPActivity<CardMyContract.Presenter> implem
 
         setupListener();
         initRecyclerView();
+        sendBroadcast(CBagEventConstant.EVENT_PAGE_CREATE_CARD_MY, getResources().getString(R.string.cb_title_card_my));
     }
 
     private void initRecyclerView() {
@@ -283,5 +285,6 @@ public class CardMyActivity extends MVPActivity<CardMyContract.Presenter> implem
         mListRVAdapter = null;
         mIconEmptyWrapper = null;
         mListEmptyWrapper = null;
+        sendBroadcast(CBagEventConstant.EVENT_PAGE_DESTROY_CARD_MY, getResources().getString(R.string.cb_title_card_my));
     }
 }

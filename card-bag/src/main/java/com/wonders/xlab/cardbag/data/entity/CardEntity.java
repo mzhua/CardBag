@@ -2,16 +2,15 @@ package com.wonders.xlab.cardbag.data.entity;
 
 import android.os.Parcel;
 import android.os.Parcelable;
-import android.support.annotation.NonNull;
 import android.text.TextUtils;
+
+import com.wonders.xlab.cardbag.CBag;
 
 /**
  * Created by hua on 16/8/21.
  */
 
 public class CardEntity implements Parcelable {
-    private final String IMG_URL_DEFAULT = "http://ocg8s5zv8.bkt.clouddn.com/pic_vip_card.png";
-    @NonNull
     private String mId;
     private String mCardName;
     private String mBarCode;
@@ -50,7 +49,7 @@ public class CardEntity implements Parcelable {
     }
 
     public void setImgUrl(String imgUrl) {
-        mImgUrl = !TextUtils.isEmpty(imgUrl) ? imgUrl : IMG_URL_DEFAULT;
+        mImgUrl = !TextUtils.isEmpty(imgUrl) ? imgUrl : CBag.get().getCardImgUrlDefault();
     }
 
     public String getCardName() {
@@ -182,6 +181,6 @@ public class CardEntity implements Parcelable {
 
     @Override
     public int hashCode() {
-        return mId.hashCode();
+        return mId == null ? 0 : mId.hashCode();
     }
 }

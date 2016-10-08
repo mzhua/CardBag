@@ -21,25 +21,26 @@ class CardSearchPresenter extends BasePresenter implements CardSearchContract.Pr
      */
     CardSearchPresenter(CardSearchContract.View view, CardSearchContract.Model model) {
         mView = view;
-        if (model == null) {
-            model = new CardSearchModel();
-        }
         mModel = model;
         attachModels(mModel);
     }
 
     @Override
     public void searchByCardName(String cardName) {
-        mModel.searchByCardName(cardName, new BaseContract.Model.Callback<List<CardSearchEntity.ResultsEntity>>() {
-            @Override
-            public void onSuccess(List<CardSearchEntity.ResultsEntity> resultsEntities) {
-                mView.showSearchResult(resultsEntities);
-            }
+        if (null == mModel) {
+            mView.showSearchResult(null);
+        } else {
+            mModel.searchByCardName(cardName, new BaseContract.Model.Callback<List<CardSearchEntity.ResultsEntity>>() {
+                @Override
+                public void onSuccess(List<CardSearchEntity.ResultsEntity> resultsEntities) {
+                    mView.showSearchResult(resultsEntities);
+                }
 
-            @Override
-            public void onFail(DefaultException e) {
-                mView.showToastMessage(e.getMessage());
-            }
-        });
+                @Override
+                public void onFail(DefaultException e) {
+                    mView.showToastMessage(e.getMessage());
+                }
+            });
+        }
     }
 }

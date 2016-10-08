@@ -15,6 +15,7 @@ public class CardShowPresenter extends BasePresenter implements CardShowContract
     public CardShowPresenter(CardShowContract.View view, CardContract.Model model) {
         mView = view;
         mModel = model;
+        attachModels(mModel);
     }
 
     @Override

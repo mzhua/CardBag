@@ -1,5 +1,6 @@
 apply plugin: 'com.android.library'
-apply plugin: 'com.novoda.bintray-release'
+apply plugin: 'com.jfrog.bintray'
+apply plugin: 'com.github.dcendents.android-maven'
 
 android {
     compileSdkVersion rootProject.ext.compileSdkVersion
@@ -36,40 +37,27 @@ dependencies {
     androidTestCompile(rootProject.ext.libTestEspressoCore, {
         exclude group: 'com.android.support', module: 'support-annotations'
     })
-    compile rootProject.ext.libSupportAppcompat
-    compile rootProject.ext.libSupportRecyclerView
-    compile rootProject.ext.libSupportCardView
+    androidTestCompile 'com.android.support.test:runner:0.5'
+    androidTestCompile 'com.android.support.test:rules:0.5'
+    androidTestCompile 'com.android.support.test.espresso:espresso-intents:2.2.2'
+    androidTestCompile 'com.android.support.test.espresso:espresso-web:2.2.2'
+    androidTestCompile 'com.android.support.test.espresso:espresso-contrib:2.2.2'
+    androidTestCompile rootProject.ext.libJunit
+//    androidTestCompile 'com.android.support.test.uiautomator:uiautomator-v18:2.1.2'
 
     testCompile rootProject.ext.libJunit
     testCompile rootProject.ext.libTestMockitoCore
     testCompile rootProject.ext.libTestRobolectric
-    compile rootProject.ext.libGson
-    compile rootProject.ext.libOkHttp
+
+    compile 'com.android.support.test.espresso:espresso-idling-resource:2.2.2'
+    compile rootProject.ext.libSupportAppcompat
+    compile rootProject.ext.libSupportRecyclerView
+    compile rootProject.ext.libSupportCardView
     compile 'com.squareup.picasso:picasso:2.5.2'
     compile 'com.yalantis:ucrop:2.1.2'
     compile 'com.github.promeg:tinypinyin:1.0.0'
-    compile 'com.wonders.xlab.qrscanner:qr-scanner:1.0.4'
-//    compile project(':qr-scanner')
+//    compile 'com.wonders.xlab.qrscanner:qr-scanner:0.9.1'
+    compile project(':qr-scanner')
 }
 
-task clearJar(type: Delete) {
-    delete 'build/outputs/okhttputils.jar'
-}
-
-task makeJar(type: Copy) {
-    from('build/intermediates/bundles/release/')
-    into('build/outputs/')
-    include('classes.jar')
-    rename('classes.jar', 'cardbag-1_0_2_3.jar')
-}
-
-makeJar.dependsOn(clearJar, build)
-
-publish {
-    userOrg = 'mzhua'
-    groupId = 'com.wonders.xlab.cardbag'
-    artifactId = 'card-bag'
-    publishVersion = '1.0.6.1'
-    desc = 'Oh hi, this is a nice description for a project, right?'
-    website = 'https://gitlab.com/Mzhua/card-bag'
-}
+apply from: "bintrayUpload.gradle"

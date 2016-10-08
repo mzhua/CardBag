@@ -2,8 +2,10 @@ package com.wonders.xlab.cardbag.base;
 
 import android.app.ProgressDialog;
 import android.content.DialogInterface;
+import android.content.Intent;
 import android.graphics.PorterDuff;
 import android.graphics.drawable.Drawable;
+import android.os.Build;
 import android.os.Bundle;
 import android.os.IBinder;
 import android.support.annotation.Nullable;
@@ -15,10 +17,14 @@ import android.text.SpannableString;
 import android.text.TextUtils;
 import android.text.style.ForegroundColorSpan;
 import android.view.MenuItem;
+import android.view.Window;
 import android.view.inputmethod.InputMethodManager;
 import android.widget.Toast;
 
+import com.wonders.xlab.cardbag.CBagEventConstant;
 import com.wonders.xlab.cardbag.R;
+
+import static android.R.attr.type;
 
 /**
  * Created by hua on 16/8/19.
@@ -31,7 +37,11 @@ public class BaseActivity extends AppCompatActivity implements BaseContract.View
 
     @Override
     protected void onCreate(@Nullable Bundle savedInstanceState) {
-        setTheme(R.style.CBAppTheme_NoActionBar);
+        if (getResources().getColor(R.color.cbTopBarBackground) == getResources().getColor(android.R.color.white) && Build.VERSION.SDK_INT >= 23) {
+            setTheme(R.style.CBAppTheme_NoActionBar_LightStatusBar);
+        } else {
+            setTheme(R.style.CBAppTheme_NoActionBar);
+        }
         super.onCreate(savedInstanceState);
     }
 
@@ -152,5 +162,13 @@ public class BaseActivity extends AppCompatActivity implements BaseContract.View
     @Override
     public void showToastMessage(String message) {
         showShortToast(message);
+    }
+
+    protected void sendBroadcast(String event, String name) {
+        Intent intent = new Intent(getPackageName() + CBagEventConstant.EVENT_BROADCAST_SUFFIX);
+        intent.putExtra("event", event);
+        intent.putExtra("name", name);
+        intent.putExtra("timeInMill", System.currentTimeMillis());
+        sendBroadcast(intent);
     }
 }

@@ -19,6 +19,8 @@
 -keep class com.wonders.xlab.cardbag.CBag { *; }
 -keep class com.wonders.xlab.cardbag.db.CBDataSyncHelper { *; }
 -keep class com.wonders.xlab.cardbag.data.entity.** { *; }
+-keep class com.wonders.xlab.cardbag.CBagEventDataBean { *; }
+-keep class com.wonders.xlab.cardbag.CBagEvent { *; }
 -keep interface com.wonders.xlab.cardbag.base.BaseContract$Model { *; }
 -keep interface com.wonders.xlab.cardbag.base.BaseContract$Model$Callback { *; }
 -keep interface com.wonders.xlab.cardbag.ui.cardsearch.CardSearchContract$Model {*;}
@@ -26,14 +28,5 @@
 -dontwarn com.yalantis.ucrop**
 -keep class com.yalantis.ucrop** { *; }
 -keep interface com.yalantis.ucrop** { *; }
-
-#okhttp
--dontwarn okhttp3.**
--keep class okhttp3.**{*;}
-
-
-#okio
--dontwarn okio.**
--keep class okio.**{*;}
 
 -keep class com.squareup.** {*;}

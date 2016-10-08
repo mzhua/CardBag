@@ -1,5 +1,6 @@
 apply plugin: 'com.android.library'
-apply plugin: 'com.novoda.bintray-release'
+apply plugin: 'com.jfrog.bintray'
+apply plugin: 'com.github.dcendents.android-maven'
 
 android {
     compileSdkVersion rootProject.ext.compileSdkVersion
@@ -35,24 +36,4 @@ dependencies {
     compile rootProject.ext.libBgaZxing
 }
 
-task clearJar(type: Delete) {
-    delete 'build/outputs/okhttputils.jar'
-}
-
-task makeJar(type: Copy) {
-    from('build/intermediates/bundles/release/')
-    into('build/outputs/')
-    include('classes.jar')
-    rename ('classes.jar', 'cardbag-1_0_2_3.jar')
-}
-
-makeJar.dependsOn(clearJar, build)
-
-publish {
-    userOrg = 'mzhua'
-    groupId = 'com.wonders.xlab.qrscanner'
-    artifactId = 'qr-scanner'
-    publishVersion = '1.0.4'
-    desc = 'Oh hi, this is a nice description for a project, right?'
-    website = 'https://gitlab.com/Mzhua/card-bag'
-}
+apply from: "bintrayUpload.gradle"

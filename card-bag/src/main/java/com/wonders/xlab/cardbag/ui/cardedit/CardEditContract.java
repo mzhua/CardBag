@@ -10,6 +10,10 @@ import com.wonders.xlab.cardbag.data.entity.CardEntity;
 public interface CardEditContract {
     interface View extends BaseContract.View {
         void saveSuccess();
+
+        void showCardNameEmptyMessage();
+
+        void showBarCodeNonMessage();
     }
 
     interface Presenter extends BaseContract.Presenter {

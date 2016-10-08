@@ -32,9 +32,9 @@ public class TopBar extends RelativeLayout {
     private final float MENU_SIZE_DEFAULT = 24;//dp
     private final float MENU_HORIZONTAL_PADDING = 10;//dp
 
-    private final int GRAVITY_TITLE_MASK = 1;
-    private final int GRAVITY_TITLE_LEFT = GRAVITY_TITLE_MASK << 1;
-    private final int GRAVITY_TITLE_CENTER = GRAVITY_TITLE_MASK << 2;
+    private final static int GRAVITY_TITLE_MASK = 1;
+    public final static int GRAVITY_TITLE_LEFT = GRAVITY_TITLE_MASK << 1;
+    public final static int GRAVITY_TITLE_CENTER = GRAVITY_TITLE_MASK << 2;
 
     private String mTitleText;
     private int mTitleGravity;
@@ -158,7 +158,7 @@ public class TopBar extends RelativeLayout {
                     public boolean onLongClick(View view) {
                         if (!TextUtils.isEmpty(mLeftMenuText)) {
                             Toast toast = Toast.makeText(mContext, mLeftMenuText, Toast.LENGTH_SHORT);
-                            toast.setGravity(Gravity.LEFT | Gravity.TOP,50, dp2px(mContext,56));
+                            toast.setGravity(Gravity.LEFT | Gravity.TOP, 50, dp2px(mContext, 56));
                             toast.show();
                         }
                         return true;
@@ -206,7 +206,7 @@ public class TopBar extends RelativeLayout {
                     public boolean onLongClick(View view) {
                         if (!TextUtils.isEmpty(mRightMenuText)) {
                             Toast toast = Toast.makeText(mContext, mRightMenuText, Toast.LENGTH_SHORT);
-                            toast.setGravity(Gravity.RIGHT | Gravity.TOP,50, dp2px(mContext,56));
+                            toast.setGravity(Gravity.RIGHT | Gravity.TOP, 50, dp2px(mContext, 56));
                             toast.show();
                         }
                         return true;
