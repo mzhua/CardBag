@@ -7,6 +7,7 @@ import android.database.sqlite.SQLiteDatabase;
 import android.support.annotation.NonNull;
 import android.support.annotation.Nullable;
 import android.support.annotation.VisibleForTesting;
+import android.text.TextUtils;
 
 import com.wonders.xlab.cardbag.data.entity.CardEntity;
 import com.wonders.xlab.cardbag.db.CBContract.CardEntry;
@@ -68,10 +69,13 @@ public class CBCardBagDB {
         return values;
     }
 
-    public void insertOrReplaceWithBatchData(List<CardEntity> cardEntities) {
+    void insertOrReplaceWithBatchData(List<CardEntity> cardEntities) {
         SQLiteDatabase db = mCBDbHelper.getWritableDatabase();
         db.beginTransaction();
         for (CardEntity cardEntity : cardEntities) {
+            if (TextUtils.isEmpty(cardEntity.getId())) {
+                throw new IllegalArgumentException("you must set unique id for each CardEntity");
+            }
             db.insertWithOnConflict(CardEntry.TABLE_NAME, null, convertEntityToContentValues(cardEntity), SQLiteDatabase.CONFLICT_REPLACE);
         }
         db.setTransactionSuccessful();
@@ -136,6 +140,9 @@ public class CBCardBagDB {
     }
 
     public int deleteByIds(HashSet<String> ids) {
+        if (null == ids || ids.size() == 0) {
+            return 0;
+        }
         SQLiteDatabase db = mCBDbHelper.getWritableDatabase();
 
         String selection = assembleIdsToSelection(ids);

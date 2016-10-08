@@ -45,6 +45,7 @@ import static com.yalantis.ucrop.UCrop.EXTRA_OUTPUT_URI;
 import static org.hamcrest.Matchers.allOf;
 import static org.hamcrest.Matchers.any;
 import static org.hamcrest.Matchers.equalTo;
+import static org.junit.Assert.assertTrue;
 
 /**
  * Created by hua on 16/9/29.
@@ -69,6 +70,13 @@ public class TestCardEditActivity {
         bean.setBarCode(barCode);
         intent.putExtra("data", bean);
         return intent;
+    }
+
+    @Test
+    public void testClickBackNavigator_finishActivity() {
+        launchActivity(null);
+        onView(withContentDescription(R.string.cb_action_bar_up_description)).perform(click());
+        assertTrue("CardEditActivity should be finished after click navigation icon", mRule.getActivity().isFinishing());
     }
 
     @Test
