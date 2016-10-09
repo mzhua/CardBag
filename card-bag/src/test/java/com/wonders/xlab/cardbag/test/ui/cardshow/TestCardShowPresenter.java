@@ -1,9 +1,11 @@
-package com.wonders.xlab.cardbag.ui.cardshow;
+package com.wonders.xlab.cardbag.test.ui.cardshow;
 
 import com.wonders.xlab.cardbag.base.BaseContract;
 import com.wonders.xlab.cardbag.base.DefaultException;
 import com.wonders.xlab.cardbag.data.CardModel;
 import com.wonders.xlab.cardbag.data.entity.CardEntity;
+import com.wonders.xlab.cardbag.ui.cardshow.CardShowContract;
+import com.wonders.xlab.cardbag.ui.cardshow.CardShowPresenter;
 
 import org.junit.Before;
 import org.junit.Test;

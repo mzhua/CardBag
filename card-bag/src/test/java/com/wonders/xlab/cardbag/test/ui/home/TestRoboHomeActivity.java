@@ -1,4 +1,4 @@
-package com.wonders.xlab.cardbag.ui.home;
+package com.wonders.xlab.cardbag.test.ui.home;
 
 import android.content.Intent;
 import android.content.res.Configuration;
@@ -11,6 +11,7 @@ import com.wonders.xlab.cardbag.BuildConfig;
 import com.wonders.xlab.cardbag.R;
 import com.wonders.xlab.cardbag.ui.cardmy.CardMyActivity;
 import com.wonders.xlab.cardbag.ui.cardshow.CardShowActivity;
+import com.wonders.xlab.cardbag.ui.home.HomeActivity;
 import com.wonders.xlab.cardbag.widget.XToolBarLayout;
 
 import org.junit.Before;
