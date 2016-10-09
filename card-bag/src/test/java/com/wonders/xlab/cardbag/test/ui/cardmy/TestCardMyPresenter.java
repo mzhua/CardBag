@@ -86,7 +86,8 @@ public class TestCardMyPresenter {
     @Test
     public void testDeleteSuccess_ShowSuccessMessageView() {
         HashSet<String> ids = new HashSet<>();
-        ids.add("1");
+        String id = "1";
+        ids.add(id);
         mPresenter.deleteCards(ids);
         verify(mModel).deleteCards(ArgumentMatchers.<HashSet<String>>any(), mCallbackDelete.capture());
         String message = "message";

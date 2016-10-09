@@ -1,12 +1,12 @@
 package com.wonders.xlab.cardbag.ui.cardedit;
 
-import android.text.TextUtils;
 
 import com.wonders.xlab.cardbag.base.BaseContract;
 import com.wonders.xlab.cardbag.base.BasePresenter;
 import com.wonders.xlab.cardbag.base.DefaultException;
 import com.wonders.xlab.cardbag.data.CardContract;
 import com.wonders.xlab.cardbag.data.entity.CardEntity;
+import com.wonders.xlab.cardbag.util.TextUtils;
 
 import java.util.UUID;
 
