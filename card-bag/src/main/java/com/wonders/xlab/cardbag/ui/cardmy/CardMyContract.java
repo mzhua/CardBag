@@ -14,7 +14,9 @@ public interface CardMyContract {
     interface View extends BaseContract.View{
         void showMyCards(List<CardEntity> cardEntityList);
 
-        void deleteSuccess();
+        void deleteSuccess(String message);
+
+        void noCardWillBeDeleted();
     }
 
     interface Presenter extends BaseContract.Presenter{

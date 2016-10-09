@@ -1,5 +1,8 @@
 package com.wonders.xlab.cardbag.ui.cardsearch;
 
+import android.support.annotation.NonNull;
+import android.support.annotation.Nullable;
+
 import com.wonders.xlab.cardbag.base.BaseContract;
 import com.wonders.xlab.cardbag.base.BasePresenter;
 import com.wonders.xlab.cardbag.base.DefaultException;
@@ -11,7 +14,7 @@ import java.util.List;
  * Created by hua on 16/8/23.
  */
 
-class CardSearchPresenter extends BasePresenter implements CardSearchContract.Presenter {
+public class CardSearchPresenter extends BasePresenter implements CardSearchContract.Presenter {
     private CardSearchContract.View mView;
     private CardSearchContract.Model mModel;
 
@@ -19,7 +22,7 @@ class CardSearchPresenter extends BasePresenter implements CardSearchContract.Pr
      * @param view
      * @param model if model is null, then search card from owe own server
      */
-    CardSearchPresenter(CardSearchContract.View view, CardSearchContract.Model model) {
+    public CardSearchPresenter(@NonNull CardSearchContract.View view,@Nullable CardSearchContract.Model model) {
         mView = view;
         mModel = model;
         attachModels(mModel);

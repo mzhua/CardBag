@@ -184,8 +184,14 @@ public class CardMyActivity extends MVPActivity<CardMyContract.Presenter> implem
     }
 
     @Override
-    public void deleteSuccess() {
+    public void deleteSuccess(String message) {
+        showToastMessage(message);
         mPresenter.getMyCards();
+    }
+
+    @Override
+    public void noCardWillBeDeleted() {
+        showShortToast(getString(R.string.toast_card_my_no_card_be_deleted));
     }
 
     /**

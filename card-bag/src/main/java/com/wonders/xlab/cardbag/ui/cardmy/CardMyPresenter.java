@@ -1,5 +1,7 @@
 package com.wonders.xlab.cardbag.ui.cardmy;
 
+import android.support.annotation.NonNull;
+
 import com.wonders.xlab.cardbag.base.BaseContract;
 import com.wonders.xlab.cardbag.base.BasePresenter;
 import com.wonders.xlab.cardbag.base.DefaultException;
@@ -16,7 +18,7 @@ public class CardMyPresenter extends BasePresenter implements CardMyContract.Pre
     private CardContract.Model mModel;
     private CardMyContract.View mView;
 
-    public CardMyPresenter(CardContract.Model model, CardMyContract.View view) {
+    public CardMyPresenter(@NonNull CardContract.Model model,@NonNull CardMyContract.View view) {
         mModel = model;
         mView = view;
         attachModels(mModel);
@@ -40,14 +42,13 @@ public class CardMyPresenter extends BasePresenter implements CardMyContract.Pre
     @Override
     public void deleteCards(HashSet<String> ids) {
         if (ids == null || ids.isEmpty()) {
-            mView.showToastMessage("数据为空");
+            mView.noCardWillBeDeleted();
             return;
         }
         mModel.deleteCards(ids, new BaseContract.Model.Callback<String>() {
             @Override
             public void onSuccess(String s) {
-                mView.showToastMessage(s);
-                mView.deleteSuccess();
+                mView.deleteSuccess(s);
             }
 
             @Override

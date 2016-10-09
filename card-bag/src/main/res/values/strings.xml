@@ -29,4 +29,5 @@
     <string name="cb_toast_card_edit_card_name_empty">请输入卡片名称</string>
     <string name="cb_toast_card_edit_bar_code_non">请先扫描条形码</string>
     <string name="cb_action_bar_up_description">转到上一层</string>
+    <string name="toast_card_my_no_card_be_deleted">没有删除任何卡片</string>
 </resources>

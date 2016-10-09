@@ -2,7 +2,7 @@ package com.wonders.xlab.cardbag.test.ui.cardshow;
 
 import com.wonders.xlab.cardbag.base.BaseContract;
 import com.wonders.xlab.cardbag.base.DefaultException;
-import com.wonders.xlab.cardbag.data.CardModel;
+import com.wonders.xlab.cardbag.data.CardContract;
 import com.wonders.xlab.cardbag.data.entity.CardEntity;
 import com.wonders.xlab.cardbag.ui.cardshow.CardShowContract;
 import com.wonders.xlab.cardbag.ui.cardshow.CardShowPresenter;
@@ -11,6 +11,7 @@ import org.junit.Before;
 import org.junit.Test;
 import org.junit.runner.RunWith;
 import org.junit.runners.JUnit4;
+import org.mockito.ArgumentMatchers;
 import org.mockito.Mock;
 import org.mockito.invocation.InvocationOnMock;
 import org.mockito.stubbing.Answer;
@@ -33,7 +34,7 @@ import static org.mockito.MockitoAnnotations.initMocks;
 public class TestCardShowPresenter {
 
     @Mock
-    CardModel mCardModel;
+    CardContract.Model mCardModel;
 
     @Mock
     CardShowContract.View mView;
@@ -49,7 +50,7 @@ public class TestCardShowPresenter {
     @Test
     public void testModelGetAllCardsCalled() {
         mCardShowPresenter.getAllCards();
-        verify(mCardModel, times(1)).getAllCards(any(BaseContract.Model.Callback.class));
+        verify(mCardModel, times(1)).getAllCards(ArgumentMatchers.<BaseContract.Model.Callback<List<CardEntity>>>any());
     }
 
     @Test
@@ -58,12 +59,12 @@ public class TestCardShowPresenter {
             @Override
             public Object answer(InvocationOnMock invocation) throws Throwable {
                 Object[] arguments = invocation.getArguments();
-                BaseContract.Model.Callback callback = (BaseContract.Model.Callback) arguments[0];
+                BaseContract.Model.Callback<List<CardEntity>> callback = (BaseContract.Model.Callback<List<CardEntity>>) arguments[0];
                 List<CardEntity> list = new ArrayList<>();
                 callback.onSuccess(list);
                 return 200;
             }
-        }).when(mCardModel).getAllCards(any(BaseContract.Model.Callback.class));
+        }).when(mCardModel).getAllCards(ArgumentMatchers.<BaseContract.Model.Callback<List<CardEntity>>>any());
         mCardShowPresenter.getAllCards();
         verify(mView, times(1)).noCardData();
         verify(mView, times(1)).showMenu(anyBoolean());
@@ -75,11 +76,11 @@ public class TestCardShowPresenter {
             @Override
             public Object answer(InvocationOnMock invocation) throws Throwable {
                 Object[] arguments = invocation.getArguments();
-                BaseContract.Model.Callback callback = (BaseContract.Model.Callback) arguments[0];
+                BaseContract.Model.Callback<List<CardEntity>> callback = (BaseContract.Model.Callback<List<CardEntity>>) arguments[0];
                 callback.onSuccess(null);
                 return 200;
             }
-        }).when(mCardModel).getAllCards(any(BaseContract.Model.Callback.class));
+        }).when(mCardModel).getAllCards(ArgumentMatchers.<BaseContract.Model.Callback<List<CardEntity>>>any());
         mCardShowPresenter.getAllCards();
         verify(mView, times(1)).noCardData();
         verify(mView, times(1)).showMenu(anyBoolean());
@@ -91,15 +92,15 @@ public class TestCardShowPresenter {
             @Override
             public Object answer(InvocationOnMock invocation) throws Throwable {
                 Object[] arguments = invocation.getArguments();
-                BaseContract.Model.Callback callback = (BaseContract.Model.Callback) arguments[0];
+                BaseContract.Model.Callback<List<CardEntity>> callback = (BaseContract.Model.Callback<List<CardEntity>>) arguments[0];
                 List<CardEntity> list = new ArrayList<>();
                 list.add(new CardEntity());
                 callback.onSuccess(list);
                 return 200;
             }
-        }).when(mCardModel).getAllCards(any(BaseContract.Model.Callback.class));
+        }).when(mCardModel).getAllCards(ArgumentMatchers.<BaseContract.Model.Callback<List<CardEntity>>>any());
         mCardShowPresenter.getAllCards();
-        verify(mView, times(1)).showCardViewPager(any(List.class));
+        verify(mView, times(1)).showCardViewPager(ArgumentMatchers.<CardEntity>anyList());
         verify(mView, times(1)).showMenu(anyBoolean());
     }
 
@@ -113,7 +114,7 @@ public class TestCardShowPresenter {
                 callback.onFail(any(DefaultException.class));
                 return 500;
             }
-        }).when(mCardModel).getAllCards(any(BaseContract.Model.Callback.class));
+        }).when(mCardModel).getAllCards(ArgumentMatchers.<BaseContract.Model.Callback<List<CardEntity>>>any());
         mCardShowPresenter.getAllCards();
         verify(mView, times(1)).showToastMessage(anyString());
     }
