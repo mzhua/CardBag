@@ -141,9 +141,6 @@ public class TestCardEditActivity {
 
         intended(hasAction(MediaStore.ACTION_IMAGE_CAPTURE));
 
-//        File photoFile = FileUtil.createTempFile(InstrumentationRegistry.getTargetContext(), CardEditActivity.TMP_FILE_NAME_CARD_FRONT_PICTURE);
-//        intended(allOf(hasExtras(hasEntry(equalTo(EXTRA_INPUT_URI), equalTo(Uri.parse("file:"+photoFile.getAbsolutePath()))));
-        //// NOTE: 16/9/29 无法通过图片的路径来判断,因为创建的图片的名称是当前的时间
         intended(allOf(
                 hasExtra(equalTo(EXTRA_INPUT_URI), any(Uri.class)),
                 hasExtra(equalTo(EXTRA_OUTPUT_URI), any(Uri.class)),
