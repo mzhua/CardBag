@@ -1,6 +1,7 @@
 before_script:
   - export http_proxy="http://127.0.0.1:8123/"
   - export https_proxy="http://127.0.0.1:8123/"
+  - export socks_server="http://127.0.0.1:8123/"
   - export ANDROID_HOME="/opt/android-sdk"
   - export PATH=$ANDROID_HOME/tools:$PATH
   - export PATH=$ANDROID_HOME/platform-tools:$PATH
