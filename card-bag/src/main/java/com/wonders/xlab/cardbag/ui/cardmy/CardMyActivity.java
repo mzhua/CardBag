@@ -59,6 +59,7 @@ public class CardMyActivity extends MVPActivity<CardMyContract.Presenter> implem
 
     }
 
+
     @Override
     public CardMyContract.Presenter getPresenter() {
         if (mPresenter == null) {
