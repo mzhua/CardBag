@@ -25,7 +25,6 @@ public class CBag {
         mCBagIntent = new Intent();
     }
 
-
     /**
      * get an instance of CBag
      */
