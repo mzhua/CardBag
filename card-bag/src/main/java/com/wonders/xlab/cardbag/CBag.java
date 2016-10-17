@@ -31,6 +31,7 @@ public class CBag {
     public static CBag get() {
         if (cBag == null) {
             cBag = new CBag();
+
         }
         return cBag;
     }
