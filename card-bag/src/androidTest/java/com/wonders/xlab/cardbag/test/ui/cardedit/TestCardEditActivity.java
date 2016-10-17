@@ -19,6 +19,7 @@ import com.wonders.xlab.qrscanner.XQrScanner;
 import com.wonders.xlab.qrscanner.XQrScannerActivity;
 import com.yalantis.ucrop.UCropActivity;
 
+import org.junit.Ignore;
 import org.junit.Rule;
 import org.junit.Test;
 import org.junit.runner.RunWith;
