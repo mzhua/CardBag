@@ -1,17 +1,20 @@
 package com.wonders.xlab.cardbag.test.ui.cardmy;
 
 import android.support.annotation.NonNull;
-import android.support.test.InstrumentationRegistry;
+import android.support.test.espresso.contrib.RecyclerViewActions;
 import android.support.test.espresso.intent.rule.IntentsTestRule;
 import android.support.test.filters.LargeTest;
 import android.support.test.runner.AndroidJUnit4;
 
 import com.wonders.xlab.cardbag.R;
 import com.wonders.xlab.cardbag.data.entity.CardEntity;
-import com.wonders.xlab.cardbag.db.CBCardBagDB;
 import com.wonders.xlab.cardbag.ui.cardmy.CardMyActivity;
 import com.wonders.xlab.cardbag.ui.cardmy.CardMyContract;
+import com.wonders.xlab.cardbag.ui.cardmy.CardMyIconRVAdapter;
 
+import org.hamcrest.Description;
+import org.hamcrest.Matcher;
+import org.hamcrest.TypeSafeMatcher;
 import org.junit.Before;
 import org.junit.Rule;
 import org.junit.Test;
@@ -39,12 +42,8 @@ public class TestCardMyActivity {
     @Rule
     public IntentsTestRule<CardMyActivity> mRule = new IntentsTestRule<>(CardMyActivity.class);
 
-    private CBCardBagDB mCBCardBagDB;
-
     @Before
     public void setup() {
-        mCBCardBagDB = CBCardBagDB.getInstance(InstrumentationRegistry.getContext());
-        mCBCardBagDB.deleteAll();
         mRule.getActivity().setPresenter(new Presenter());
     }
 
@@ -105,6 +104,7 @@ public class TestCardMyActivity {
             }
         });
 
+        onView(withId(R.id.recycler_view)).perform(RecyclerViewActions.scrollToPosition(3));
         onView(allOf(withId(R.id.tv_name), withText(getCardName(3)))).check(matches(isDisplayed()));
     }
 
@@ -298,7 +298,7 @@ public class TestCardMyActivity {
 
         onView(withId(R.id.iv_bar_code)).perform(click());
     }
-
+*/
     private static Matcher<CardMyIconRVAdapter.ItemViewHolder> hasSameName(final String name) {
         return new TypeSafeMatcher<CardMyIconRVAdapter.ItemViewHolder>() {
             @Override
@@ -312,7 +312,7 @@ public class TestCardMyActivity {
             }
         };
     }
-*/
+
 
     /**
      * get the name of card
