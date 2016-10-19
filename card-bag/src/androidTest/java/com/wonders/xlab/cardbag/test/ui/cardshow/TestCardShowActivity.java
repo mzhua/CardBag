@@ -2,6 +2,8 @@ package com.wonders.xlab.cardbag.test.ui.cardshow;
 
 import android.support.annotation.NonNull;
 import android.support.test.InstrumentationRegistry;
+import android.support.test.espresso.Espresso;
+import android.support.test.espresso.IdlingResource;
 import android.support.test.espresso.intent.rule.IntentsTestRule;
 import android.support.test.filters.LargeTest;
 import android.support.test.runner.AndroidJUnit4;
@@ -81,12 +83,11 @@ public class TestCardShowActivity {
 
         int positionToCheck = 0;
         onView(withId(R.id.tv_card_name)).check(matches(allOf(isDisplayed(), withText(getCardNameByIndex(positionToCheck)))));
-        onView(withId(R.id.tv_bar_code)).check(matches(allOf(isDisplayed(), withText(getBarCodeByIndex(positionToCheck)))));
+        onView(allOf(withId(R.id.tv_bar_code),withText(getBarCodeByIndex(positionToCheck)))).check(matches(isDisplayed()));
 
         checkViewPagerChildCount(cardCounts);
 
-        onView(withId(R.id.menu_card_show_edit))
-                .check(matches(allOf(isDisplayed(), withContentDescription(R.string.cb_menu_card_show_edit))))
+        onView(allOf(withId(R.id.menu_card_show_edit),withContentDescription(R.string.cb_menu_card_show_edit)))
                 .perform(click());
         intended(allOf(hasComponent(CardEditActivity.class.getName()),
                 hasExtra(equalTo("data"), equalTo(addNewCardData(0)))));
@@ -100,8 +101,8 @@ public class TestCardShowActivity {
         onView(withId(R.id.viewPager)).perform(swipeLeft());
 
         int positionToCheck = 1;
-        onView(allOf(withId(R.id.tv_card_name), withText(getCardNameByIndex(positionToCheck)))).check(matches(isDisplayed()));
-        onView(allOf(withId(R.id.tv_bar_code), withText(getBarCodeByIndex(positionToCheck)))).check(matches(isDisplayed()));
+        onView(withId(R.id.tv_card_name)).check(matches(allOf(isDisplayed(), withText(getCardNameByIndex(positionToCheck)))));
+        onView(allOf(withId(R.id.tv_bar_code),withText(getBarCodeByIndex(positionToCheck)))).check(matches(isDisplayed()));
 
         checkViewPagerChildCount(cardCounts);
     }

@@ -80,8 +80,15 @@ public class CardShowActivity extends MVPActivity<CardShowContract.Presenter> im
         mViewPager.setPageTransformer(false, mCardShadowTransformer);
         mViewPager.setOffscreenPageLimit(3);
         mViewPager.addOnPageChangeListener(new ViewPager.SimpleOnPageChangeListener() {
+
             @Override
             public void onPageScrolled(int position, float positionOffset, int positionOffsetPixels) {
+                mSelectedCardEntity = mCardAdapter.getBean(position);
+            }
+
+            @Override
+            public void onPageSelected(int position) {
+                super.onPageSelected(position);
                 final Configuration newMetrics = getResources().getConfiguration();
                 CardEntity bean = mCardAdapter.getBean(position);
                 mSelectedCardEntity = bean;
@@ -96,11 +103,6 @@ public class CardShowActivity extends MVPActivity<CardShowContract.Presenter> im
                         mToolBarLayout.setTitle(bean.getCardName());
                     }
                 }
-            }
-
-            @Override
-            public void onPageSelected(int position) {
-                super.onPageSelected(position);
             }
         });
     }

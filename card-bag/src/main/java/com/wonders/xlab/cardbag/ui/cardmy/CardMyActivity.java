@@ -3,6 +3,7 @@ package com.wonders.xlab.cardbag.ui.cardmy;
 import android.content.Intent;
 import android.os.Bundle;
 import android.support.annotation.IntDef;
+import android.support.annotation.VisibleForTesting;
 import android.support.v7.widget.DefaultItemAnimator;
 import android.support.v7.widget.GridLayoutManager;
 import android.support.v7.widget.LinearLayoutManager;
@@ -22,6 +23,7 @@ import com.wonders.xlab.cardbag.data.entity.CardEntity;
 import com.wonders.xlab.cardbag.db.CBCardBagDB;
 import com.wonders.xlab.cardbag.ui.cardedit.CardEditActivity;
 import com.wonders.xlab.cardbag.ui.cardsearch.CardSearchActivity;
+import com.wonders.xlab.cardbag.ui.cardshow.CardShowContract;
 import com.wonders.xlab.cardbag.util.DensityUtil;
 import com.wonders.xlab.cardbag.widget.SideBar;
 import com.wonders.xlab.cardbag.widget.XToolBarLayout;
@@ -66,6 +68,11 @@ public class CardMyActivity extends MVPActivity<CardMyContract.Presenter> implem
             mPresenter = new CardMyPresenter(new CardModel(CBCardBagDB.getInstance(this)), this);
         }
         return mPresenter;
+    }
+
+    @VisibleForTesting
+    public void setPresenter(CardMyContract.Presenter presenter) {
+        this.mPresenter = presenter;
     }
 
     @Override

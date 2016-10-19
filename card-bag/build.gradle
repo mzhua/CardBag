@@ -14,11 +14,14 @@ android {
 
         testInstrumentationRunner "android.support.test.runner.AndroidJUnitRunner"
 
+        // Enabling multidex support.
+        multiDexEnabled true
     }
     buildTypes {
         debug {
             minifyEnabled false
             proguardFiles getDefaultProguardFile('proguard-android.txt'), 'proguard-rules.pro'
+            testCoverageEnabled = true
         }
 
         release {
@@ -40,9 +43,11 @@ dependencies {
     androidTestCompile 'com.android.support.test:runner:0.5'
     androidTestCompile 'com.android.support.test:rules:0.5'
     androidTestCompile 'com.android.support.test.espresso:espresso-intents:2.2.2'
-    androidTestCompile 'com.android.support.test.espresso:espresso-web:2.2.2'
+//    androidTestCompile 'com.android.support.test.espresso:espresso-web:2.2.2'
     androidTestCompile 'com.android.support.test.espresso:espresso-contrib:2.2.2'
     androidTestCompile rootProject.ext.libJunit
+    androidTestCompile rootProject.ext.libTestMockitoCore
+    androidTestCompile 'com.android.support:multidex:1.0.1'
 //    androidTestCompile 'com.android.support.test.uiautomator:uiautomator-v18:2.1.2'
 
     testCompile rootProject.ext.libJunit
@@ -55,8 +60,8 @@ dependencies {
     compile 'com.squareup.picasso:picasso:2.5.2'
     compile 'com.yalantis:ucrop:2.1.2'
     compile 'com.github.promeg:tinypinyin:1.0.0'
-//    compile 'com.wonders.xlab.qrscanner:qr-scanner:0.9.1'
-    compile project(':qr-scanner')
+    compile 'com.wonders.xlab.qrscanner:qr-scanner:0.9.1'
+//    compile project(':qr-scanner')
 }
 
 apply from: "bintrayUpload.gradle"
