@@ -27,6 +27,7 @@ import java.io.IOException;
 
 import static android.support.test.espresso.Espresso.onView;
 import static android.support.test.espresso.action.ViewActions.click;
+import static android.support.test.espresso.action.ViewActions.closeSoftKeyboard;
 import static android.support.test.espresso.action.ViewActions.typeText;
 import static android.support.test.espresso.assertion.ViewAssertions.matches;
 import static android.support.test.espresso.intent.Intents.intended;
@@ -98,6 +99,7 @@ public class TestCardEditActivity {
 
         mRule.launchActivity(getIntent(cardName, barCode));
 
+        onView(withId(R.id.et_card_name)).check(matches(allOf(withText(cardName), withHint(R.string.cb_please_input_card_name_hint), isDisplayed()))).perform(closeSoftKeyboard());
         onView(withId(R.id.iv_card)).check(matches(allOf(withContentDescription(R.string.cb_card_edit_img_content_desc), isDisplayed())));
         onView(withId(R.id.iv_bar_code)).check(matches(isDisplayed()));
         onView(withId(R.id.iv_card_front)).check(matches(isDisplayed()));
@@ -105,7 +107,6 @@ public class TestCardEditActivity {
         onView(withId(R.id.tv_bar_code)).check(matches(allOf(withText(barCode), withHint(R.string.cb_bar_code_place_holder), isDisplayed())));
         onView(withText(R.string.cb_title_card_edit_edit)).check(matches(isDisplayed()));
         onView(withId(R.id.menu_card_edit_save)).check(matches(allOf(isDisplayed(), withText(R.string.cb_menu_text_card_edit_finish))));
-        onView(withId(R.id.et_card_name)).check(matches(allOf(withText(cardName), withHint(R.string.cb_please_input_card_name_hint), isDisplayed())));
     }
 
     @Test
@@ -131,7 +132,7 @@ public class TestCardEditActivity {
     @Test
     public void clickIvCardFront_goTakePicture() throws IOException {
         launchActivity(getIntent(null, null));
-
+        onView(withId(R.id.et_card_name)).perform(closeSoftKeyboard());
         Intent takePictureIntent = new Intent(MediaStore.ACTION_IMAGE_CAPTURE);
         intending(hasAction(MediaStore.ACTION_IMAGE_CAPTURE)).respondWith(new Instrumentation.ActivityResult(Activity.RESULT_OK, takePictureIntent));
         Intent cropIntent = new Intent();
@@ -150,7 +151,7 @@ public class TestCardEditActivity {
     @Test
     public void clickIvCardBack_goTakePicture() throws IOException {
         launchActivity(getIntent(null, null));
-
+        onView(withId(R.id.et_card_name)).perform(closeSoftKeyboard());
         Intent takePictureIntent = new Intent(MediaStore.ACTION_IMAGE_CAPTURE);
         intending(hasAction(MediaStore.ACTION_IMAGE_CAPTURE)).respondWith(new Instrumentation.ActivityResult(Activity.RESULT_OK, takePictureIntent));
         Intent cropIntent = new Intent();
