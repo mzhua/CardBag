@@ -44,27 +44,10 @@ import static org.hamcrest.Matchers.equalTo;
 @LargeTest
 public class SingleUITest {
     @Rule
-    public IntentsTestRule<CardEditActivity> mRule = new IntentsTestRule<>(CardEditActivity.class, true, false);
-
-    private void launchActivity(Intent intent) {
-
-        mRule.launchActivity(intent);
-    }
-
-    @NonNull
-    private Intent getIntent(String cardName, String barCode) {
-        Intent intent = new Intent();
-        CardEntity bean = new CardEntity();
-        bean.setImgUrl(CBag.get().getCardImgUrlDefault());
-        bean.setCardName(cardName);
-        bean.setBarCode(barCode);
-        intent.putExtra("data", bean);
-        return intent;
-    }
+    public IntentsTestRule<CardEditActivity> mRule = new IntentsTestRule<>(CardEditActivity.class);
 
     @Test
     public void clickIvCardFront_goTakePicture() throws IOException {
-        launchActivity(getIntent(null, null));
         onView(withId(R.id.et_card_name)).perform(closeSoftKeyboard());
         Intent takePictureIntent = new Intent(MediaStore.ACTION_IMAGE_CAPTURE);
         intending(hasAction(MediaStore.ACTION_IMAGE_CAPTURE)).respondWith(new Instrumentation.ActivityResult(Activity.RESULT_OK, takePictureIntent));
