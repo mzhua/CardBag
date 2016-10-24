@@ -177,6 +177,7 @@ public class TestCardEditActivity {
     }
 
     @Test
+    @Ignore
     public void nameEmpty_showToast() {
         launchActivity(getIntent(null, null));
         onView(withId(R.id.et_card_name)).perform(typeText("cardName"));
@@ -187,6 +188,7 @@ public class TestCardEditActivity {
     }
 
     @Test
+    @Ignore
     public void saveSuccess_finishActivity() {
         launchActivity(getIntent(null, null));
         scanBarCode();
