@@ -33,6 +33,10 @@
             android:name=".ui.cardshow.CardShowActivity"
             android:theme="@style/CBAppTheme.NoActionBar">
         </activity>
+        <activity
+            android:name=".ui.scanner.CBScannerActivity"
+            android:theme="@style/CBAppTheme.NoActionBar">
+        </activity>
     </application>
 
 </manifest>

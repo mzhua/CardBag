@@ -10,9 +10,9 @@ import android.widget.TextView;
 
 import com.wonders.xlab.cardbag.R;
 import com.wonders.xlab.cardbag.data.entity.CardEntity;
+import com.wonders.xlab.cardbag.ui.scanner.BarCodeEncoder;
 import com.wonders.xlab.cardbag.widget.RatioImageView;
 import com.wonders.xlab.cardbag.widget.vpc.CardAdapter;
-import com.wonders.xlab.qrscanner.BarCodeEncoder;
 
 import java.util.ArrayList;
 import java.util.List;

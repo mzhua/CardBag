@@ -13,21 +13,16 @@ import android.support.test.espresso.intent.rule.IntentsTestRule;
 import android.support.test.filters.LargeTest;
 import android.support.test.runner.AndroidJUnit4;
 import android.support.v7.widget.RecyclerView;
-import android.text.TextUtils;
 
 import com.wonders.xlab.cardbag.R;
-import com.wonders.xlab.cardbag.data.CardModel;
 import com.wonders.xlab.cardbag.data.entity.CardEntity;
 import com.wonders.xlab.cardbag.db.CBCardBagDB;
 import com.wonders.xlab.cardbag.test.ToastChecker;
 import com.wonders.xlab.cardbag.ui.cardedit.CardEditActivity;
 import com.wonders.xlab.cardbag.ui.cardmy.CardMyActivity;
-import com.wonders.xlab.cardbag.ui.cardmy.CardMyContract;
 import com.wonders.xlab.cardbag.ui.cardmy.CardMyIconRVAdapter;
-import com.wonders.xlab.cardbag.ui.cardmy.CardMyPresenter;
 import com.wonders.xlab.cardbag.ui.cardsearch.CardSearchActivity;
-import com.wonders.xlab.qrscanner.XQrScanner;
-import com.wonders.xlab.qrscanner.XQrScannerActivity;
+import com.wonders.xlab.cardbag.ui.scanner.CBScannerActivity;
 import com.yalantis.ucrop.UCropActivity;
 
 import org.hamcrest.Description;
@@ -44,16 +39,12 @@ import java.util.List;
 
 import static android.support.test.espresso.Espresso.onView;
 import static android.support.test.espresso.action.ViewActions.click;
-import static android.support.test.espresso.action.ViewActions.closeSoftKeyboard;
 import static android.support.test.espresso.action.ViewActions.longClick;
-import static android.support.test.espresso.action.ViewActions.pressImeActionButton;
-import static android.support.test.espresso.action.ViewActions.typeText;
 import static android.support.test.espresso.assertion.ViewAssertions.doesNotExist;
 import static android.support.test.espresso.assertion.ViewAssertions.matches;
 import static android.support.test.espresso.contrib.RecyclerViewActions.actionOnItemAtPosition;
 import static android.support.test.espresso.intent.Intents.intended;
 import static android.support.test.espresso.intent.Intents.intending;
-import static android.support.test.espresso.intent.VerificationModes.times;
 import static android.support.test.espresso.intent.matcher.IntentMatchers.hasAction;
 import static android.support.test.espresso.intent.matcher.IntentMatchers.hasComponent;
 import static android.support.test.espresso.matcher.ViewMatchers.hasSibling;
@@ -69,7 +60,6 @@ import static org.hamcrest.core.IsNot.not;
 import static org.junit.Assert.assertEquals;
 import static org.junit.Assert.assertTrue;
 import static org.junit.Assert.fail;
-import static org.mockito.Mockito.mock;
 
 /**
  * Created by hua on 16/9/27.
@@ -325,8 +315,8 @@ public class TestCardMyActivity {
         String barCode = "12138";
 
         Intent scanIntent = new Intent();
-        scanIntent.putExtra(XQrScanner.EXTRA_RESULT_BAR_OR_CODE_STRING, barCode);
-        intending(hasComponent(XQrScannerActivity.class.getName())).respondWith(new Instrumentation.ActivityResult(Activity.RESULT_OK, scanIntent));
+        scanIntent.putExtra(CBScannerActivity.EXTRA_RESULT_BAR_OR_CODE_STRING, barCode);
+        intending(hasComponent(CBScannerActivity.class.getName())).respondWith(new Instrumentation.ActivityResult(Activity.RESULT_OK, scanIntent));
 
         onView(withId(R.id.iv_bar_code)).perform(click());
     }

@@ -15,8 +15,7 @@ import com.wonders.xlab.cardbag.R;
 import com.wonders.xlab.cardbag.data.entity.CardEntity;
 import com.wonders.xlab.cardbag.test.ToastChecker;
 import com.wonders.xlab.cardbag.ui.cardedit.CardEditActivity;
-import com.wonders.xlab.qrscanner.XQrScanner;
-import com.wonders.xlab.qrscanner.XQrScannerActivity;
+import com.wonders.xlab.cardbag.ui.scanner.CBScannerActivity;
 import com.yalantis.ucrop.UCropActivity;
 
 import org.junit.Ignore;
@@ -122,8 +121,8 @@ public class TestCardEditActivity {
         String barCode = "12138";
 
         Intent scanIntent = new Intent();
-        scanIntent.putExtra(XQrScanner.EXTRA_RESULT_BAR_OR_CODE_STRING, barCode);
-        intending(hasComponent(XQrScannerActivity.class.getName())).respondWith(new Instrumentation.ActivityResult(Activity.RESULT_OK, scanIntent));
+        scanIntent.putExtra(CBScannerActivity.EXTRA_RESULT_BAR_OR_CODE_STRING, barCode);
+        intending(hasComponent(CBScannerActivity.class.getName())).respondWith(new Instrumentation.ActivityResult(Activity.RESULT_OK, scanIntent));
 
         onView(withId(R.id.iv_bar_code)).perform(click());
         return barCode;

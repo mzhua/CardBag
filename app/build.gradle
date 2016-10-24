@@ -37,6 +37,8 @@ dependencies {
 //    compile 'com.wonders.xlab.cardbag:card-bag:1.0.7.1'
     compile rootProject.ext.libSupportAppcompat
     compile rootProject.ext.libSupportDesign
+    compile 'com.wonders.xlab.qrscanner:qr-scanner:0.9.1'
+
     androidTestCompile 'com.android.support.test.espresso:espresso-core:2.2.2', {
         exclude group: 'com.android.support', module: 'support-annotations'
     }

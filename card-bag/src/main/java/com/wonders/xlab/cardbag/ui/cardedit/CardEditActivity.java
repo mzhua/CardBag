@@ -22,12 +22,12 @@ import com.wonders.xlab.cardbag.data.CardModel;
 import com.wonders.xlab.cardbag.data.entity.CardEntity;
 import com.wonders.xlab.cardbag.db.CBCardBagDB;
 import com.wonders.xlab.cardbag.db.CBDataSyncHelper;
+import com.wonders.xlab.cardbag.ui.scanner.BarCodeEncoder;
+import com.wonders.xlab.cardbag.ui.scanner.CBScannerActivity;
 import com.wonders.xlab.cardbag.util.FileUtil;
 import com.wonders.xlab.cardbag.util.ImageViewUtil;
 import com.wonders.xlab.cardbag.widget.RatioImageView;
 import com.wonders.xlab.cardbag.widget.XToolBarLayout;
-import com.wonders.xlab.qrscanner.BarCodeEncoder;
-import com.wonders.xlab.qrscanner.XQrScanner;
 import com.yalantis.ucrop.UCrop;
 
 import java.io.File;
@@ -174,8 +174,8 @@ public class CardEditActivity extends MVPActivity<CardEditContract.Presenter> im
     }
 
     public void scanBarCode(View view) {
-        XQrScanner.getInstance()
-                .startForResult(this, REQUEST_CODE_SCAN_BAR_CODE);
+
+        startActivityForResult(new Intent(this, CBScannerActivity.class), REQUEST_CODE_SCAN_BAR_CODE);
         sendBroadcast(CBagEventConstant.EVENT_CLICK_SCAN_BAR_CODE, getResources().getString(R.string.cb_card_edit_cover_modify_bar_code));
     }
 
@@ -195,7 +195,7 @@ public class CardEditActivity extends MVPActivity<CardEditContract.Presenter> im
         if (resultCode == RESULT_OK) {
             switch (requestCode) {
                 case REQUEST_CODE_SCAN_BAR_CODE:
-                    String mBarCode = data.getStringExtra(XQrScanner.EXTRA_RESULT_BAR_OR_CODE_STRING);
+                    String mBarCode = data.getStringExtra(CBScannerActivity.EXTRA_RESULT_BAR_OR_CODE_STRING);
                     setBarCodeView(mBarCode);
                     break;
                 case REQUEST_CODE_TAKE_PHOTO_CARD_FRONT:

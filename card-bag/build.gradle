@@ -60,8 +60,11 @@ dependencies {
     compile 'com.squareup.picasso:picasso:2.5.2'
     compile 'com.yalantis:ucrop:2.1.2'
     compile 'com.github.promeg:tinypinyin:1.0.0'
-    compile 'com.wonders.xlab.qrscanner:qr-scanner:0.9.1'
 //    compile project(':qr-scanner')
+
+    compile rootProject.ext.libZxingCore
+    compile rootProject.ext.libBgaQrCodeCore
+    compile rootProject.ext.libBgaZxing
 }
 
 apply from: "bintrayUpload.gradle"
