@@ -20,7 +20,6 @@ import com.wonders.xlab.cardbag.R;
 import com.wonders.xlab.cardbag.base.MVPActivity;
 import com.wonders.xlab.cardbag.data.CardModel;
 import com.wonders.xlab.cardbag.data.entity.CardEntity;
-import com.wonders.xlab.cardbag.db.CBCardBagDB;
 import com.wonders.xlab.cardbag.db.CBDataSyncHelper;
 import com.wonders.xlab.cardbag.ui.scanner.BarCodeEncoder;
 import com.wonders.xlab.cardbag.ui.scanner.CBScannerActivity;
@@ -64,7 +63,7 @@ public class CardEditActivity extends MVPActivity<CardEditContract.Presenter> im
     @Override
     public CardEditContract.Presenter getPresenter() {
         if (null == mPresenter) {
-            mPresenter = new CardEditPresenter(this, new CardModel(CBCardBagDB.getInstance(this)));
+            mPresenter = new CardEditPresenter(this, new CardModel(this));
         }
         return mPresenter;
     }

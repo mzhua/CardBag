@@ -41,6 +41,11 @@ public class CBCardBagDB {
         return instance;
     }
 
+    @VisibleForTesting
+    public static void setInstance(CBCardBagDB cbCardBagDB) {
+        instance = cbCardBagDB;
+    }
+
     /**
      * @param entity
      * @return the row ID of the newly inserted row OR <code>-1</code> when insert failed

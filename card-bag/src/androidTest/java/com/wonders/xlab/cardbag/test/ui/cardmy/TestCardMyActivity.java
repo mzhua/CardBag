@@ -1,38 +1,28 @@
 package com.wonders.xlab.cardbag.test.ui.cardmy;
 
-import android.app.Activity;
-import android.app.Instrumentation;
-import android.content.Intent;
-import android.provider.MediaStore;
 import android.support.annotation.NonNull;
-import android.support.test.InstrumentationRegistry;
-import android.support.test.espresso.PerformException;
 import android.support.test.espresso.ViewInteraction;
 import android.support.test.espresso.contrib.RecyclerViewActions;
 import android.support.test.espresso.intent.rule.IntentsTestRule;
 import android.support.test.filters.LargeTest;
 import android.support.test.runner.AndroidJUnit4;
-import android.support.v7.widget.RecyclerView;
 
 import com.wonders.xlab.cardbag.R;
 import com.wonders.xlab.cardbag.data.entity.CardEntity;
 import com.wonders.xlab.cardbag.db.CBCardBagDB;
-import com.wonders.xlab.cardbag.test.ToastChecker;
 import com.wonders.xlab.cardbag.ui.cardedit.CardEditActivity;
 import com.wonders.xlab.cardbag.ui.cardmy.CardMyActivity;
 import com.wonders.xlab.cardbag.ui.cardmy.CardMyIconRVAdapter;
 import com.wonders.xlab.cardbag.ui.cardsearch.CardSearchActivity;
-import com.wonders.xlab.cardbag.ui.scanner.CBScannerActivity;
-import com.yalantis.ucrop.UCropActivity;
 
 import org.hamcrest.Description;
 import org.hamcrest.Matcher;
 import org.hamcrest.TypeSafeMatcher;
-import org.junit.After;
 import org.junit.Before;
 import org.junit.Rule;
 import org.junit.Test;
 import org.junit.runner.RunWith;
+import org.mockito.Mock;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -44,10 +34,7 @@ import static android.support.test.espresso.assertion.ViewAssertions.doesNotExis
 import static android.support.test.espresso.assertion.ViewAssertions.matches;
 import static android.support.test.espresso.contrib.RecyclerViewActions.actionOnItemAtPosition;
 import static android.support.test.espresso.intent.Intents.intended;
-import static android.support.test.espresso.intent.Intents.intending;
-import static android.support.test.espresso.intent.matcher.IntentMatchers.hasAction;
 import static android.support.test.espresso.intent.matcher.IntentMatchers.hasComponent;
-import static android.support.test.espresso.matcher.ViewMatchers.hasSibling;
 import static android.support.test.espresso.matcher.ViewMatchers.isChecked;
 import static android.support.test.espresso.matcher.ViewMatchers.isDisplayed;
 import static android.support.test.espresso.matcher.ViewMatchers.withContentDescription;
@@ -56,10 +43,9 @@ import static android.support.test.espresso.matcher.ViewMatchers.withText;
 import static com.wonders.xlab.cardbag.test.CustomMatcher.childAtPosition;
 import static com.wonders.xlab.cardbag.test.CustomMatcher.linearLayoutParent;
 import static org.hamcrest.Matchers.allOf;
-import static org.hamcrest.core.IsNot.not;
-import static org.junit.Assert.assertEquals;
-import static org.junit.Assert.assertTrue;
-import static org.junit.Assert.fail;
+import static org.hamcrest.Matchers.not;
+import static org.mockito.Mockito.when;
+import static org.mockito.MockitoAnnotations.initMocks;
 
 /**
  * Created by hua on 16/9/27.
@@ -68,60 +54,25 @@ import static org.junit.Assert.fail;
 @LargeTest
 public class TestCardMyActivity {
     @Rule
-    public IntentsTestRule<CardMyActivity> mRule = new IntentsTestRule<>(CardMyActivity.class,true,false);
+    public IntentsTestRule<CardMyActivity> mRule = new IntentsTestRule<>(CardMyActivity.class, true, false);
 
-    private CBCardBagDB mCBCardBagDB;
+    @Mock
+    public CBCardBagDB mDb;
 
     @Before
     public void setup() {
-        mCBCardBagDB = CBCardBagDB.getInstance(InstrumentationRegistry.getTargetContext());
-//        CardMyPresenter presenter = new CardMyPresenter(mock(CardModel.class), mock(CardMyContract.View.class));
-//        mRule.getActivity().setPresenter(presenter);
+        initMocks(this);
+        CBCardBagDB.setInstance(mDb);
+    }
+
+    private void launchActivity() {
+        mRule.launchActivity(null);
     }
 
     @Test
-    public void testEmptyData_ShowTips() {
-        startActivity();
-        onView(withId(R.id.menu_card_my_list))
-                .check(matches(isDisplayed()));
-        onView(withId(R.id.side_bar))
-                .check(matches(not(isDisplayed())));
-        onView(withId(R.id.recycler_view))
-                .check(matches(isDisplayed()));
-        onView(withId(R.id.recycler_view_list))
-                .check(matches(not(isDisplayed())));
-        onView(withText(R.string.cb_tip_no_card))
-                .check(matches(isDisplayed()));
-        onView(allOf(withText(R.string.cb_tip_no_card),
-                childAtPosition(childAtPosition(withId(R.id.recycler_view), 0), 0)))
-                .check(matches(isDisplayed()));
-    }
+    public void testDefaultView() {
+        launchActivity();
 
-    @NonNull
-    private List<CardEntity> getCardEntities() {
-        List<CardEntity> cardEntities = new ArrayList<>();
-        for (int i = 0; i < 5; i++) {
-            CardEntity entity = new CardEntity();
-            entity.setId(String.valueOf(i));
-            entity.setCardName(getCardName(i));
-            entity.setImgUrl("http://ocg8s5zv8.bkt.clouddn.com/pic_vip_card.png");
-            entity.setBarCode("12138" + i);
-
-            cardEntities.add(entity);
-        }
-        return cardEntities;
-    }
-
-    @Test
-    public void testClickBackNavigator_finishActivity() {
-        startActivity();
-        onView(withContentDescription(R.string.cb_action_bar_up_description)).perform(click());
-        assertTrue("CardMyActivity should be finished after click navigation icon", mRule.getActivity().isFinishing());
-    }
-
-    @Test
-    public void testDefaultShowCardViewAndSideBarStayHidden() {
-        startActivity();
         onView(withId(R.id.menu_card_my_list))
                 .check(matches(isDisplayed()));
         onView(withId(R.id.side_bar))
@@ -139,7 +90,8 @@ public class TestCardMyActivity {
 
     @Test
     public void testClickListMenu_showListRecyclerView_showSideBar() {
-        startActivity();
+        launchActivity();
+
         onView(withId(R.id.menu_card_my_list))
                 .perform(click());
         onView(withId(R.id.side_bar))
@@ -155,19 +107,30 @@ public class TestCardMyActivity {
 
     @Test
     public void testClickAddFAB_goToCardSearch() {
-        startActivity();
+        launchActivity();
+
         onView(withId(R.id.iv_add))
                 .perform(click());
         intended(hasComponent(CardSearchActivity.class.getName()));
     }
 
     @Test
-    public void testShowCardsInfoInBothListAndIconModeCorrect() {
-        for (int i = 0; i < 2; i++) {
-            addCard(getCardName(i));
+    public void testShowCardsPendingOverScreen() {
+        int cardCounts = setupCardListAndLaunchActivity(25);
+
+        //remember to reverse the index
+        for (int i = 0; i < cardCounts; i++) {
+            int positionInAdapter = cardCounts - i - 1;
+            onView(withId(R.id.recycler_view)).perform(RecyclerViewActions.scrollToPosition(positionInAdapter));//must scroll to the item first, make sure the item is displayed on screen
+            onView(allOf(withId(R.id.tv_name), withText(getCardName(positionInAdapter)))).check(matches(isDisplayed()));
         }
-        startActivity();
-        int itemToCheckPosition = 1;
+    }
+
+    @Test
+    public void testShowCardsInfoInBothListAndIconModeCorrect() {
+        int cardCounts = setupCardListAndLaunchActivity(2);
+
+        int itemToCheckPosition = cardCounts - 1;
         String nameOfItemToCheck = getCardName(itemToCheckPosition);
 
         onView(withId(R.id.recycler_view))
@@ -188,14 +151,10 @@ public class TestCardMyActivity {
                 .check(matches(isDisplayed()));
     }
 
-    private void startActivity() {
-        mRule.launchActivity(null);
-    }
-
     @Test
     public void testClickItem_goToCardEditInIconMode() {
-        addCard("CardName");
-        startActivity();
+        setupCardListAndLaunchActivity(1);
+
         onView(withId(R.id.recycler_view))
                 .perform(actionOnItemAtPosition(0, click()));
         intended(hasComponent(CardEditActivity.class.getName()));
@@ -203,8 +162,8 @@ public class TestCardMyActivity {
 
     @Test
     public void testClickItem_goToCardEditInListMode() {
-        addCard("CardName");
-        startActivity();
+        setupCardListAndLaunchActivity(1);
+
         onView(withId(R.id.menu_card_my_list))
                 .perform(click());
 
@@ -215,8 +174,8 @@ public class TestCardMyActivity {
 
     @Test
     public void testLongClickToSelectThenPressBackToExitTheSelectMode() {
-        addCard("CardName");
-        startActivity();
+        setupCardListAndLaunchActivity(1);
+
         ViewInteraction viewInteraction = onView(withId(R.id.recycler_view));
         viewInteraction.perform(actionOnItemAtPosition(0, longClick()));
 
@@ -229,96 +188,28 @@ public class TestCardMyActivity {
 
     @Test
     public void testLongClickToSelectAndThenDeleteOnCardMode() {
-        int[] positionsToSelect = new int[]{0, 1, 5, 8};
-        int deleteCounts = positionsToSelect.length;
-        int originCounts = 10;
-        for (int i = 0; i < originCounts; i++) {
-            addCard(getCardName(i));
-        }
-        startActivity();
-        ViewInteraction viewInteraction = onView(withId(R.id.recycler_view));
-        viewInteraction.perform(RecyclerViewActions.actionOnHolderItem(hasSameName(getCardName(positionsToSelect[0])), longClick()));
 
-        onView(withId(R.id.menu_card_my_delete)).check(matches(isDisplayed()));
-        onView(withId(R.id.iv_add)).check(matches(not(isDisplayed())));
-
-        //except the first one
-        for (int i = 1; i < positionsToSelect.length; i++) {
-            viewInteraction.perform(RecyclerViewActions.actionOnHolderItem(hasSameName(getCardName(positionsToSelect[i])), click()));
-        }
-        for (int position : positionsToSelect) {
-            viewInteraction.perform(RecyclerViewActions.scrollToHolder(hasSameName(getCardName(position))));
-            onView(allOf(withId(R.id.cb_card), hasSibling(withText(getCardName(position)))))
-                    .check(matches(isChecked()));
-        }
-
-        //delete all selected cards
-        onView(withId(R.id.menu_card_my_delete))
-                .perform(click());
-
-        //check the toast
-        ToastChecker.checkToast("删除" + deleteCounts + "张卡片", mRule);
-
-        //check if all selected card have been deleted
-        RecyclerView recyclerView = (RecyclerView) mRule.getActivity().findViewById(R.id.recycler_view);
-        assertEquals("the remain child counts of RecyclerView is incorrect", originCounts - deleteCounts, recyclerView.getChildCount());
-        for (int position : positionsToSelect) {
-            try {
-                onView(withId(R.id.recycler_view))
-                        .perform(RecyclerViewActions.scrollToHolder(hasSameName(getCardName(position))));
-                fail("all selected cards should be deleted");
-            } catch (PerformException ignored) {
-
-            }
-
-        }
     }
 
-    @After
-    public void cleanUp() {
-        mCBCardBagDB.deleteAll();
+    private int setupCardListAndLaunchActivity(int counts) {
+        when(mDb.queryAllOrderByCreateDateDesc()).thenReturn(setupCardList(counts));
+        launchActivity();
+        return counts;
     }
 
-    private void addCard(String cardName) {
-        CardEntity entity = new CardEntity();
-        entity.setId(cardName);
-        entity.setCardName(cardName);
-        entity.setImgUrl("http://ocg8s5zv8.bkt.clouddn.com/pic_vip_card.png");
-        entity.setBarCode(cardName);
+    @NonNull
+    private List<CardEntity> setupCardList(int counts) {
+        List<CardEntity> cardEntities = new ArrayList<>();
+        for (int i = 0; i < counts; i++) {
+            CardEntity entity = new CardEntity();
+            entity.setId(String.valueOf(i));
+            entity.setCardName(getCardName(i));
+            entity.setImgUrl("http://ocg8s5zv8.bkt.clouddn.com/pic_vip_card.png");
+            entity.setBarCode("12138" + i);
 
-        mCBCardBagDB.insertOrReplace(entity);
-
-        /*onView(withId(R.id.iv_add)).perform(click());
-        onView(withId(R.id.et_card_name)).perform(typeText(cardName), pressImeActionButton());
-        onView(withText(R.string.cb_card_not_found_notice)).perform(click());
-        if (TextUtils.isEmpty(cardName)) {
-            onView(withId(R.id.et_card_name)).perform(typeText("CardName"), closeSoftKeyboard());
+            cardEntities.add(entity);
         }
-
-        scanBarCode();
-
-        takeCardFrontImg();
-
-        onView(withId(R.id.menu_card_edit_save)).perform(click());*/
-    }
-
-    private void takeCardFrontImg() {
-        Intent takePictureIntent = new Intent(MediaStore.ACTION_IMAGE_CAPTURE);
-        intending(hasAction(MediaStore.ACTION_IMAGE_CAPTURE)).respondWith(new Instrumentation.ActivityResult(Activity.RESULT_OK, takePictureIntent));
-        Intent cropIntent = new Intent();
-        intending(hasComponent(UCropActivity.class.getName())).respondWith(new Instrumentation.ActivityResult(Activity.RESULT_OK, cropIntent));
-
-        onView(withId(R.id.iv_card_front)).perform(click());
-    }
-
-    private void scanBarCode() {
-        String barCode = "12138";
-
-        Intent scanIntent = new Intent();
-        scanIntent.putExtra(CBScannerActivity.EXTRA_RESULT_BAR_OR_CODE_STRING, barCode);
-        intending(hasComponent(CBScannerActivity.class.getName())).respondWith(new Instrumentation.ActivityResult(Activity.RESULT_OK, scanIntent));
-
-        onView(withId(R.id.iv_bar_code)).perform(click());
+        return cardEntities;
     }
 
     private static Matcher<CardMyIconRVAdapter.ItemViewHolder> hasSameName(final String name) {

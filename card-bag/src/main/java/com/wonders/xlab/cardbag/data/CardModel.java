@@ -1,5 +1,7 @@
 package com.wonders.xlab.cardbag.data;
 
+import android.content.Context;
+
 import com.wonders.xlab.cardbag.base.BaseModel;
 import com.wonders.xlab.cardbag.base.DefaultException;
 import com.wonders.xlab.cardbag.data.entity.CardEntity;
@@ -17,8 +19,8 @@ public class CardModel extends BaseModel implements CardContract.Model {
     private CBCardBagDB mCBCardBagDB;
 
 
-    public CardModel(CBCardBagDB cbCardBagDB) {
-        mCBCardBagDB = cbCardBagDB;
+    public CardModel(Context context) {
+        mCBCardBagDB = CBCardBagDB.getInstance(context);
     }
 
     @Override

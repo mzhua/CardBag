@@ -175,12 +175,35 @@ public class CardEntity implements Parcelable {
 
         CardEntity entity = (CardEntity) o;
 
-        return mId.equals(entity.mId);
+        if (mCreateDate != entity.mCreateDate) return false;
+        if (!mId.equals(entity.mId)) return false;
+        if (!mCardName.equals(entity.mCardName)) return false;
+        if (!mBarCode.equals(entity.mBarCode)) return false;
+        if (!mImgUrl.equals(entity.mImgUrl)) return false;
+        if (mImgFilePath != null ? !mImgFilePath.equals(entity.mImgFilePath) : entity.mImgFilePath != null)
+            return false;
+        if (mFrontImgUrl != null ? !mFrontImgUrl.equals(entity.mFrontImgUrl) : entity.mFrontImgUrl != null)
+            return false;
+        if (mFrontImgFilePath != null ? !mFrontImgFilePath.equals(entity.mFrontImgFilePath) : entity.mFrontImgFilePath != null)
+            return false;
+        if (mBackImgUrl != null ? !mBackImgUrl.equals(entity.mBackImgUrl) : entity.mBackImgUrl != null)
+            return false;
+        return mBackImgFilePath != null ? mBackImgFilePath.equals(entity.mBackImgFilePath) : entity.mBackImgFilePath == null;
 
     }
 
     @Override
     public int hashCode() {
-        return mId == null ? 0 : mId.hashCode();
+        int result = mId.hashCode();
+        result = 31 * result + mCardName.hashCode();
+        result = 31 * result + mBarCode.hashCode();
+        result = 31 * result + mImgUrl.hashCode();
+        result = 31 * result + (mImgFilePath != null ? mImgFilePath.hashCode() : 0);
+        result = 31 * result + (mFrontImgUrl != null ? mFrontImgUrl.hashCode() : 0);
+        result = 31 * result + (mFrontImgFilePath != null ? mFrontImgFilePath.hashCode() : 0);
+        result = 31 * result + (mBackImgUrl != null ? mBackImgUrl.hashCode() : 0);
+        result = 31 * result + (mBackImgFilePath != null ? mBackImgFilePath.hashCode() : 0);
+        result = 31 * result + (int) (mCreateDate ^ (mCreateDate >>> 32));
+        return result;
     }
 }

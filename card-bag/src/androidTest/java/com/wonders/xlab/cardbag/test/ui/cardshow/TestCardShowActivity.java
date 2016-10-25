@@ -1,9 +1,6 @@
 package com.wonders.xlab.cardbag.test.ui.cardshow;
 
 import android.support.annotation.NonNull;
-import android.support.test.InstrumentationRegistry;
-import android.support.test.espresso.Espresso;
-import android.support.test.espresso.IdlingResource;
 import android.support.test.espresso.intent.rule.IntentsTestRule;
 import android.support.test.filters.LargeTest;
 import android.support.test.runner.AndroidJUnit4;
@@ -22,6 +19,10 @@ import org.junit.Before;
 import org.junit.Rule;
 import org.junit.Test;
 import org.junit.runner.RunWith;
+import org.mockito.Mock;
+
+import java.util.ArrayList;
+import java.util.List;
 
 import static android.support.test.espresso.Espresso.onView;
 import static android.support.test.espresso.action.ViewActions.click;
@@ -39,6 +40,8 @@ import static org.hamcrest.Matchers.allOf;
 import static org.hamcrest.Matchers.equalTo;
 import static org.junit.Assert.assertEquals;
 import static org.junit.Assert.assertNotNull;
+import static org.mockito.Mockito.when;
+import static org.mockito.MockitoAnnotations.initMocks;
 
 /**
  * Created by hua on 2016/10/8.
@@ -53,16 +56,22 @@ public class TestCardShowActivity {
     @Rule
     public IntentsTestRule<CardShowActivity> mRule = new IntentsTestRule<>(CardShowActivity.class, true, false);
 
-    private CBCardBagDB mDB;
+    @Mock
+    public CBCardBagDB mDb;
 
     @Before
     public void setup() {
-        mDB = CBCardBagDB.getInstance(InstrumentationRegistry.getTargetContext());
+        initMocks(this);
+        CBCardBagDB.setInstance(mDb);
+    }
+
+    private void launchActivity() {
+        mRule.launchActivity(null);
     }
 
     @Test
     public void testNoData_showToast_emptyViewPager() {
-        mRule.launchActivity(null);
+        launchActivity();
         onView(withText(R.string.cb_title_card_show)).check(matches(isDisplayed()));
         String emptyStr = "";
         onView(withId(R.id.tv_card_name)).check(matches(allOf(isDisplayed(), withText(emptyStr))));
@@ -78,8 +87,7 @@ public class TestCardShowActivity {
 
     @Test
     public void testShowSingleCardInfo_clickEditMenu_goToEditActivity() {
-        int cardCounts = 1;
-        addCardsAndThenStartActivity(cardCounts);
+        int cardCounts = setupCardListAndLaunchActivity(1);
 
         int positionToCheck = 0;
         onView(withId(R.id.tv_card_name)).check(matches(allOf(isDisplayed(), withText(getCardNameByIndex(positionToCheck)))));
@@ -90,13 +98,12 @@ public class TestCardShowActivity {
         onView(allOf(withId(R.id.menu_card_show_edit),withContentDescription(R.string.cb_menu_card_show_edit)))
                 .perform(click());
         intended(allOf(hasComponent(CardEditActivity.class.getName()),
-                hasExtra(equalTo("data"), equalTo(addNewCardData(0)))));
+                hasExtra(equalTo("data"), equalTo(getCardEntity(0)))));
     }
 
     @Test
     public void testSwipeToShowMore() throws InterruptedException {
-        int cardCounts = 3;
-        addCardsAndThenStartActivity(cardCounts);
+        int cardCounts = setupCardListAndLaunchActivity(3);
 
         onView(withId(R.id.viewPager)).perform(swipeLeft());
 
@@ -105,30 +112,6 @@ public class TestCardShowActivity {
         onView(allOf(withId(R.id.tv_bar_code),withText(getBarCodeByIndex(positionToCheck)))).check(matches(isDisplayed()));
 
         checkViewPagerChildCount(cardCounts);
-    }
-
-    private void addCardsAndThenStartActivity(int counts) {
-        for (int i = 0; i < counts; i++) {
-            addNewCardData(i);
-        }
-        mRule.launchActivity(null);
-    }
-
-    private CardEntity addNewCardData(int index) {
-        String id = String.valueOf(index);
-        String cardName = getCardNameByIndex(index);
-        String barCode = getBarCodeByIndex(index);
-
-        assertNotNull("you must set card id", id);
-
-        CardEntity entity = new CardEntity();
-        entity.setId(id);
-        entity.setCardName(cardName);
-        entity.setImgUrl(CBag.get().getCardImgUrlDefault());
-        entity.setBarCode(barCode);
-        mDB.insertOrReplace(entity);
-
-        return entity;
     }
 
     @NonNull
@@ -143,6 +126,34 @@ public class TestCardShowActivity {
 
     @After
     public void cleanUp() {
-        mDB.deleteAll();
+        mDb.deleteAll();
     }
+
+    private int setupCardListAndLaunchActivity(int counts) {
+        when(mDb.queryAllOrderByCreateDateDesc()).thenReturn(setupCardList(counts));
+        launchActivity();
+        return counts;
+    }
+
+    @NonNull
+    private List<CardEntity> setupCardList(int counts) {
+        List<CardEntity> cardEntities = new ArrayList<>();
+        for (int i = 0; i < counts; i++) {
+            CardEntity entity = getCardEntity(i);
+
+            cardEntities.add(entity);
+        }
+        return cardEntities;
+    }
+
+    @NonNull
+    private CardEntity getCardEntity(int i) {
+        CardEntity entity = new CardEntity();
+        entity.setId(String.valueOf(i));
+        entity.setCardName(getCardNameByIndex(i));
+        entity.setImgUrl("http://ocg8s5zv8.bkt.clouddn.com/pic_vip_card.png");
+        entity.setBarCode(getBarCodeByIndex(i));
+        return entity;
+    }
+
 }

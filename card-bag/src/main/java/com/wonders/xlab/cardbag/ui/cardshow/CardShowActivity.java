@@ -14,7 +14,6 @@ import com.wonders.xlab.cardbag.R;
 import com.wonders.xlab.cardbag.base.MVPActivity;
 import com.wonders.xlab.cardbag.data.CardModel;
 import com.wonders.xlab.cardbag.data.entity.CardEntity;
-import com.wonders.xlab.cardbag.db.CBCardBagDB;
 import com.wonders.xlab.cardbag.ui.cardedit.CardEditActivity;
 import com.wonders.xlab.cardbag.util.ImageViewUtil;
 import com.wonders.xlab.cardbag.widget.RatioImageView;
@@ -48,7 +47,7 @@ public class CardShowActivity extends MVPActivity<CardShowContract.Presenter> im
     @Override
     public CardShowContract.Presenter getPresenter() {
         if (null == mPresenter) {
-            mPresenter = new CardShowPresenter(this, new CardModel(CBCardBagDB.getInstance(this)));
+            mPresenter = new CardShowPresenter(this, new CardModel(this));
         }
         return mPresenter;
     }

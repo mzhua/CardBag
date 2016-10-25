@@ -12,7 +12,6 @@ import org.junit.Test;
 import org.junit.runner.RunWith;
 import org.junit.runners.JUnit4;
 import org.mockito.ArgumentCaptor;
-import org.mockito.ArgumentMatchers;
 import org.mockito.Captor;
 import org.mockito.Mock;
 
@@ -20,7 +19,8 @@ import java.util.ArrayList;
 import java.util.HashSet;
 import java.util.List;
 
-import static org.mockito.ArgumentMatchers.eq;
+import static org.mockito.Matchers.any;
+import static org.mockito.Matchers.eq;
 import static org.mockito.Mockito.never;
 import static org.mockito.Mockito.verify;
 import static org.mockito.MockitoAnnotations.initMocks;
@@ -73,14 +73,14 @@ public class TestCardMyPresenter {
     public void testDeleteWithNonIds_ShowToast() {
         mPresenter.deleteCards(null);
         verify(mView).noCardWillBeDeleted();
-        verify(mModel, never()).deleteCards(ArgumentMatchers.<HashSet<String>>any(), mCallbackDelete.capture());
+        verify(mModel, never()).deleteCards(any(HashSet.class), mCallbackDelete.capture());
     }
 
     @Test
     public void testDeleteWithEmptyIds_ShowToast() {
         mPresenter.deleteCards(new HashSet<String>());
         verify(mView).noCardWillBeDeleted();
-        verify(mModel, never()).deleteCards(ArgumentMatchers.<HashSet<String>>any(), mCallbackDelete.capture());
+        verify(mModel, never()).deleteCards(any(HashSet.class), mCallbackDelete.capture());
     }
 
     @Test
@@ -89,7 +89,7 @@ public class TestCardMyPresenter {
         String id = "1";
         ids.add(id);
         mPresenter.deleteCards(ids);
-        verify(mModel).deleteCards(ArgumentMatchers.<HashSet<String>>any(), mCallbackDelete.capture());
+        verify(mModel).deleteCards(any(HashSet.class), mCallbackDelete.capture());
         String message = "message";
         mCallbackDelete.getValue().onSuccess(message);
         verify(mView).deleteSuccess(eq(message));
@@ -100,7 +100,7 @@ public class TestCardMyPresenter {
         HashSet<String> ids = new HashSet<>();
         ids.add("1");
         mPresenter.deleteCards(ids);
-        verify(mModel).deleteCards(ArgumentMatchers.<HashSet<String>>any(), mCallbackDelete.capture());
+        verify(mModel).deleteCards(any(HashSet.class), mCallbackDelete.capture());
         String message = "message";
         mCallbackDelete.getValue().onFail(new DefaultException(message));
         verify(mView).showToastMessage(eq(message));

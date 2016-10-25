@@ -20,10 +20,8 @@ import com.wonders.xlab.cardbag.base.adapter.BaseRecyclerViewAdapter;
 import com.wonders.xlab.cardbag.base.adapter.MultiSelectionRecyclerViewAdapter;
 import com.wonders.xlab.cardbag.data.CardModel;
 import com.wonders.xlab.cardbag.data.entity.CardEntity;
-import com.wonders.xlab.cardbag.db.CBCardBagDB;
 import com.wonders.xlab.cardbag.ui.cardedit.CardEditActivity;
 import com.wonders.xlab.cardbag.ui.cardsearch.CardSearchActivity;
-import com.wonders.xlab.cardbag.ui.cardshow.CardShowContract;
 import com.wonders.xlab.cardbag.util.DensityUtil;
 import com.wonders.xlab.cardbag.widget.SideBar;
 import com.wonders.xlab.cardbag.widget.XToolBarLayout;
@@ -61,18 +59,12 @@ public class CardMyActivity extends MVPActivity<CardMyContract.Presenter> implem
 
     }
 
-
     @Override
     public CardMyContract.Presenter getPresenter() {
         if (mPresenter == null) {
-            mPresenter = new CardMyPresenter(new CardModel(CBCardBagDB.getInstance(this)), this);
+            mPresenter = new CardMyPresenter(new CardModel(this), this);
         }
         return mPresenter;
-    }
-
-    @VisibleForTesting
-    public void setPresenter(CardMyContract.Presenter presenter) {
-        this.mPresenter = presenter;
     }
 
     @Override
