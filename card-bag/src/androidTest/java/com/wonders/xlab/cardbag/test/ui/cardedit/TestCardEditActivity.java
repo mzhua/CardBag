@@ -168,7 +168,7 @@ public class TestCardEditActivity {
     }
 
     @Test
-    public void barCodeEmpty_showToast() {
+    public void nameEmpty_showToast() {
         launchActivity(getIntent(null, null));
         onView(withId(R.id.et_card_name)).check(matches(withText("")));
         onView(withId(R.id.menu_card_edit_save)).perform(click());
@@ -177,8 +177,7 @@ public class TestCardEditActivity {
     }
 
     @Test
-    @Ignore
-    public void nameEmpty_showToast() {
+    public void barCodeEmpty_showToast() {
         launchActivity(getIntent(null, null));
         onView(withId(R.id.et_card_name)).perform(typeText("cardName"));
         onView(withId(R.id.tv_bar_code)).check(matches(withText("")));
@@ -188,7 +187,6 @@ public class TestCardEditActivity {
     }
 
     @Test
-    @Ignore
     public void saveSuccess_finishActivity() {
         launchActivity(getIntent(null, null));
         scanBarCode();
