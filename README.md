@@ -14,9 +14,9 @@ minSdkVersion 15
 * 在module的`build.gradle`中加入依赖
 
    `compile 'com.wonders.xlab.cardbag:card-bag:lastestVersion'`
-
+   
    ***lastestVersion就是顶部Download后面的数字***
-
+   
    如图
 
    ![添加依赖](img/add-card-bag-dependency-android.png)
@@ -171,4 +171,3 @@ android{
 }
 ```
 
-##上传到bintray的命令 ./gradlew clean build card-bag:bintrayUpload -PbintrayUser=yourname -PbintrayKey=yourkey -PdryRun=false

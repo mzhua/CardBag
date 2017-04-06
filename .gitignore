@@ -1,6 +1,7 @@
 .bugtags.log
 .gradle
 /.idea
+/freeline
 .DS_Store
 build
 /captures
